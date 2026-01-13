@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:exp="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/exportmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/exportmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="LocationURI">
+		<xsd:restriction base="xsd:anyURI">
+			<xsd:pattern value="media://(usb[0-7]|esata[0-7]|nas[1-4])(/.*)?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfExportLocation">
+		<xsd:sequence>
+			<xsd:element name="location" type="exp:LocationURI" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="DataType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="CompositionPlaylist"/>
+			<xsd:enumeration value="ShowPlaylist"/>
+			<xsd:enumeration value="KDM"/>
+			<xsd:enumeration value="Licence"/>
+			<xsd:enumeration value="Report"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="State">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Idle"/>
+			<xsd:enumeration value="Waiting"/> 
+			<xsd:enumeration value="Paused"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Failed"/>                               
+			<xsd:enumeration value="Succeeded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ExportTask">
+		<xsd:sequence>
+			<xsd:element name="identifier" type="xsd:int"/>
+			<xsd:element name="sourceType" type="exp:DataType"/>
+			<xsd:element name="sourceName" type="xsd:string"/>
+			<xsd:element name="exportURI" type="exp:LocationURI"/>
+			<xsd:element name="state" type="exp:State"/>
+			<xsd:element name="progress" type="com:Rational"/>
+			<xsd:element name="logs" type="com:ArrayOfString"/>
+			<xsd:element name="creationDate" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfExportTasks">
+		<xsd:sequence>
+			<xsd:element name="task" type="exp:ExportTask" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

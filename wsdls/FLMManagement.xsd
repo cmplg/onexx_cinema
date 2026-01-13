@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/flmmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/flmmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="FlmStatus">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Ready"/>
+			<xsd:enumeration value="Incomplete"/>
+			<xsd:enumeration value="NotAvailable"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="FLMInfo">
+		<xsd:sequence>
+			<xsd:element name="status" type="flm:FlmStatus"/>
+			<xsd:element name="timestamp" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FLMDevice">
+		<xsd:sequence>
+			<xsd:element name="fileName" type="xsd:string"/>
+			<xsd:element name="type" type="xsd:string"/>
+			<xsd:element name="model" type="xsd:string"/>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="serial" type="xsd:string"/>
+			<xsd:element name="pem" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfFlmInfo">
+		<xsd:sequence>
+			<xsd:element name="flmInfo" type="flm:FLMInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfFlmDevice">
+		<xsd:sequence>
+			<xsd:element name="flmDevice" type="flm:FLMDevice" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FlmExportLocation">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="path" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfFlmExportLocation">
+		<xsd:sequence>
+			<xsd:element name="exportLocation" type="flm:FlmExportLocation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

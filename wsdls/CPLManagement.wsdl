@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:cpl="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cplmanagement" name="CPLManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                CPL Management provides functions to interact with CPL on the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="CPLManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cplmanagement"/>
+            <xsd:element name="GetCPLList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="cplList" type="cpl:ArrayOfCplId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteCPL">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <xsd:element name="location" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteCPLResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="cplInfo" type="cpl:CPLInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+      <xsd:element name="GetCPLCurrentInfo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetCPLCurrentInfoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="cplInfo" type="cpl:CPLInfo"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+            <xsd:element name="GetCPLContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetCPLContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetCPLContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ValidateCPL">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <!-- indicates how hard the system shall try to validate the CPL. Default value is zero !-->
+                        <xsd:element name="checkStrength" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ValidateCPLResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="com:WorkingStatusInfo"/>
+                        <xsd:element name="errorCode" type="xsd:int"/>
+                        <xsd:element name="errorString" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLListInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLListInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="cplList" type="cpl:ArrayOfCplInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLSettings">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <xsd:element name="type" type="cpl:Setting" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLSettingsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetCPLSettings">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetCPLSettingsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLDefaultSettings">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCPLDefaultSettingsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetCPLList">
+        <wsdl:part name="parameters" element="v1_0:GetCPLList"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteCPL">
+        <wsdl:part name="parameters" element="v1_0:DeleteCPL"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteCPLResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteCPLResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLInfo">
+        <wsdl:part name="parameters" element="v1_0:GetCPLInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLCurrentInfo">
+        <wsdl:part name="parameters" element="v1_0:GetCPLCurrentInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLCurrentInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLCurrentInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLContent">
+        <wsdl:part name="parameters" element="v1_0:GetCPLContent"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLContentResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetCPLContent">
+        <wsdl:part name="parameters" element="v1_0:SetCPLContent"/>
+    </wsdl:message>
+    <wsdl:message name="SetCPLContentResponse">
+        <wsdl:part name="parameters" element="v1_0:SetCPLContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ValidateCPL">
+        <wsdl:part name="parameters" element="v1_0:ValidateCPL"/>
+    </wsdl:message>
+    <wsdl:message name="ValidateCPLResponse">
+        <wsdl:part name="parameters" element="v1_0:ValidateCPLResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLListInfo">
+        <wsdl:part name="parameters" element="v1_0:GetCPLListInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLListInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLListInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLSettings">
+        <wsdl:part name="parameters" element="v1_0:GetCPLSettings"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLSettingsResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLSettingsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetCPLSettings">
+        <wsdl:part name="parameters" element="v1_0:SetCPLSettings"/>
+    </wsdl:message>
+    <wsdl:message name="SetCPLSettingsResponse">
+        <wsdl:part name="parameters" element="v1_0:SetCPLSettingsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLDefaultSettings">
+        <wsdl:part name="parameters" element="v1_0:GetCPLDefaultSettings"/>
+    </wsdl:message>
+    <wsdl:message name="GetCPLDefaultSettingsResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCPLDefaultSettingsResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="CPLManagement_v1_0">
+        <wsdl:operation name="GetCPLList">
+            <wsdl:documentation>
+                GetCPLList
+                    Retrieves a list of CPLs present on the unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    An array (cpl:cplList) of CPL UUIDs present on the unit
+
+                Faults
+                    "Internal server error" : if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLList"/>
+            <wsdl:output message="tns:GetCPLListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCPL">
+            <wsdl:documentation>
+                DeleteCPL
+                    Removes CPL from the unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+                    location: (optional xsd:string). Path to the data map where the CPL is stored
+
+                Response
+                    Empty response
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteCPL"/>
+            <wsdl:output message="tns:DeleteCPLResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLInfo">
+            <wsdl:documentation>
+                GetCPLInfo
+                    Retrieve information about the CPL (UUID, duration, title, kind, ...)
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+
+                Response
+                    Structure cpl:cplInfo
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLInfo"/>
+            <wsdl:output message="tns:GetCPLInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLCurrentInfo">
+            <wsdl:documentation>
+                GetCPLCurrentInfo
+                    Retrieve information about the CPL current playing (UUID, duration, title, kind, ...)
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Structure cpl:cplInfo
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if no CPL is currently playing. This includes playing patterns.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLCurrentInfo"/>
+            <wsdl:output message="tns:GetCPLCurrentInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLContent">
+            <wsdl:documentation>
+                GetCPLContent
+                    Retrieves CPL's XML content
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+
+                Response
+                    Base64 packed (xsd:base64Binary) CPL XML
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLContent"/>
+            <wsdl:output message="tns:GetCPLContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetCPLContent">
+            <wsdl:documentation>
+                SetCPLContent
+                    Stores a CPL on the server. Note that in order to be considered as valid, the assets referenced in the CPL should have been ingested.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    content (xsd:base64Binary) CPL XML to store on the server, base 64 encoded
+
+                Response
+                    Empty
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetCPLContent"/>
+            <wsdl:output message="tns:SetCPLContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ValidateCPL">
+            <wsdl:documentation>
+                ValidateCPL
+                    Check the validity of a CPL: to be considered as valid, all mandatory fields should be present and well formed, and all referenced assets should be present (ingested) on the system. For encrypted content, checks if a KDM exists for this CPL.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+
+                Response
+                    "status": indicates the result. "Normal" if the CPL is valid, "Error" otherwise
+                    "errorCode": corresponding error code. 0 in case of success.
+                    "errorString": a description of the issue, if the CPL failed to validate
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:ValidateCPL"/>
+            <wsdl:output message="tns:ValidateCPLResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLListInfo">
+            <wsdl:documentation>
+                GetCPLListInfo
+                    Retrieves details of all CPLs present on unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    A list (cpl:cplList) of CPL information (cpl:cplInfo)
+
+                Faults
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLListInfo"/>
+            <wsdl:output message="tns:GetCPLListInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLSettings">
+            <wsdl:documentation>
+                GetCPLSettings
+                    Retrieves the settings of a CPL. Those can be changed with SetCPLSettings call
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+                    type (cpl:Setting, optional): if set, should be "Custom" or "Default"
+
+                Response
+                    content: XML data (xsd:base64Binary) containing the settings of this CPL
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLSettings"/>
+            <wsdl:output message="tns:GetCPLSettingsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetCPLSettings">
+            <wsdl:documentation>
+                SetCPLSettings
+                    Sets the settings of a CPL. Can be retreived later using GetCPLSettings call
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist those settings belong to
+                    content (xsd:base64Binary) the settings, as XML data base 64 encoded
+
+                Response
+                    Empty
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetCPLSettings"/>
+            <wsdl:output message="tns:SetCPLSettingsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLDefaultSettings">
+            <wsdl:documentation>
+                GetCPLDefaultSettings
+                    Retrieves the default settings of a CPL. This ignores the changes made to the custom CPL settings using SetCPLSettings.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (com:Uuid) UUID of CompositionPlaylist
+
+                Response
+                    content: XML data (xsd:base64Binary) containing the settings of this CPL
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument is in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+                    "not found" : if given CPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCPLDefaultSettings"/>
+            <wsdl:output message="tns:GetCPLDefaultSettingsResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CPLManagement_v1_0_SOAPBinding" type="tns:CPLManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetCPLList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCPL">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    <wsdl:operation name="GetCPLCurrentInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCPLContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetCPLContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ValidateCPL">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLListInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLSettings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetCPLSettings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCPLDefaultSettings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CPLManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:CPLManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/CPLManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

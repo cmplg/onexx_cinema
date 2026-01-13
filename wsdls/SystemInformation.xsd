@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sys="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systeminformation" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systeminformation" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="SoftwarePartType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Software"/>
+			<xsd:enumeration value="Firmware"/>
+			<xsd:enumeration value="OperatingSystem"/>
+			<xsd:enumeration value="Library"/>
+			<xsd:enumeration value="Package"/>
+			<xsd:enumeration value="Kernel"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SoftwarePartInfo">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string"/>
+			<xsd:element name="type" type="sys:SoftwarePartType"/>
+			<xsd:element name="vendor" type="xsd:string"/>
+			<xsd:element name="version" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfSoftwarePart">
+		<xsd:sequence>
+			<xsd:element name="softwarePart" type="sys:SoftwarePartInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="HardwarePartType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Motherboard"/>
+			<xsd:enumeration value="HDD"/>
+			<xsd:enumeration value="Chassis"/>
+			<xsd:enumeration value="CPU"/>
+			<xsd:enumeration value="Memory"/>
+			<xsd:enumeration value="AddOnBoard"/>
+			<xsd:enumeration value="USBGeneric"/>
+			<xsd:enumeration value="Projector"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="HardwarePartInfo">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string"/>
+			<xsd:element name="type" type="sys:HardwarePartType"/>
+			<xsd:element name="vendor" type="xsd:string"/>
+			<xsd:element name="version" type="xsd:string"/>
+			<xsd:element name="model" type="xsd:string"/>
+			<xsd:element name="serial" type="xsd:string"/>
+			<xsd:element name="status" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfHardwarePart">
+		<xsd:sequence>
+			<xsd:element name="hardwarePart" type="sys:HardwarePartInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductInformationInfo">
+		<xsd:sequence>
+			<xsd:element name="productName" type="xsd:string"/>
+			<xsd:element name="serialNumber" type="xsd:string"/>
+			<xsd:element name="systemId" type="com:Uuid"/>
+			<xsd:element name="mainSoftwareVersion" type="xsd:string"/>
+			<xsd:element name="mainFirmwareVersion" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="bundleVersion" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CertificateInfo">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string"/>
+			<xsd:element name="cert" type="xsd:string"/>
+			<xsd:element name="chain" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCertificate">
+		<xsd:sequence>
+			<xsd:element name="certificate" type="sys:CertificateInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FeatureInfo">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="FeatureTag">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="4kRendering"/>
+			<xsd:enumeration value="Reald3D"/>
+			<xsd:enumeration value="Dolby3D"/>
+			<xsd:enumeration value="DolbyAtmos"/>
+			<xsd:enumeration value="DolbyAtmos16Channels"/>
+			<xsd:enumeration value="DolbyVision"/>
+			<xsd:enumeration value="PartialBlackout"/>
+			<xsd:enumeration value="Auro"/>
+			<xsd:enumeration value="Chase"/>
+			<xsd:enumeration value="StreamIt"/>
+			<xsd:enumeration value="Standby"/>
+			<xsd:enumeration value="RealdSbS"/>
+			<xsd:enumeration value="DualProjector"/>
+			<xsd:enumeration value="Sensio3D"/>
+			<xsd:enumeration value="Subtitle"/>
+			<xsd:enumeration value="ClosedCaption"/>
+			<xsd:enumeration value="Audiomark"/>
+			<xsd:enumeration value="MDA"/>
+			<xsd:enumeration value="HDMIInput"/>
+			<xsd:enumeration value="SDIInput"/>
+			<xsd:enumeration value="Intermission"/>
+			<xsd:enumeration value="HighFrameRate"/>
+			<xsd:enumeration value="Nas"/>
+			<xsd:enumeration value="Export"/>
+			<xsd:enumeration value="SPLValidator"/>
+			<xsd:enumeration value="LinkDecryptor"/>
+			<xsd:enumeration value="PayPerView"/>
+			<xsd:enumeration value="EncryptedCPL"/>
+			<xsd:enumeration value="DolbyDeghost"/>
+			<xsd:enumeration value="Diskless"/>
+			<xsd:enumeration value="4k60"/>
+			<xsd:enumeration value="InternalRAID"/>
+			<xsd:enumeration value="NoneTIMode"/>
+			<xsd:enumeration value="DisplayManagement"/>
+			<xsd:enumeration value="DisplayMapping"/>
+			<xsd:enumeration value="BasicAudio"/>
+			<xsd:enumeration value="NoAudioDecoder"/>
+			<xsd:enumeration value="SharedNASCompatibility"/>
+			<xsd:enumeration value="SecondaryNasNode"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfFeatureTag">
+		<xsd:sequence>
+			<xsd:element name="feature" type="sys:FeatureTag" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

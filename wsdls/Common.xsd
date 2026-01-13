@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:complexType name="ArrayOfString">
+		<xsd:sequence>
+			<xsd:element name="string" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfLong">
+		<xsd:sequence>
+			<xsd:element name="long" type="xsd:long" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfInt">
+		<xsd:sequence>
+			<xsd:element name="int" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Uuid">
+		<xsd:restriction base="xsd:anyURI">
+			<xsd:pattern value="urn:uuid:[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfUuid">
+		<xsd:sequence>
+			<xsd:element name="uuid" type="ns1:Uuid" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SessionIdentifier">
+		<xsd:restriction base="xsd:token">
+			<xsd:pattern value="[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IpAddress">
+		<xsd:restriction base="xsd:string">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ObjectIdentifier">
+		<xsd:restriction base="xsd:token">
+			<xsd:pattern value="[0-9\.]{1,80}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Percentage">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Seconds">
+		<xsd:restriction base="xsd:int"/>
+		<!-- unit in seconds !-->
+	</xsd:simpleType>
+	<xsd:simpleType name="UnixEpochTime">
+		<xsd:restriction base="xsd:unsignedLong"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Rational">
+		<xsd:sequence>
+			<xsd:element name="numerator" type="xsd:int"/>
+			<xsd:element name="denominator" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="WorkingStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="NotRelevant"/>
+			<xsd:enumeration value="Normal"/>
+			<xsd:enumeration value="Warning"/>
+			<xsd:enumeration value="Error"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CriticityInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Debug"/>
+			<xsd:enumeration value="Informational"/>
+			<xsd:enumeration value="Warning"/>
+			<xsd:enumeration value="Error"/>
+			<xsd:enumeration value="Critical"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Digicine"/>
+			<xsd:enumeration value="SMPTE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ServiceStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Stopped"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PasswordEncodingType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Default"/>
+			<xsd:enumeration value="Plaintext"/>
+			<xsd:enumeration value="Base64"/>
+			<xsd:enumeration value="Base64-enc"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="EncodedPassword">
+		<xsd:simpleContent>
+			 <xsd:extension base="xsd:string">
+				  <xsd:attribute name="encoding" type="ns1:PasswordEncodingType" use="optional"/>
+			 </xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="JobStateInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Paused"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Scheduled"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="Failed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="CheckItem">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string">
+			<!-- title for this check  -->
+			</xsd:element>
+			<xsd:element name="progress" type="ns1:Percentage">
+			<!-- For long running checks, this field contains the progression of the check.
+				This field is meaningfull only when the job is running. The value could be zero
+				for not started check, and 100% for completed but it is not manadatory. -->
+			</xsd:element>
+			<xsd:element name="status" type="ns1:WorkingStatusInfo">
+			<!-- if the check completed, this holds the results of the check with a severity indication -->
+			</xsd:element>
+			<xsd:element name="state" type="ns1:JobStateInfo">
+			<!-- indicate the internal state of the check. -->
+			</xsd:element>
+			<xsd:element name="completed" type="xsd:boolean">
+			<!-- indicate if the check is completed (final status) or still ongoing-->
+			</xsd:element>
+			<xsd:element name="annotationText" type="xsd:string" minOccurs="0">
+			<!-- additional optional information for the check. If completed, it may contain information about the reported error  -->
+			</xsd:element>
+			<xsd:element name="objectId" type="ns1:Uuid" minOccurs="0">
+			<!-- if the check relates to a uniquely identified object, its uuid is stored in this optional field. -->
+			</xsd:element>
+			<xsd:element name="objectName" type="xsd:string" minOccurs="0">
+			<!-- if the check relates to a named object, its name is stored in this optional field. -->
+			</xsd:element>
+			<xsd:element name="objectType" type="xsd:string" minOccurs="0">
+			<!-- if the check relates to a typed object, its type  is stored in this optional field. -->
+			</xsd:element>
+			<xsd:element name="errorCode" type="xsd:string" minOccurs="0">
+			<!-- in case a specific errorCode is attached to this check, it is defined here. -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCheckItem">
+		<xsd:sequence>
+			<xsd:element name="check" type="ns1:CheckItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- in case of chase, the secondary unit can be accessible using the uuid urn:uuid:C7a33000-0000-0000-0000-000000000001. -->
+	<xsd:complexType name="DeviceManagerTarget">
+		<xsd:sequence>
+			<xsd:element name="uuid" type="ns1:Uuid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Device Target definition -->
+	<xsd:complexType name="DeviceTarget">
+		<xsd:choice>
+			<xsd:element name="devmgr" type="ns1:DeviceManagerTarget"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+</xsd:schema>

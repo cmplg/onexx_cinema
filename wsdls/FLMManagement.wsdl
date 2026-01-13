@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:flm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/flmmanagement" name="FLMManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                FLM Management provides functions to handle FLM Device.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="FLMManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/flmmanagement"/>
+			<xsd:element name="GetFLMDevices">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMDevicesResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="flmDevices" type="flm:ArrayOfFlmDevice"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMExportLocation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMExportLocationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="flmExportLocationList" type="flm:ArrayOfFlmExportLocation"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RefreshFLM">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RefreshFLMResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMStatus">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="flmInfo" type="flm:FLMInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ExportFLMFile">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="path" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ExportFLMFileResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="path" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMContent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFLMContentResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="content" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetFLMDevices">
+		<wsdl:part name="parameters" element="v1_0:GetFLMDevices"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMDevicesResponse">
+		<wsdl:part name="parameters" element="v1_0:GetFLMDevicesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMExportLocation">
+		<wsdl:part name="parameters" element="v1_0:GetFLMExportLocation"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMExportLocationResponse">
+		<wsdl:part name="parameters" element="v1_0:GetFLMExportLocationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RefreshFLM">
+		<wsdl:part name="parameters" element="v1_0:RefreshFLM"/>
+	</wsdl:message>
+	<wsdl:message name="RefreshFLMResponse">
+		<wsdl:part name="parameters" element="v1_0:RefreshFLMResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMStatus">
+		<wsdl:part name="parameters" element="v1_0:GetFLMStatus"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMStatusResponse">
+		<wsdl:part name="parameters" element="v1_0:GetFLMStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ExportFLMFile">
+		<wsdl:part name="parameters" element="v1_0:ExportFLMFile"/>
+	</wsdl:message>
+	<wsdl:message name="ExportFLMFileResponse">
+		<wsdl:part name="parameters" element="v1_0:ExportFLMFileResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMContent">
+		<wsdl:part name="parameters" element="v1_0:GetFLMContent"/>
+	</wsdl:message>
+	<wsdl:message name="GetFLMContentResponse">
+		<wsdl:part name="parameters" element="v1_0:GetFLMContentResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="FLMManagement_v1_0">
+		<wsdl:operation name="GetFLMDevices">
+			<wsdl:documentation>
+                 GetFLMDevices
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetFLMDevices"/>
+			<wsdl:output message="tns:GetFLMDevicesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMExportLocation">
+			<wsdl:documentation>
+                 GetFLMExportLocation
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="GetFLMExportLocation"/>
+			<wsdl:output message="tns:GetFLMExportLocationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="RefreshFLM">
+			<wsdl:documentation>
+                 RefreshFLM
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:RefreshFLM"/>
+			<wsdl:output message="tns:RefreshFLMResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMStatus">
+			<wsdl:documentation>
+                 GetFLMStatus
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetFLMStatus"/>
+			<wsdl:output message="tns:GetFLMStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ExportFLMFile">
+			<wsdl:documentation>
+                 ExportFLMFile
+
+                 Arguments
+
+
+                 Response
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:ExportFLMFile"/>
+			<wsdl:output message="tns:ExportFLMFileResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMContent">
+			<wsdl:documentation>
+                 "GetFLMContent"
+
+                 Arguments
+
+
+                 Response
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetFLMContent"/>
+			<wsdl:output message="tns:GetFLMContentResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FLMManagement_v1_0_SOAPBinding" type="tns:FLMManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetFLMDevices">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMExportLocation">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RefreshFLM">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMStatus">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ExportFLMFile">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFLMContent">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FLMManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:FLMManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/FLMManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

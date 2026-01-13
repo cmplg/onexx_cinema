@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:sen="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sensors" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Sensors_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Sensors provides functions to list system's sensors.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="Sensors.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sensors"/>
+            <xsd:element name="GetModuleList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetModuleListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="moduleList" type="com:ArrayOfString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTemperatureList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="module" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTemperatureListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sensorList" type="sen:ArrayOfSensor"/>
+                        <xsd:element name="status" type="com:WorkingStatusInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFanList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="module" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFanListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sensorList" type="sen:ArrayOfSensor"/>
+                        <xsd:element name="status" type="com:WorkingStatusInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVoltageList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="module" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetVoltageListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sensorList" type="sen:ArrayOfSensor"/>
+                        <xsd:element name="status" type="com:WorkingStatusInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetModuleList">
+        <wsdl:part name="parameters" element="v1_0:GetModuleList"/>
+    </wsdl:message>
+    <wsdl:message name="GetModuleListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetModuleListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTemperatureList">
+        <wsdl:part name="parameters" element="v1_0:GetTemperatureList"/>
+    </wsdl:message>
+    <wsdl:message name="GetTemperatureListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetTemperatureListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetFanList">
+        <wsdl:part name="parameters" element="v1_0:GetFanList"/>
+    </wsdl:message>
+    <wsdl:message name="GetFanListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetFanListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetVoltageList">
+        <wsdl:part name="parameters" element="v1_0:GetVoltageList"/>
+    </wsdl:message>
+    <wsdl:message name="GetVoltageListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetVoltageListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Sensors_v1_0">
+        <wsdl:operation name="GetModuleList">
+            <wsdl:documentation>
+                GetModuleList
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    moduleList (com:ArrayOfString)  list of module available
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetModuleList"/>
+            <wsdl:output message="tns:GetModuleListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTemperatureList">
+            <wsdl:documentation>
+                GetTemperatureList
+                    Read temperature sensor status and measurements of different
+                    system modules (System, mediablock, storage, etc.)
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    module (optional string) pick a module to show sensor measurements,
+                                            all modules are displayed if not provided
+
+                Response
+                    sensorList (sen:ArrayOfSensor) List of sensors (for one module or more), with sensor parameters
+                                                    and measurements: title, value, unit, module, status, thresholds
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetTemperatureList"/>
+            <wsdl:output message="tns:GetTemperatureListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetFanList">
+            <wsdl:documentation>
+                GetFanList
+                    Read fan sensor status and measurements of different
+                    system modules (System, mediablock, storage, etc.)
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    module (optional string) pick a module to show sensor measurements,
+                                            all modules are displayed if not provided
+
+                Response
+                    sensorList (sen:ArrayOfSensor) List of sensors (for one module or more), with sensor parameters
+                                                    and measurements: title, value, unit, module, status, thresholds
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetFanList"/>
+            <wsdl:output message="tns:GetFanListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetVoltageList">
+            <wsdl:documentation>
+                GetVoltageList
+                    Read voltage sensor status and measurements of different
+                    system modules (System, mediablock, storage, etc.)
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    module (optional string) pick a module to show sensor measurements,
+                                            all modules are displayed if not provided
+
+                Response
+                    sensorList (sen:ArrayOfSensor) List of sensors (for one module or more), with sensor parameters
+                                                    and measurements: title, value, unit, module, status, thresholds
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetVoltageList"/>
+            <wsdl:output message="tns:GetVoltageListResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Sensors_v1_0_SOAPBinding" type="tns:Sensors_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetModuleList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTemperatureList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetFanList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetVoltageList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Sensors_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:Sensors_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/Sensors"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

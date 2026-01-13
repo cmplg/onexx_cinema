@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions name="SPLManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:spl="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/splmanagement"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:documentation>
+        SPL Management provides functions to List, add or delete a Show Playlist.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+                schemaLocation="Common.xsd" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/splmanagement"
+                schemaLocation="SPLManagement.xsd" />
+            <xsd:element name="GetSPLList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="splList" type="spl:ArrayOfSplId" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteSPL">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="splId" type="com:Uuid" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteSPLResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="splId" type="com:Uuid" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="splInfo" type="spl:SPLInfo" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="splId" type="com:Uuid" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetSPLContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="content" type="xsd:base64Binary" />
+                        <xsd:element name="checkForOverlapping" type="xsd:boolean" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetSPLContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLListInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLListInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="splList" type="spl:ArrayOfSplInfo" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLRuntime">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSPLRuntimeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LockSPL">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="splId" type="com:Uuid" />
+                        <xsd:element name="locked" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LockSPLResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetSPLList">
+        <wsdl:part element="v1_0:GetSPLList" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLListResponse">
+        <wsdl:part element="v1_0:GetSPLListResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteSPL">
+        <wsdl:part element="v1_0:DeleteSPL" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteSPLResponse">
+        <wsdl:part element="v1_0:DeleteSPLResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLInfo">
+        <wsdl:part element="v1_0:GetSPLInfo" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLInfoResponse">
+        <wsdl:part element="v1_0:GetSPLInfoResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLContent">
+        <wsdl:part element="v1_0:GetSPLContent" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLContentResponse">
+        <wsdl:part element="v1_0:GetSPLContentResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="SetSPLContent">
+        <wsdl:part element="v1_0:SetSPLContent" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="SetSPLContentResponse">
+        <wsdl:part element="v1_0:SetSPLContentResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLListInfo">
+        <wsdl:part element="v1_0:GetSPLListInfo" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLListInfoResponse">
+        <wsdl:part element="v1_0:GetSPLListInfoResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLRuntime">
+        <wsdl:part element="v1_0:GetSPLRuntime" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="LockSPL">
+        <wsdl:part element="v1_0:LockSPL" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="LockSPLResponse">
+        <wsdl:part element="v1_0:LockSPLResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetSPLRuntimeResponse">
+        <wsdl:part element="v1_0:GetSPLRuntimeResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:portType name="SPLManagement_v1_0">
+        <wsdl:operation name="GetSPLList">
+            <wsdl:documentation>
+                GetSPLList
+                    Retrieves a list of SPLs present on unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    An array (spl:ArrayOfSplId) of SPL IDs present on unit
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSPLList" />
+            <wsdl:output message="tns:GetSPLListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="DeleteSPL">
+            <wsdl:documentation>
+                DeleteSPL
+                    Removes SPL from unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    splId (com:Uuid) UUID of ShowPlaylist
+
+                Response
+                    Empty response
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument in wrong format
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "resource busy" : If given SPL is in use
+                    "resource locked" : If given SPL is locked
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "permission denied" : If user not privileged to perform operation
+                    "not found" : if given SPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteSPL" />
+            <wsdl:output message="tns:DeleteSPLResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLInfo">
+            <wsdl:documentation>
+                GetSPLInfo
+                    Retrieves SPL's UUID, title and duration
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    splId (com:Uuid) UUID of ShowPlaylist
+
+                Response
+                    Structure (spl:SPLInfo) with SPL's UUID, title and duration
+
+                Faults
+                    "invalid argument '[X]'" : if [X] argument in wrong format
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "not found" : if given SPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSPLInfo" />
+            <wsdl:output message="tns:GetSPLInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLContent">
+            <wsdl:documentation>
+                GetSPLContent
+                    Retrieves SPL's XML content
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    splId (com:Uuid) UUID of ShowPlaylist
+
+                Response
+                    Base64 packed (xsd:base64Binary) SPL XML
+
+                Faults
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "invalid argument '[X]'" : if [X] argument in wrong format
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "not found" : if given SPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSPLContent" />
+            <wsdl:output message="tns:GetSPLContentResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="SetSPLContent">
+            <wsdl:documentation>
+                SetSPLContent
+                    Saves SPL on unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    content (xsd:base64Binary) Base64 packed SPL XML, max size is 1MB unpacked
+                    checkForOverlapping (xsd:boolean, optional) true if schedule overlap requested
+
+                Response
+                    Empty response
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "permission denied" : If user not privileged to perform operation
+                    "check for overlapping schedule failed": if check for overlapping requested and failed
+                    "resource locked" : If given SPL is locked
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetSPLContent" />
+            <wsdl:output message="tns:SetSPLContentResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLListInfo">
+            <wsdl:documentation>
+                GetSPLListInfo
+                    Retrieves details of all SPLs present on unit
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    An Array (spl:ArrayOfSplInf) of details (UUID, title, duration) of SPLs present on unit
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSPLListInfo" />
+            <wsdl:output message="tns:GetSPLListInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLRuntime">
+            <wsdl:documentation>
+                GetSPLRuntime
+                    Retrieves SPL's XML content of currently loaded SPL
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Base64 packed (xsd:base64Binary) SPL XML
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "ressource not available": If no SPL loaded
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSPLRuntime" />
+            <wsdl:output message="tns:GetSPLRuntimeResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="LockSPL">
+            <wsdl:documentation>
+                LockSPL
+                    Protect or unprotect a SPL to be deleted or modified
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    splId (com:Uuid) SPL uuid to lock or unlock
+                    locked (xsd:boolean) requested Lock state.
+
+                Response
+                    Empty response
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "permission denied" : If user not privileged to perform operation
+                    "not found" : if given SPL uuid not found.
+            </wsdl:documentation>
+            <wsdl:input message="tns:LockSPL" />
+            <wsdl:output message="tns:LockSPLResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SPLManagement_v1_0_SOAPBinding" type="tns:SPLManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetSPLList">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteSPL">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLInfo">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLContent">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetSPLContent">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLListInfo">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSPLRuntime">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LockSPL">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SPLManagement_v1_0">
+        <wsdl:port binding="tns:SPLManagement_v1_0_SOAPBinding" name="SOAPOverHTTP">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/SPLManagement" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

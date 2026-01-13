@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:ngs="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IngestScan_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Ingest Management provides functions to ingest content on the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="IngestManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestmanagement"/>
+            <xsd:element name="CreateIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskParameters" type="ngs:IngestTaskParameters"/>
+                        <xsd:element name="taskProperties" type="ngs:IngestTaskProperties"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PauseIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PauseIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ResumeIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ResumeIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateIngestTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                        <xsd:element name="taskProperties" type="ngs:IngestTaskProperties"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="UpdateIngestTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskList" type="ngs:ArrayOfIngestTask"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                        <xsd:element name="taskParameters" type="ngs:IngestTaskParameters"/>
+                        <xsd:element name="taskProperties" type="ngs:IngestTaskProperties"/>
+                        <xsd:element name="taskInfos" type="ngs:IngestTaskInfos"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                        <xsd:element name="taskStatus" type="ngs:IngestTaskStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventCount">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventCountResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- number of available message starting from index 0 !-->
+                        <xsd:element name="eventCount" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventMessage">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                        <xsd:element name="eventIndex" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventMessageResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="eventMessage" type="ngs:IngestTaskEvent"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskListInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskListInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskList" type="ngs:ArrayOfIngestTaskFullInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="taskId" type="ngs:TaskId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetIngestTaskEventListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="eventList" type="ngs:ArrayOfIngestTaskEvent"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CreateIngestTask">
+        <wsdl:part name="parameters" element="v1_0:CreateIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="CreateIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:CreateIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="PauseIngestTask">
+        <wsdl:part name="parameters" element="v1_0:PauseIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="PauseIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:PauseIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ResumeIngestTask">
+        <wsdl:part name="parameters" element="v1_0:ResumeIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="ResumeIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:ResumeIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelIngestTask">
+        <wsdl:part name="parameters" element="v1_0:CancelIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="CancelIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:CancelIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteIngestTask">
+        <wsdl:part name="parameters" element="v1_0:DeleteIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateIngestTask">
+        <wsdl:part name="parameters" element="v1_0:UpdateIngestTask"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateIngestTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:UpdateIngestTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskList">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskList"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskInfo">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskStatus">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventCount">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventCount"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventCountResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventCountResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventMessage">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventMessage"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventMessageResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventMessageResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskListInfo">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskListInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskListInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskListInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventList">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventList"/>
+    </wsdl:message>
+    <wsdl:message name="GetIngestTaskEventListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetIngestTaskEventListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IngestManagement_v1_0">
+        <wsdl:operation name="CreateIngestTask">
+            <wsdl:documentation>
+                CreateIngestTask
+                    Creates a task to ingest the content specified using the parameters
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskParameters (ngs:IngestTaskParameters) specify parameters for this task (uri, contentType, ...). At least uri and contentType shall be specified
+                    taskProperties (ngs:IngestTaskProperties) specify properties for this task (description, creator, ...). All fields are optional.
+
+                Response
+                    taskId (ngs:TaskId) ID of the task created
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "syntax error": if the syntax of either taskParameters or taskProperties is invalid
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateIngestTask"/>
+            <wsdl:output message="tns:CreateIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="PauseIngestTask">
+            <wsdl:documentation>
+                PauseIngestTask
+                    Pauses the specified ingest task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:PauseIngestTask"/>
+            <wsdl:output message="tns:PauseIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResumeIngestTask">
+            <wsdl:documentation>
+                ResumeIngestTask
+                    Resumes an ingest task paused using PauseIngestTask
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:ResumeIngestTask"/>
+            <wsdl:output message="tns:ResumeIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelIngestTask">
+            <wsdl:documentation>
+                CancelIngestTask
+                    Cancels the specified ingest task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:CancelIngestTask"/>
+            <wsdl:output message="tns:CancelIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteIngestTask">
+            <wsdl:documentation>
+                DeleteIngestTask
+                    Removes the specified ingest task from the ingest tasks database
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteIngestTask"/>
+            <wsdl:output message="tns:DeleteIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateIngestTask">
+            <wsdl:documentation>
+                UpdateIngestTask
+                    Updates ingest task properties
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+                    taskProperties (ngs:IngestTaskProperties) specify properties for this task (description, creator, ...). All fields are optional.
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "syntax error": if the syntax of taskProperties is invalid
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:UpdateIngestTask"/>
+            <wsdl:output message="tns:UpdateIngestTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskList">
+            <wsdl:documentation>
+                GetIngestTaskList
+                    Retrieves the list of ingest task present on the unit, with basic information for each task.
+                    To retrieve a list of tasks with more details, see GetIngestTaskListInfo
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    taskList (ngs:ArrayOfIngestTask) list of ingest tasks present on the unit
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskList"/>
+            <wsdl:output message="tns:GetIngestTaskListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskInfo">
+            <wsdl:documentation>
+                GetIngestTaskInfo
+                    Retrieves information about a given task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    taskId (ngs:TaskId) ID of the task
+                    taskParameters (ngs:IngestTaskParameters) the task's parameters provided in CreateIngestTask
+                    taskProperties (ngs:IngestTaskProperties) the task's properties provided in CreateIngestTask or UpdateIngestTask
+                    taskInfos (ngs:IngestTaskInfos) several information about the task: creation, started and finished data, as well as the ip adress
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskInfo"/>
+            <wsdl:output message="tns:GetIngestTaskInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskStatus">
+            <wsdl:documentation>
+                GetIngestTaskStatus
+                    Retrieves the status of a given ingest task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    taskId (ngs:TaskId) ID of the task
+                    taskStatus (ngs:IngestTaskStatus) status of the task: state, number of errors, warnings, ...
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskStatus"/>
+            <wsdl:output message="tns:GetIngestTaskStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventCount">
+            <wsdl:documentation>
+                GetIngestTaskEventCount
+                    Retrieves the number of event/log messages for a given task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    eventCount (xsd:int) the number of log messages for that task
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskEventCount"/>
+            <wsdl:output message="tns:GetIngestTaskEventCountResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventMessage">
+            <wsdl:documentation>
+                GetIngestTaskEventMessage
+                    Retrieves a specific log message for a given task. To retrieve all log messages, see GetIngestTaskEventList.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+                    eventIndex (xsd:int) index of the event. Should be between 0 and eventCount returned by GetIngestTaskEventCount
+
+                Response
+                    eventMessage (ngs:IngestTaskEvent) A log message, with date, severity level, and the actual text message
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskEventMessage"/>
+            <wsdl:output message="tns:GetIngestTaskEventMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskListInfo">
+            <wsdl:documentation>
+                GetIngestTaskListInfo
+                    Retrieves the list of ingest task present on the unit, with full details for each task. To retrieve a list of tasks with only minimal information, see GetIngestTaskList
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    taskList (ngs:ArrayOfIngestTaskFullInfo) list of ingest tasks present on the unit, with full information
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskListInfo"/>
+            <wsdl:output message="tns:GetIngestTaskListInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventList">
+            <wsdl:documentation>
+                GetIngestTaskEventList
+                    Get all events/log messages for a given task. To retrieve a specific log message, see GetIngestTaskEventMessage.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskId (ngs:TaskId) returned by CreateIngestTask or GetIngestTaskList
+
+                Response
+                    eventList (ngs:ArrayOfIngestTaskEvent) a list of log messages
+
+                Faults
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "invalid argument '[X]'": if [X] argument is in wrong format
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetIngestTaskEventList"/>
+            <wsdl:output message="tns:GetIngestTaskEventListResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IngestManagement_v1_0_SOAPBinding" type="tns:IngestManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PauseIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResumeIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateIngestTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventCount">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventMessage">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskListInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetIngestTaskEventList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="IngestManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:IngestManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/IngestManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

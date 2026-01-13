@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:usr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/usermanagement"
+    name="UserManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+        User Management provides functions to List, add or delete a user or a group.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:import schemaLocation="Common.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" />
+            <xsd:import schemaLocation="UserManagement.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/usermanagement" />
+            <xsd:element name="GetUserList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetUserListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="userList" type="usr:ArrayOfUser" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetGroupList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetGroupListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="groupList" type="usr:ArrayOfGroup" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetUserListInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetUserListInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="userListInfo" type="usr:ArrayOfUserInfo" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateUser">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="userId" type="usr:UserId" />
+                        <xsd:element name="groupId" type="usr:GroupId" />
+                        <xsd:element name="userType" type="usr:UserTypeInfo" />
+                        <xsd:element name="password" type="xsd:string" />
+                        <xsd:element name="userFullName" type="xsd:string" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteUser">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="userId" type="usr:UserId" />
+                        <xsd:element name="userType" type="usr:UserTypeInfo" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ModifyUser">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="userId" type="usr:UserId" />
+                        <xsd:element name="userType" type="usr:UserTypeInfo" minOccurs="0" />
+                        <xsd:element name="groupId" type="usr:GroupId" minOccurs="0" />
+                        <xsd:element name="userFullName" type="xsd:string" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ModifyUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetUserInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="userId" type="usr:UserId" />
+                        <xsd:element name="userType" type="usr:UserTypeInfo" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetUserInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="userInfo" type="usr:UserInfo" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ChangeUserPassword">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="userId" type="usr:UserId" />
+                        <xsd:element name="password" type="xsd:string" />
+                        <xsd:element name="userType" type="usr:UserTypeInfo" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ChangeUserPasswordResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetUserList">
+        <wsdl:part name="parameters" element="v1_0:GetUserList" />
+    </wsdl:message>
+    <wsdl:message name="GetUserListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetUserListResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetGroupList">
+        <wsdl:part name="parameters" element="v1_0:GetGroupList" />
+    </wsdl:message>
+    <wsdl:message name="GetGroupListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetGroupListResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetUserListInfo">
+        <wsdl:part name="parameters" element="v1_0:GetUserListInfo" />
+    </wsdl:message>
+    <wsdl:message name="GetUserListInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetUserListInfoResponse" />
+    </wsdl:message>
+    <wsdl:message name="CreateUser">
+        <wsdl:part name="parameters" element="v1_0:CreateUser" />
+    </wsdl:message>
+    <wsdl:message name="CreateUserResponse">
+        <wsdl:part name="parameters" element="v1_0:CreateUserResponse" />
+    </wsdl:message>
+    <wsdl:message name="DeleteUser">
+        <wsdl:part name="parameters" element="v1_0:DeleteUser" />
+    </wsdl:message>
+    <wsdl:message name="DeleteUserResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteUserResponse" />
+    </wsdl:message>
+    <wsdl:message name="ModifyUser">
+        <wsdl:part name="parameters" element="v1_0:ModifyUser" />
+    </wsdl:message>
+    <wsdl:message name="ModifyUserResponse">
+        <wsdl:part name="parameters" element="v1_0:ModifyUserResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetUserInfo">
+        <wsdl:part name="parameters" element="v1_0:GetUserInfo" />
+    </wsdl:message>
+    <wsdl:message name="GetUserInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetUserInfoResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeUserPassword">
+        <wsdl:part name="parameters" element="v1_0:ChangeUserPassword" />
+    </wsdl:message>
+    <wsdl:message name="ChangeUserPasswordResponse">
+        <wsdl:part name="parameters" element="v1_0:ChangeUserPasswordResponse" />
+    </wsdl:message>
+    <wsdl:portType name="UserManagement_v1_0">
+        <wsdl:operation name="GetUserList">
+            <wsdl:documentation>
+                GetUserList
+                    This command provides list of available system and virtual users
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Provides list of users with their user ID, type and last login time on WebUI
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetUserList" />
+            <wsdl:output message="tns:GetUserListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetGroupList">
+            <wsdl:documentation>
+                GetGroupList
+                    This command returns list of available groups
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    List of groups with access rights assigned to them
+
+                Faults
+                    Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetGroupList" />
+            <wsdl:output message="tns:GetGroupListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetUserListInfo">
+            <wsdl:documentation>
+                GetUserListInfo
+                    This comand provides list of available users with full information about them
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Full users list with user ID, group. access rights, user type and descriptive
+                    information about the user
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetUserListInfo" />
+            <wsdl:output message="tns:GetUserListInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="CreateUser">
+            <wsdl:documentation>
+                CreateUser
+                    This command is used to create new user
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    userId unique ID of a new user
+                    groupId group ID the new user is assigned to
+                    userType user type: System or Virtual
+                    password plain text password
+                    userFullName descriptive user name
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "already exist" when user with given user ID already exist
+                    "invalid argument" when invalid argument is provided, for example user type is wrong
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateUser" />
+            <wsdl:output message="tns:CreateUserResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="DeleteUser">
+            <wsdl:documentation>
+                DeleteUser
+                    This command deletes a given user
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    userId ID of a user to be deleted
+                    userType optional parmeter, user type: System or Virtual
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "Permission denied" if user right are not sufficient
+                    "not found" when user to be deleted is not found
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteUser" />
+            <wsdl:output message="tns:DeleteUserResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="ModifyUser">
+            <wsdl:documentation>
+                ModifyUser
+                    This command modifies user parameters
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    userId ID of a user to be modified
+                    userType optional parmeter, new user type: System or Virtual
+                    groupId optional parmeter, new group ID for the user
+                    userFullName optional parmeter, new full name for the user
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "Permission denied" if user right are not sufficient
+                    "not found" when user to be modified is not found
+            </wsdl:documentation>
+            <wsdl:input message="tns:ModifyUser" />
+            <wsdl:output message="tns:ModifyUserResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetUserInfo">
+            <wsdl:documentation>
+                GetUserInfo
+                    Provides information about given user
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    userId user ID for which we want to get information
+
+                Response
+                    userId user ID
+                    groupId group ID the user belongs to
+                    userType type of the user
+                    applicationRights rights assigned to the user
+                    userFullName user full name
+
+                Faults
+                    Permission denied
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetUserInfo" />
+            <wsdl:output message="tns:GetUserInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="ChangeUserPassword">
+            <wsdl:documentation>
+                ChangeUserPassword
+                    This command changes user's password
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login
+                    userId    user ID for which we want to get information
+                    password   new password in plain text
+                    userType   optional parameter, user type: System or Virtual
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    Permission denied
+            </wsdl:documentation>
+            <wsdl:input message="tns:ChangeUserPassword" />
+            <wsdl:output message="tns:ChangeUserPasswordResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UserManagement_v1_0_SOAPBinding" type="tns:UserManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetUserList">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetGroupList">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetUserListInfo">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CreateUser">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteUser">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ModifyUser">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetUserInfo">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ChangeUserPassword">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UserManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:UserManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/UserManagement" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:log="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/logmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LogManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Log Management provides functions to create and download log.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="LogManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/logmanagement"/>
+            <xsd:element name="CreateLogSnapshot">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="databaseId" type="log:DatabaseId"/>
+                        <xsd:element name="filters" type="log:LogFiltering"/>
+                        <xsd:element name="title" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateLogSnapshotResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="snapshotId" type="log:LogSnapshotId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLogSnapshotList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLogSnapshotListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="snapshotList" type="log:ArrayOfLogSnapshot"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteLogSnapshot">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="snapshotId" type="log:LogSnapshotId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteLogSnapshotResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="QueryLog">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="databaseId" type="log:DatabaseId"/>
+                        <xsd:element name="offset" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="count" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="descendingOrder" type="xsd:boolean" minOccurs="0" default="true"/>
+                        <xsd:element name="filters" type="log:QueryLogFiltering"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="QueryLogResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="recordList" type="log:ArrayOfLogRecord"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CreateLogSnapshot">
+        <wsdl:part name="parameters" element="v1_0:CreateLogSnapshot"/>
+    </wsdl:message>
+    <wsdl:message name="CreateLogSnapshotResponse">
+        <wsdl:part name="parameters" element="v1_0:CreateLogSnapshotResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetLogSnapshotList">
+        <wsdl:part name="parameters" element="v1_0:GetLogSnapshotList"/>
+    </wsdl:message>
+    <wsdl:message name="GetLogSnapshotListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetLogSnapshotListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteLogSnapshot">
+        <wsdl:part name="parameters" element="v1_0:DeleteLogSnapshot"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteLogSnapshotResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteLogSnapshotResponse"/>
+    </wsdl:message>
+    <wsdl:message name="QueryLog">
+        <wsdl:part name="parameters" element="v1_0:QueryLog"/>
+    </wsdl:message>
+    <wsdl:message name="QueryLogResponse">
+        <wsdl:part name="parameters" element="v1_0:QueryLogResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="LogManagement_v1_0">
+        <wsdl:operation name="CreateLogSnapshot">
+            <wsdl:documentation>
+                CreateLogSnapshot
+                    This command starts an internal task that generates log file in SMPTE format
+
+                Arguments
+                    sessionId  returned by SessionManagement/Login
+                    databaseId System (Performance Logs) and SecurityManager (Security Logs) options are supported
+                    filters used to filer range of returned log entires
+
+                Response
+                    Log generation task id
+
+                Faults
+                    "Internal server error"  : If system error occured
+                    "Invalid argument"       : If argument is incorrect
+                    "Not authenticated"      : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateLogSnapshot"/>
+            <wsdl:output message="tns:CreateLogSnapshotResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetLogSnapshotList">
+            <wsdl:documentation>
+                GetLogSnapshotList
+                    Used to get list of log generation tasks and their status
+                    Once log generation task job completes it generates a log snapshot file stored on the system.
+                    The log snapshot is available via the URL :
+                    http://{unit_addr}/dc/dcp/rest/v1/FileManagement/report/{filename}
+                    More information: Check FileManagement Rest service.
+
+                Arguments
+                    sessionId  returned by SessionManagement/Login
+
+                Response
+                    List of log generation tasks and their status
+
+                Faults
+                    "Internal server error"  : If system error occured
+                    "Invalid argument"       : If argument is incorrect
+                    "Not authenticated"      : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetLogSnapshotList"/>
+            <wsdl:output message="tns:GetLogSnapshotListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteLogSnapshot">
+            <wsdl:documentation>
+                DeleteLogSnapshot
+                    Delete existing log generation task and associated log file
+
+                Arguments
+                    sessionId  returned by SessionManagement/Login
+                    snapshotId  id of task to be removed
+
+                Response
+                    Confirmation of deletion
+
+                Faults
+                    "Internal server error"  : If system error occured
+                    "Invalid argument"       : If argument is incorrect
+                    "Not authenticated"      : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteLogSnapshot"/>
+            <wsdl:output message="tns:DeleteLogSnapshotResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="QueryLog">
+            <wsdl:documentation>
+                QueryLog
+                    Use this command to download performance logs from the unit
+
+                Arguments
+                    sessionId  returned by SessionManagement/Login
+                    databaseId Only System option is supported
+                    filters used to filer range of returned log entires
+
+                Response
+                    performance log entries
+
+                Faults
+                    "Internal server error"  : If system error occured
+                    "Invalid argument"       : If argument is incorrect
+                    "Not authenticated"      : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:QueryLog"/>
+            <wsdl:output message="tns:QueryLogResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LogManagement_v1_0_SOAPBinding" type="tns:LogManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateLogSnapshot">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLogSnapshotList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteLogSnapshot">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="QueryLog">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="LogManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:LogManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/LogManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

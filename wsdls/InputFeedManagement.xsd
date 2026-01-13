@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/inputfeedmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/inputfeedmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="InputFeedId">
+		<xsd:restriction base="xsd:unsignedInt"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PidType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="PCR"/>
+			<xsd:enumeration value="PSI"/>
+			<xsd:enumeration value="Audio"/>
+			<xsd:enumeration value="Video"/>
+			<xsd:enumeration value="Subtitle"/>
+			<xsd:enumeration value="Misc"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="InputDeviceType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Satellite"/>
+			<xsd:enumeration value="ASI"/>
+			<xsd:enumeration value="File"/>
+			<xsd:enumeration value="Network"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SatelliteModulation">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="QPSK"/>
+			<xsd:enumeration value="QAM_16"/>
+			<xsd:enumeration value="QAM_32"/>
+			<xsd:enumeration value="QAM_64"/>
+			<xsd:enumeration value="QAM_128"/>
+			<xsd:enumeration value="QAM_256"/>
+			<xsd:enumeration value="QAM_AUTO"/>
+			<xsd:enumeration value="VSB_8"/>
+			<xsd:enumeration value="VSB_16"/>
+			<xsd:enumeration value="PSK_8"/>
+			<xsd:enumeration value="APSK_16"/>
+			<xsd:enumeration value="APSK_32"/>
+			<xsd:enumeration value="DQPSK"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SatellitePolarity">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="None"/>
+			<xsd:enumeration value="Horizontal"/>
+			<xsd:enumeration value="Vertical"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SatelliteInversion">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Auto"/>
+			<xsd:enumeration value="Off"/>
+			<xsd:enumeration value="On"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SatelliteTone">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Off"/>
+			<xsd:enumeration value="On"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SateliteFEC">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="None"/>
+			<xsd:enumeration value="Auto"/>
+			<xsd:enumeration value="1/2"/>
+			<xsd:enumeration value="2/3"/>
+			<xsd:enumeration value="3/4"/>
+			<xsd:enumeration value="3/5"/>
+			<xsd:enumeration value="4/5"/>
+			<xsd:enumeration value="5/6"/>
+			<xsd:enumeration value="6/7"/>
+			<xsd:enumeration value="7/8"/>
+			<xsd:enumeration value="8/9"/>
+			<xsd:enumeration value="9/10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SateliteDisceq">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="PortA"/>
+			<xsd:enumeration value="PortB"/>
+			<xsd:enumeration value="PortC"/>
+			<xsd:enumeration value="PortD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:simpleType name="SatelliteScramblingKeyType">
+        <xsd:restriction base="xsd:token">
+            <xsd:enumeration value="Biss-1"/>
+            <xsd:enumeration value="Biss-E"/>
+            <xsd:enumeration value="Injected-ID"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SatelliteScramblingActId">
+        <xsd:restriction base="xsd:token">
+            <xsd:enumeration value="Injected"/>
+            <xsd:enumeration value="Buried"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="SatelliteScramblingKeyBiss1">
+        <xsd:sequence>
+            <xsd:element name="sid" type="xsd:unsignedInt"/>
+            <xsd:element name="sw" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SatelliteScramblingKeyBissE">
+        <xsd:sequence>
+            <xsd:element name="sid" type="xsd:unsignedInt"/>
+            <xsd:element name="actid" type="ns:SatelliteScramblingActId"/>
+            <xsd:element name="sw" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SatelliteScramblingKeyInjectedID">
+        <xsd:sequence>
+            <xsd:element name="sw" type="xsd:string"/>
+            </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SatelliteScramblingKey">
+        <xsd:sequence>
+            <xsd:element name="type"  type="ns:SatelliteScramblingKeyType"/>
+            <xsd:choice>
+                <xsd:element name="biss-1" type="ns:SatelliteScramblingKeyBiss1"/>
+                <xsd:element name="biss-e" type="ns:SatelliteScramblingKeyBissE"/>
+                <xsd:element name="injected-id" type="ns:SatelliteScramblingKeyInjectedID" minOccurs="0" maxOccurs="1"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ArraySatelliteScramblingKey">
+        <xsd:sequence>
+            <xsd:element name="key" type="ns:SatelliteScramblingKey" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="InputFeedConfigSatellite">
+		<xsd:sequence>
+			<xsd:element name="modulation" type="ns:SatelliteModulation"/>
+			<xsd:element name="frequency" type="xsd:unsignedInt"/>
+			<xsd:element name="LOfrequency" type="xsd:unsignedInt"/>
+			<xsd:element name="fec" type="xsd:string"/>
+			<xsd:element name="disceq" type="ns:SateliteDisceq"/>
+			<xsd:element name="symbolRate" type="xsd:unsignedInt"/>
+			<xsd:element name="polarity" type="ns:SatellitePolarity"/>
+			<xsd:element name="tone" type="ns:SatelliteTone"/>
+			<xsd:element name="inversion" type="ns:SatelliteInversion"/>
+            <xsd:element name="keys" type="ns:ArraySatelliteScramblingKey"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedConfigNetwork">
+		<xsd:sequence>
+			<xsd:element name="ipAddress" type="xsd:string"/>
+			<xsd:element name="port" type="xsd:unsignedInt"/>
+			<xsd:element name="interface" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedConfigFile">
+		<xsd:sequence>
+			<xsd:element name="path" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedConfig">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="annotationText" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="enabled" type="xsd:boolean"/>
+			<xsd:choice>
+				<xsd:element name="satellite" type="ns:InputFeedConfigSatellite"/>
+				<xsd:element name="network" type="ns:InputFeedConfigNetwork"/>
+				<xsd:element name="file" type="ns:InputFeedConfigFile"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedInfo">
+		<xsd:sequence>
+			<xsd:element name="type" type="ns:InputDeviceType"/>
+			<xsd:element name="id" type="ns:InputFeedId"/>
+			<xsd:element name="deviceName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="deviceDescription" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="config" type="ns:InputFeedConfig"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfInputFeedInfo">
+		<xsd:sequence>
+			<xsd:element name="inputFeed" type="ns:InputFeedInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputElement">
+		<xsd:sequence>
+			<xsd:element name="pid" type="xsd:unsignedInt"/>
+			<xsd:element name="typeId" type="xsd:unsignedInt"/>
+			<xsd:element name="type" type="ns:PidType"/>
+			<xsd:element name="annotationText" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfInputElement">
+		<xsd:sequence>
+			<xsd:element name="element" type="ns:InputElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PmtVersion">
+		<xsd:sequence>
+			<xsd:element name="version" type="xsd:string"/>
+			<xsd:element name="pcrId" type="xsd:unsignedInt"/>
+			<xsd:element name="elementList" type="ns:ArrayOfInputElement"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfPmtVersion">
+		<xsd:sequence>
+			<xsd:element name="pmtVersion" type="ns:PmtVersion" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PmtElement">
+		<xsd:sequence>
+			<xsd:element name="pid" type="xsd:unsignedInt"/>
+			<xsd:element name="programName" type="xsd:string"/>
+			<xsd:element name="providerName" type="xsd:string"/>
+			<xsd:element name="pmtVersionList" type="ns:ArrayOfPmtVersion"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfPmtElement">
+		<xsd:sequence>
+			<xsd:element name="pmt" type="ns:PmtElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PatElement">
+		<xsd:sequence>
+			<xsd:element name="transportId" type="xsd:unsignedInt"/>
+			<xsd:element name="version" type="xsd:string"/>
+			<xsd:element name="pmtList" type="ns:ArrayOfPmtElement"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfPatElement">
+		<xsd:sequence>
+			<xsd:element name="pat" type="ns:PatElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedStatusSatellite">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedStatusNetwork">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedStatusFile">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="InputFeedStatus">
+		<xsd:sequence>
+			<xsd:element name="enabled" type="xsd:boolean"/>
+			<xsd:element name="running" type="xsd:boolean"/>
+			<xsd:element name="signalLock" type="xsd:boolean"/>
+			<xsd:element name="signalPresence" type="xsd:boolean"/>
+			<xsd:element name="status" type="com:WorkingStatusInfo"/>
+			<xsd:choice>
+				<xsd:element name="satellite" type="ns:InputFeedStatusSatellite"/>
+				<xsd:element name="network" type="ns:InputFeedStatusNetwork"/>
+				<xsd:element name="file" type="ns:InputFeedStatusFile"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

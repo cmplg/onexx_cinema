@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:ifd="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/inputfeedmanagement" name="InputFeedManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Input Feed Management provides functions to configure Input Feed stream.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="InputFeedManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/inputfeedmanagement"/>
+			<xsd:element name="GetInputFeedList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetInputFeedListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="inputFeedList" type="ifd:ArrayOfInputFeedInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ConfigureInputFeed">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="feedId" type="ifd:InputFeedId"/>
+						<xsd:element name="config" type="ifd:InputFeedConfig"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ConfigureInputFeedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetInputFeedProgramList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="feedId" type="ifd:InputFeedId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetInputFeedProgramListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="patList" type="ifd:ArrayOfPatElement"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetInputFeedStatus">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="feedId" type="ifd:InputFeedId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetInputFeedStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="feedStatus" type="ifd:InputFeedStatus"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetInputFeedList">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedList"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFeedListResponse">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ConfigureInputFeed">
+		<wsdl:part name="parameters" element="v1_0:ConfigureInputFeed"/>
+	</wsdl:message>
+	<wsdl:message name="ConfigureInputFeedResponse">
+		<wsdl:part name="parameters" element="v1_0:ConfigureInputFeedResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFeedProgramList">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedProgramList"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFeedProgramListResponse">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedProgramListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFeedStatus">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedStatus"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFeedStatusResponse">
+		<wsdl:part name="parameters" element="v1_0:GetInputFeedStatusResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="InputFeedManagement_v1_0">
+		<wsdl:operation name="GetInputFeedList">
+			<wsdl:documentation>
+                 GetInputFeedList
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetInputFeedList"/>
+			<wsdl:output message="tns:GetInputFeedListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ConfigureInputFeed">
+			<wsdl:documentation>
+                 ConfigureInputFeed
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:ConfigureInputFeed"/>
+			<wsdl:output message="tns:ConfigureInputFeedResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFeedProgramList">
+			<wsdl:documentation>
+                 GetInputFeedProgramList
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetInputFeedProgramList"/>
+			<wsdl:output message="tns:GetInputFeedProgramListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFeedStatus">
+			<wsdl:documentation>
+                 GetInputFeedStatus
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetInputFeedStatus"/>
+			<wsdl:output message="tns:GetInputFeedStatusResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="InputFeedManagement_v1_0_SOAPBinding" type="tns:InputFeedManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetInputFeedList">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ConfigureInputFeed">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFeedProgramList">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFeedStatus">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="InputFeedManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:InputFeedManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/InputFeedManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

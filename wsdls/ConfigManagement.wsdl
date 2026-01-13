@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:cfg="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/configmanagement" name="ConfigManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Config Management provides functions to handle configuration file.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="ConfigManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/configmanagement"/>
+            <xsd:element name="GetConfigurationFileContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="id" type="cfg:ConfigurationFileIdentifierEnum"/>
+                        <xsd:element name="channel" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetConfigurationFileContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetConfigurationFileContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="id" type="cfg:ConfigurationFileIdentifierEnum"/>
+                        <xsd:element name="channel" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetConfigurationFileContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteConfigurationFile">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="id" type="cfg:ConfigurationFileIdentifierEnum"/>
+                        <xsd:element name="channel" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteConfigurationFileResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetConfigurationFileContent">
+        <wsdl:part name="parameters" element="v1_0:GetConfigurationFileContent"/>
+    </wsdl:message>
+    <wsdl:message name="GetConfigurationFileContentResponse">
+        <wsdl:part name="parameters" element="v1_0:GetConfigurationFileContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetConfigurationFileContent">
+        <wsdl:part name="parameters" element="v1_0:SetConfigurationFileContent"/>
+    </wsdl:message>
+    <wsdl:message name="SetConfigurationFileContentResponse">
+        <wsdl:part name="parameters" element="v1_0:SetConfigurationFileContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteConfigurationFile">
+        <wsdl:part name="parameters" element="v1_0:DeleteConfigurationFile"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteConfigurationFileResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteConfigurationFileResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ConfigManagement_v1_0">
+        <wsdl:operation name="GetConfigurationFileContent">
+            <wsdl:documentation>
+                 GetConfigurationFileContent
+                    Return the configuration file content in base64.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    id (cfg:ConfigurationFileIdentifierEnum) Configuration File Identifier
+                    [channel] (integer)  Select a specific channel of the configuration File (default: 0)
+
+                 Response
+                    content (base64Binary) Configuration file content in Base64
+
+                 Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetConfigurationFileContent"/>
+            <wsdl:output message="tns:GetConfigurationFileContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetConfigurationFileContent">
+            <wsdl:documentation>
+                 SetConfigurationFileContent
+                    Set the configuration file content in base64.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    id (cfg:ConfigurationFileIdentifierEnum) Configuration File Identifier
+                    [channel] (integer)  Select a specific channel of the configuration File (default: 0)
+                    content (base64Binary) Configuration file content in Base64
+
+                 Response
+                    return nothing on success.
+
+                 Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetConfigurationFileContent"/>
+            <wsdl:output message="tns:SetConfigurationFileContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteConfigurationFile">
+            <wsdl:documentation>
+                 DeleteConfigurationFile
+                    Delete a configuration file.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    id (cfg:ConfigurationFileIdentifierEnum) Configuration File Identifier
+                    [channel] (integer)  Select a specific channel of the configuration File (default: 0)
+
+                 Response
+                    return nothing on success.
+
+                 Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteConfigurationFile"/>
+            <wsdl:output message="tns:DeleteConfigurationFileResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ConfigManagement_v1_0_SOAPBinding" type="tns:ConfigManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetConfigurationFileContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetConfigurationFileContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteConfigurationFile">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ConfigManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:ConfigManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/ConfigManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

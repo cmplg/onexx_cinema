@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:tkr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/tkr" name="TKR_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                TKR provides functions to run a Tkr task.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="TKR.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/tkr"/>
+            <xsd:element name="CreateTkrTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="url" type="xsd:anyURI">
+                        <!-- the URL as indicated in the AnnotationText of the CPL -->
+                        </xsd:element>
+                        <xsd:element name="cplId" type="com:Uuid" minOccurs="0">
+                        <!-- if this property is defined, then only the KDM targeted for this CPL will be ingested; all other KDM will be ignored. If not defined, all valid retrieved KDMs are ingested.-->
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateTkrTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="tkrId" type="tkr:TkrId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTkrTaskList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="cplId" type="com:Uuid" minOccurs="0">
+                        <!-- optional filter element to restrict the list to a cpl Id -->
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTkrTaskListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="tkrItemList" type="tkr:ArrayOfTkrTaskItem"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelTkrTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="tkrId" type="tkr:TkrId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelTkrTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTkrTaskInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="tkrId" type="tkr:TkrId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTkrTaskInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="tkrTask" type="tkr:TkrTaskInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CreateTkrTask">
+        <wsdl:part name="parameters" element="v1_0:CreateTkrTask"/>
+    </wsdl:message>
+    <wsdl:message name="CreateTkrTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:CreateTkrTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTkrTaskList">
+        <wsdl:part name="parameters" element="v1_0:GetTkrTaskList"/>
+    </wsdl:message>
+    <wsdl:message name="GetTkrTaskListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetTkrTaskListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelTkrTask">
+        <wsdl:part name="parameters" element="v1_0:CancelTkrTask"/>
+    </wsdl:message>
+    <wsdl:message name="CancelTkrTaskResponse">
+        <wsdl:part name="parameters" element="v1_0:CancelTkrTaskResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTkrTaskInfo">
+        <wsdl:part name="parameters" element="v1_0:GetTkrTaskInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetTkrTaskInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetTkrTaskInfoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="TKR_v1_0">
+        <wsdl:operation name="CreateTkrTask">
+            <wsdl:documentation>
+                CreateTkrTask
+                    Create a Theater Key Retrieval task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    url (xsd:anyURI) the URL as indicated in the AnnotationText of the CPL
+                    cplId (optional com:Uuid) if defined, only the KDM targeted for this CPL will be ingested, if not defined, all valid retrieved KDMs are ingested
+
+                Response
+                    tkrId (tkr:TkrId) ID of created TKR task
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Invalid argument"      : If cplId has incorrect UUID syntax
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateTkrTask"/>
+            <wsdl:output message="tns:CreateTkrTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTkrTaskList">
+            <wsdl:documentation>
+                GetTkrTaskList
+                    Get the Theater Key Retrieval task list
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    cplId (optional com:Uuid) if defined, restrict the list to only a provided CPL UUID
+
+                Response
+                    tkrItemList (tkr:ArrayOfTkrTaskItem) list of TKR tasks
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Invalid argument"      : If cplId has incorrect UUID syntax
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetTkrTaskList"/>
+            <wsdl:output message="tns:GetTkrTaskListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelTkrTask">
+            <wsdl:documentation>
+                CancelTkrTask
+                    Cancel a Theater Key Retrieval task
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    tkrId (tkr:TkrId) ID of TKR task to cancel
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Not found"             : If the TKR task with provided ID does not exist
+            </wsdl:documentation>
+            <wsdl:input message="tns:CancelTkrTask"/>
+            <wsdl:output message="tns:CancelTkrTaskResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTkrTaskInfo">
+            <wsdl:documentation>
+                GetTkrTaskInfo
+                    Get the Theater Key Retrieval task info
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    tkrId (tkr:TkrId) ID of TKR task to get the info of
+
+                Response
+                    tkrTask (tkr:TkrTaskInfo) info of selected TKR task
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Not found"             : If the TKR task with provided ID does not exist
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetTkrTaskInfo"/>
+            <wsdl:output message="tns:GetTkrTaskInfoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TKR_v1_0_SOAPBinding" type="tns:TKR_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateTkrTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTkrTaskList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelTkrTask">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTkrTaskInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TKR_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:TKR_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/TKR"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

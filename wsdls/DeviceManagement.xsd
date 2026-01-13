@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dmgt="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/devicemanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/devicemanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+
+  <xsd:simpleType name="DeviceType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="ExternalStorage"/>
+      <xsd:enumeration value="SecurityManager"/>
+      <xsd:enumeration value="AudioProcessor"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DeviceCertificateType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="SM"/>
+      <xsd:enumeration value="SPB"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DeviceActionType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="SetNetworkInterface"/>
+      <xsd:enumeration value="GetNetworkInterface"/>
+      <xsd:enumeration value="Reboot"/>
+      <xsd:enumeration value="Shutdown"/>
+      <xsd:enumeration value="GetCertificate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="DeviceCertificate">
+    <xsd:sequence>
+      <xsd:element name="kind" type="dmgt:DeviceCertificateType"/>
+      <xsd:element name="content" type="xsd:base64Binary"  minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DeviceNetworkInterface">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="dhcp" type="xsd:boolean"/>
+      <xsd:element name="hostname" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ipAddress" type="com:IpAddress" minOccurs="0"/>
+      <xsd:element name="macAddress" type="com:IpAddress" minOccurs="0"/>
+      <xsd:element name="netmask" type="com:IpAddress" minOccurs="0"/>
+      <xsd:element name="gateway" type="com:IpAddress" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DeviceActionParameters">
+    <xsd:choice>
+      <xsd:element name="networkIf" type="dmgt:DeviceNetworkInterface"/>
+      <xsd:element name="certificate" type="dmgt:DeviceCertificate"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="DeviceActionResults">
+    <xsd:choice>
+      <xsd:element name="networkIf" type="dmgt:DeviceNetworkInterface"/>
+      <xsd:element name="certificate" type="dmgt:DeviceCertificate"/>
+    </xsd:choice>
+  </xsd:complexType>
+</xsd:schema>

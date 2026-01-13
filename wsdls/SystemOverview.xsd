@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ovr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systemoverview" xmlns:sct="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systemoverview" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" schemaLocation="ShowControl.xsd"/>
+	<xsd:complexType name="PlaybackInfo">
+		<xsd:sequence>
+			<xsd:element name="splTitle" type="xsd:string"/>
+			<xsd:element name="stateInfo" type="sct:ShowStateInfo"/>
+			<xsd:element name="splPosition" type="com:Seconds"/>
+			<xsd:element name="splDuration" type="com:Seconds"/>
+			<xsd:element name="cplTitle" type="xsd:string"/>
+			<xsd:element name="recovery" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StorageInfo">
+		<xsd:sequence>
+			<xsd:element name="capacity" type="xsd:long"/>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+			<xsd:element name="fullness" type="com:Percentage"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ScheduleInfo">
+		<xsd:sequence>
+			<xsd:element name="showTitle" type="xsd:string"/>
+			<xsd:element name="showDuration" type="com:Seconds"/>
+			<xsd:element name="date" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfScheduleInfo">
+		<xsd:sequence>
+			<xsd:element name="scheduleInfo" type="ovr:ScheduleInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="PowerStateInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="On"/>
+			<xsd:enumeration value="Off"/>
+			<xsd:enumeration value="Standby"/>
+			<xsd:enumeration value="StandbyInProgress"/>
+			<xsd:enumeration value="RebootInProgress"/>
+			<xsd:enumeration value="ShutdownInProgress"/>
+			<xsd:enumeration value="WakeupInProgress"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ComponentStatusInfo">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="status" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfComponentStatusInfo">
+		<xsd:sequence>
+			<xsd:element name="component" type="ovr:ComponentStatusInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LampStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="On"/>
+			<xsd:enumeration value="Off"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MediaBlockType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="SM"/>
+			<xsd:enumeration value="LD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DowserStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Open"/>
+			<xsd:enumeration value="Closed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+  <xsd:simpleType name="ChaseRefInfo">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="primary"/>
+      <xsd:enumeration value="secondary"/>
+      <xsd:enumeration value="disabled"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LiveStatusInfo">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="Unknown"/>
+      <xsd:enumeration value="Running"/>
+      <xsd:enumeration value="Acquiring"/>
+      <xsd:enumeration value="Idling"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ChaseLockInfo">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="locked"/>
+      <xsd:enumeration value="missing"/>
+      <xsd:enumeration value="invalid"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+	<xsd:complexType name="ProjectorInfo">
+		<xsd:sequence>
+			<xsd:element name="status" type="com:WorkingStatusInfo"/>
+			<xsd:element name="dowser" type="ovr:DowserStatusInfo"/>
+			<xsd:element name="lamp" type="ovr:LampStatusInfo"/>
+			<xsd:element name="activeChannel" type="xsd:string"  minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OverviewStatusInfo">
+		<xsd:sequence>
+			<xsd:element name="hardware" type="com:WorkingStatusInfo"/>
+			<xsd:element name="securityManager" type="com:WorkingStatusInfo"/>
+			<xsd:element name="mediablockType" type="ovr:MediaBlockType" minOccurs="0"/>
+            <xsd:element name="rebootRequired" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SchedulerInfo">
+		<xsd:sequence>
+			<xsd:element name="service" type="com:ServiceStatusInfo"/>
+			<xsd:element name="nextScheduleList" type="ovr:ArrayOfScheduleInfo" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestInfo">
+		<xsd:sequence>
+			<xsd:element name="activeTasks" type="xsd:boolean"/>
+			<xsd:element name="psdWarning" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="psdError" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="driveWithMultipleCPL" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PowerInfo">
+		<xsd:sequence>
+			<xsd:element name="powerState" type="ovr:PowerStateInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CountersInfo">
+		<xsd:sequence>
+			<xsd:element name="notificationUpdateCounter" type="xsd:unsignedLong"/>
+			<xsd:element name="assetsUpdateCounter" type="xsd:unsignedLong"/>
+			<xsd:element name="kdmUpdateCounter" type="xsd:unsignedLong"/>
+			<xsd:element name="splUpdateCounter" type="xsd:unsignedLong"/>
+			<xsd:element name="dlmUpdateCounter" type="xsd:unsignedLong"/>
+			<xsd:element name="macroUpdateCounter" type="xsd:unsignedLong"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LiveInfo">
+		<xsd:sequence>
+			<xsd:element name="active" type="xsd:boolean"/>
+			<xsd:element name="lock" type="xsd:boolean"/>
+			<xsd:element name="status" type="ovr:LiveStatusInfo" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RecordInfo">
+		<xsd:sequence>
+			<xsd:element name="active" type="xsd:boolean"/>
+			<xsd:element name="lock" type="xsd:boolean"/>
+			<xsd:element name="recordId" type="com:Uuid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ChaseInfo">
+		<xsd:sequence>
+			<xsd:element name="active" type="xsd:boolean"/>
+			<xsd:element name="status" type="com:WorkingStatusInfo"  minOccurs="0"/>
+			<xsd:element name="ref" type="ovr:ChaseRefInfo"/>
+			<xsd:element name="lock" type="ovr:ChaseLockInfo"/>
+			<xsd:element name="connected" type="com:WorkingStatusInfo" minOccurs="0"/>
+			<xsd:element name="sync" type="com:WorkingStatusInfo" minOccurs="0"/>
+			<xsd:element name="hosts" type="xsd:string"  minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExportInfo">
+		<xsd:sequence>
+			<xsd:element name="activeTasks" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  <xsd:complexType name="AudioInfo">
+    <xsd:sequence>
+      <xsd:element name="mute" type="xsd:int"/>
+      <xsd:element name="fader" type="xsd:int"/>
+      <xsd:element name="monitor" type="xsd:string"/>
+      <xsd:element name="microphone_volume" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="microphone_defined" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="microphone_enabled" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="bitstream_sample_rate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="channel_mode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="audio_type" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="input" type="xsd:string" />
+      <xsd:element name="macro_name" type="xsd:string" />
+      <xsd:element name="delay" type="xsd:int" />
+      <xsd:element name="surround_processing" type="xsd:string" />
+      <xsd:element name="derive_lfe" type="xsd:string"/>
+      <xsd:element name="mic_processing" type="xsd:string"/>
+      <xsd:element name="eq_preset" type="xsd:string" />
+      <xsd:element name="comment" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LockSystemInfo">
+    <xsd:sequence>
+      <xsd:element name="lock" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

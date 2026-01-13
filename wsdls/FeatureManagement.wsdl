@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:fmn="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/featuremanagement" name="FeatureManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Config Management provides functions to get Features information.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="FeatureManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/featuremanagement"/>
+			<xsd:element name="GetFeatureInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="feature" type="fmn:FeatureName"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetFeatureInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="infoList" type="fmn:ArrayOfFeatureInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RefreshFeatureInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="feature" type="fmn:FeatureName"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RefreshFeatureInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetFeatureInfo">
+		<wsdl:part name="parameters" element="v1_0:GetFeatureInfo"/>
+	</wsdl:message>
+	<wsdl:message name="GetFeatureInfoResponse">
+		<wsdl:part name="parameters" element="v1_0:GetFeatureInfoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RefreshFeatureInfo">
+		<wsdl:part name="parameters" element="v1_0:RefreshFeatureInfo"/>
+	</wsdl:message>
+	<wsdl:message name="RefreshFeatureInfoResponse">
+		<wsdl:part name="parameters" element="v1_0:RefreshFeatureInfoResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="FeatureManagement_v1_0">
+		<wsdl:operation name="GetFeatureInfo">
+			<wsdl:documentation>
+                 GetFeatureInfo
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetFeatureInfo"/>
+			<wsdl:output message="tns:GetFeatureInfoResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="RefreshFeatureInfo">
+			<wsdl:documentation>
+                 RefreshFeatureInfo
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+                    Permission denied
+			</wsdl:documentation>
+			<wsdl:input message="tns:RefreshFeatureInfo"/>
+			<wsdl:output message="tns:RefreshFeatureInfoResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FeatureManagement_v1_0_SOAPBinding" type="tns:FeatureManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetFeatureInfo">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RefreshFeatureInfo">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FeatureManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:FeatureManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/FeatureManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

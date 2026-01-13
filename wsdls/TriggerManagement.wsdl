@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:trg="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/triggermanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="TriggerManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Trigger Management provides functions to List trigger.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="TriggerManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/triggermanagement"/>
+            <xsd:element name="GetTriggerList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTriggerListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="triggerList" type="com:ArrayOfUuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTriggerInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="uuid" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetTriggerInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="triggerInfo" type="trg:TriggerInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetTriggerList">
+        <wsdl:part name="parameters" element="v1_0:GetTriggerList"/>
+    </wsdl:message>
+    <wsdl:message name="GetTriggerListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetTriggerListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTriggerInfo">
+        <wsdl:part name="parameters" element="v1_0:GetTriggerInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetTriggerInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetTriggerInfoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="TriggerManagement_v1_0">
+        <wsdl:operation name="GetTriggerList">
+            <wsdl:documentation>
+                GetTriggerList
+                    Gets the list of trigger UUIDs available on the server
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    triggerList (com:ArrayOfUuid) list of available trigger UUIDs
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated" : If inactive/bad sessionID passed
+                    "Permission denied" : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetTriggerList"/>
+            <wsdl:output message="tns:GetTriggerListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTriggerInfo">
+            <wsdl:documentation>
+                GetTriggerInfo
+                    Gets the trigger information
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    uuid (com:Uuid) UUID of requested trigger
+
+                Response
+                    triggerInfo (mcr:TriggerInfo) information on requested trigger
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated" : If inactive/bad sessionID passed
+                    "Permission denied" : If user not privileged to perform operation
+                    "Invalid argument" : If provided UUID is invalid
+                    "Not found" : If trigger with provided UUID is not found
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetTriggerInfo"/>
+            <wsdl:output message="tns:GetTriggerInfoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TriggerManagement_v1_0_SOAPBinding" type="tns:TriggerManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetTriggerList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTriggerInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TriggerManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:TriggerManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/TriggerManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

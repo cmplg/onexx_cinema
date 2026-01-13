@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:bck="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup" xmlns:exp="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/exportmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ExportManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Export Management provides functions to export content to another location.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="ExportManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/exportmanagement"/>
+			<xsd:element name="GetExportLocations">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="dataType" type="exp:DataType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetExportLocationsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="locations" type="exp:ArrayOfExportLocation"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetExportStatus">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetExportStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="tasks" type="exp:ArrayOfExportTasks"/>
+						<xsd:element name="status" type="exp:State"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ExportData">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="type" type="exp:DataType"/>
+						<xsd:element name="name" type="xsd:string"/>
+						<xsd:element name="exportURI" type="exp:LocationURI"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ExportDataResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="identifier" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="CancelExport">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="identifier" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CancelExportResponse">
+				<xsd:complexType>
+					<xsd:sequence/>
+				</xsd:complexType>
+			</xsd:element>
+
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetExportLocations">
+		<wsdl:part name="parameters" element="v1_0:GetExportLocations"/>
+	</wsdl:message>
+	<wsdl:message name="GetExportLocationsResponse">
+		<wsdl:part name="parameters" element="v1_0:GetExportLocationsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetExportStatus">
+		<wsdl:part name="parameters" element="v1_0:GetExportStatus"/>
+	</wsdl:message>
+	<wsdl:message name="GetExportStatusResponse">
+		<wsdl:part name="parameters" element="v1_0:GetExportStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ExportData">
+		<wsdl:part name="parameters" element="v1_0:ExportData"/>
+	</wsdl:message>
+	<wsdl:message name="ExportDataResponse">
+		<wsdl:part name="parameters" element="v1_0:ExportDataResponse"/>
+	</wsdl:message>
+	<wsdl:message name="CancelExport">
+		<wsdl:part name="parameters" element="v1_0:CancelExport"/>
+	</wsdl:message>
+	<wsdl:message name="CancelExportResponse">
+		<wsdl:part name="parameters" element="v1_0:CancelExportResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ExportManagement_v1_0">
+		<wsdl:operation name="GetExportLocations">
+			<wsdl:documentation>
+				GetExportLocations
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetExportLocations"/>
+			<wsdl:output message="tns:GetExportLocationsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetExportStatus">
+			<wsdl:documentation>
+				GetExportStatus
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetExportStatus"/>
+			<wsdl:output message="tns:GetExportStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ExportData">
+			<wsdl:documentation>
+				ExportData
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:ExportData"/>
+			<wsdl:output message="tns:ExportDataResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CancelExport">
+			<wsdl:documentation>
+				CancelExport
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:CancelExport"/>
+			<wsdl:output message="tns:CancelExportResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ExportManagement_v1_0_SOAPBinding" type="tns:ExportManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetExportLocations">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetExportStatus">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ExportData">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CancelExport">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ExportManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:ExportManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/ExportManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:scn="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestscan" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IngestScan_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Ingest Scan provides functions to list content present in different location.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="IngestScan.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestscan"/>
+            <xsd:element name="StartScan">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="uri" type="xsd:anyURI"/>
+                        <!-- maximum number of child folders to scan !-->
+                        <!-- default value is 5 !-->
+                        <xsd:element name="maxDepth" type="xsd:int" minOccurs="0"/>
+                        <!-- list of asset type to be checked. !-->
+                        <!-- If empty or missing, all supported asset types will be reported !-->
+                        <xsd:element name="typeList" type="scn:ArrayOfType" minOccurs="0"/>
+                        <!-- include field isComplete in result list !-->
+                        <xsd:element name="reportIsComplete" type="xsd:boolean" minOccurs="0"/>
+                        <!-- include field isAlreadyIngested in result list !-->
+                        <xsd:element name="reportIsAlreadyIngested" type="xsd:boolean" minOccurs="0"/>
+                        <!-- list only assets compatible for this product !-->
+                        <!-- it is used to list only license files targeted for the current product type !-->
+                        <xsd:element name="filterProduct" type="xsd:boolean" minOccurs="0"/>
+                        <!-- list only assets compatible for this product serial number !-->
+                        <!-- it is used to list only license or key files targeted for the server !-->
+                        <xsd:element name="filterSerial" type="xsd:boolean" minOccurs="0"/>
+                        <!-- to scan remote servers registered in an alternate configuration !-->
+                        <!-- file than the default. !-->
+                        <xsd:element name="alternateConfigurationFile" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartScanResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelScan">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelScanResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScanStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScanStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="scn:IngestScanStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScanResult">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScanResultResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="scn:IngestScanStatus"/>
+                        <xsd:element name="assetList" type="scn:ArrayOfAssets"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearScan">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearScanResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="StartScan">
+        <wsdl:part name="parameters" element="v1_0:StartScan"/>
+    </wsdl:message>
+    <wsdl:message name="StartScanResponse">
+        <wsdl:part name="parameters" element="v1_0:StartScanResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelScan">
+        <wsdl:part name="parameters" element="v1_0:CancelScan"/>
+    </wsdl:message>
+    <wsdl:message name="CancelScanResponse">
+        <wsdl:part name="parameters" element="v1_0:CancelScanResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetScanStatus">
+        <wsdl:part name="parameters" element="v1_0:GetScanStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetScanStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetScanStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetScanResult">
+        <wsdl:part name="parameters" element="v1_0:GetScanResult"/>
+    </wsdl:message>
+    <wsdl:message name="GetScanResultResponse">
+        <wsdl:part name="parameters" element="v1_0:GetScanResultResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ClearScan">
+        <wsdl:part name="parameters" element="v1_0:ClearScan"/>
+    </wsdl:message>
+    <wsdl:message name="ClearScanResponse">
+        <wsdl:part name="parameters" element="v1_0:ClearScanResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IngestScan_v1_0">
+        <wsdl:operation name="StartScan">
+            <wsdl:documentation>
+                StartScan
+                    Starts an Ingest scan
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    uri (xsd:anyURI) the URI to scan
+                    maxDepth (optional xsd:int) maximum number of child folders to scan. Default value is 5
+                    alternateConfigurationFile (optional xsd:string) to scan remote servers registered in an alternate configuration file than the default (/dolby/etc/netmap.xml)
+                    typeList (optional scn:ArrayOfType) list of asset type to be checked. If empty or missing, all supported asset types will be reported
+                    reportIsComplete (optional xsd:boolean, default True) report if asset is complete or not. If True, reports True if asset is complete, False if incomplete (e.g. file size defined in the PKL does not match actual asset file size). If reportIsComplete is False, isComplete always reports True.
+                    reportIsAlreadyIngested (optional xsd:boolean, default False) report if asset has already been ingested on the system or not. If False, always report False.
+                    filterProduct (optional xsd:boolean) list only assets compatible for this product. It is used to list only license files targeted for the current product type
+                    filterSerial (optional xsd:boolean) list only assets compatible for this product serial number. It is used to list only license or key files targeted for the server
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated": if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "internal server error": if a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartScan"/>
+            <wsdl:output message="tns:StartScanResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelScan">
+            <wsdl:documentation>
+                CancelScan
+                    Cancels scan started by the authenticated user
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated": if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:CancelScan"/>
+            <wsdl:output message="tns:CancelScanResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetScanStatus">
+            <wsdl:documentation>
+                GetScanStatus
+                    Returns the status of the scan initiated by the authenticated user
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    status (scn:IngestScanStatus) could be Idle, Running, Completed, Failed, Cancelled or Unknown
+                    assetmapCount (xsd:int) number of ingested ASSETMAP files
+                    pklCount (xsd:int) number of ingested Packing List files
+                    cplCount (xsd:int) number of ingested Composition Playlist files
+                    kdmCount (xsd:int) number of ingested Key Delivery Messages files
+                    dlmCount (xsd:int) number of ingested DLM files
+                    splCount (xsd:int) number of ingested Show Playlist files
+                    otherCount (xsd:int) number of ingested files of other types
+
+                Faults
+                    "not authenticated": if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetScanStatus"/>
+            <wsdl:output message="tns:GetScanStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetScanResult">
+            <wsdl:documentation>
+                GetScanResult
+                    Returns the results of the scan initiated by the authenticated user
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    status (scn:IngestScanStatus) could be Idle, Running, Completed, Failed, Cancelled or Unknown
+                    assetList (scn:ArrayOfAssets) a sequence of information about the scanned assets
+
+                Faults
+                    "not authenticated": if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetScanResult"/>
+            <wsdl:output message="tns:GetScanResultResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ClearScan">
+            <wsdl:documentation>
+                ClearScan
+                    Clean up scan
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    Empty
+
+                Faults
+                    "not authenticated": if inactive/bad sessionID passed
+                    "permission denied": if user is not privileged to perform the operation
+                    "missing mandatory argument '[X]'": if [X] argument is missing
+                    "resource busy": if the ingest scan is still running
+            </wsdl:documentation>
+            <wsdl:input message="tns:ClearScan"/>
+            <wsdl:output message="tns:ClearScanResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IngestScan_v1_0_SOAPBinding" type="tns:IngestScan_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="StartScan">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelScan">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetScanStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetScanResult">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ClearScan">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="IngestScan_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:IngestScan_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/IngestScan"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

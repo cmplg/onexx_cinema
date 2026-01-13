@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:net="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/networkmanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="NetworkManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Network management provides functions to configure system network.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="NetworkManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/networkmanagement"/>
+            <xsd:element name="GetNetworkList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="networkList" type="net:ArrayOfNetwork"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkConfig">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="interface" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkConfigResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="networkConfig" type="net:NetworkConfig"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetNetworkConfig">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="networkConfig" type="net:NetworkConfig"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetNetworkConfigResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="interface" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="networkInfo" type="net:NetworkInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetNetworkList">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkList"/>
+    </wsdl:message>
+    <wsdl:message name="GetNetworkListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetNetworkConfig">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkConfig"/>
+    </wsdl:message>
+    <wsdl:message name="GetNetworkConfigResponse">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkConfigResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetNetworkConfig">
+        <wsdl:part name="parameters" element="v1_0:SetNetworkConfig"/>
+    </wsdl:message>
+    <wsdl:message name="SetNetworkConfigResponse">
+        <wsdl:part name="parameters" element="v1_0:SetNetworkConfigResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetNetworkInfo">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetNetworkInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetNetworkInfoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="NetworkManagement_v1_0">
+        <wsdl:operation name="GetNetworkList">
+            <wsdl:documentation>
+                GetNetworkList
+                    Returns list of available network interfaces
+
+                Arguments
+                    sessionId (string) : ID of an active session
+
+                Response
+                    list of network interfaces, with a flag indicating if they are configurable or not
+
+                Faults
+                    "Internal Server Error" : if SOAP request is incorrect or network is not properly configured on the server
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetNetworkList"/>
+            <wsdl:output message="tns:GetNetworkListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetNetworkConfig">
+            <wsdl:documentation>
+                GetNetworkConfig
+                    Returns configuration of an interface for example if it is DHCP or statically configured
+
+                Arguments
+                    sessionId (string) : ID of an active session
+                    interface (string) : Interface name for which we want to obtain configuration
+
+                Response
+                    interface (string) : interface name
+                    hostname (string)  : hostname used in DHCP requests sent from this interface, used in DHCP configuration
+                    type (string)      : DHCP or Static depending on used configuration
+                    ipAddress (string) : self explanatory, used for static IP configuration
+                    netmask (string)   : self explanatory, used for static IP configuration
+                    gateway (string)   : self explanatory, used for static IP configuration
+
+                Faults
+                    "Internal Server Error" : if network configuration on the server is incorrect
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetNetworkConfig"/>
+            <wsdl:output message="tns:GetNetworkConfigResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetNetworkConfig">
+            <wsdl:documentation>
+                SetNetworkConfig
+                    Sets network configuration for a specific interface for example DHCP or static address
+
+                Arguments
+                    sessionId (string) : ID of an active session
+                    interface (string) : interface name
+                    hostname (string)  : hostname used in DHCP requests send from this interface, used in DHCP configuration
+                    type (string)      : DHCP or Static depending on used configuration
+                    ipAddress (string) : self explanatory, used for static IP configuration
+                    netmask (string)   : self explanatory, used for static IP configuration
+                    gateway (string)   : self explanatory, used for static IP configuration
+
+                Response
+                    Confirmation that configuration has been applied
+
+                Faults
+                    "Invalid argument"      : if provided network configuration is incorrect
+                    "Missing Argument"      : if SOAP request is not complete
+                    "Internal Server Error" : if case of low memory errors and similar
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetNetworkConfig"/>
+            <wsdl:output message="tns:SetNetworkConfigResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetNetworkInfo">
+            <wsdl:documentation>
+                GetNetworkInfo
+                    GetNetworkInfo - returns current settings for specific interface like IP address or mask
+
+                Arguments
+                    sessionId (string)       : ID of active session
+                    interface (string)       : interface name
+
+                Response
+                    interface (string)                       : interface name
+                    active (boolean)                         : true/false flag
+                    ipAddress (string)                       : IP address currently assigned to the interface
+                    netmask (string)                         : netmask currently assigned to the interface
+                    hardwareAddress (string)                 : interface MAC address
+                    networkAliasList (ArrayOfNetworkAddress) : network address aliases currently assigned to the interface
+
+                Faults
+                    "Missing Argument"      : if SOAP request is not complete
+                    "Internal Server Error" : if case of low memory or network misconfiguration
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetNetworkInfo"/>
+            <wsdl:output message="tns:GetNetworkInfoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="NetworkManagement_v1_0_SOAPBinding" type="tns:NetworkManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetNetworkList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetNetworkConfig">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetNetworkConfig">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetNetworkInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="NetworkManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:NetworkManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/NetworkManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

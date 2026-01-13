@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2015, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions name="AudioManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:am="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/audiomanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:documentation>
+                Audio Management provides functions to control audio output.
+    </wsdl:documentation>
+ <wsdl:types>
+  <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+   <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+   <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+   <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/audiomanagement" schemaLocation="AudioManagement.xsd"/>
+   <xsd:element name="GetAudioMacro">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMacroResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="macroId" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMacroList">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMacroListResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="macroList" type="am:ArrayOfAudioMacro"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMacro">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="macroId" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMacroResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMute">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMuteResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="value" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMute">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="value" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMuteResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMicrophone">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMicrophoneResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="enabled" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMicrophone">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="enabled" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMicrophoneResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioFader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioFaderResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="value" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioFader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="value" type="xsd:int"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioFaderResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioArrayDelays">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioArrayDelaysResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="arrayDelays" type="am:ArrayDelays"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioArrayDelays">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="arrayDelays" type="am:ArrayDelays"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioArrayDelaysResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMonitor">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMonitorResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="value" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMonitorConfig">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMonitorConfigResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="monitorConfig" type="am:MonitorConfig"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMonitorConfig">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="monitorConfig" type="am:MonitorConfig"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioMonitorConfigResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEqPresetList">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEqPresetListResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="eqPresetList" type="am:ArrayOfAudioEqPreset"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMeters">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioMetersResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="isAllZeros" type="xsd:boolean"/>
+      <xsd:element minOccurs="0" name="audioLevelList" type="am:ArrayOfAudioLevel"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioForcePCM">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioForcePCMResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="enabled" type="xsd:boolean"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioForcePCM">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="enable" type="xsd:boolean"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioForcePCMResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioRoomConfig">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioRoomConfigResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="speakerCount" type="xsd:unsignedInt"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="speakers" type="am:ArrayOfSpeakerInfo"/>
+      <xsd:element name="arrayDelays" type="am:ArrayOfDelays"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioRoomInfo">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioRoomInfoResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="roomInfo" type="am:RoomInformation"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEQCurve">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltType" type="am:EqCurveEltTypes"/>
+      <xsd:element minOccurs="0" name="eltId" type="xsd:unsignedInt"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEQCurveResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="eqCurve" type="am:EQCurve"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEQPresetConfig">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltType" type="am:EqCurveEltTypes"/>
+      <xsd:element name="eltId" type="xsd:unsignedInt"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioEQPresetConfigResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="config" type="am:EqPresetConfig"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioEQPresetInfo">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="presetName" type="xsd:string"/>
+      <xsd:element name="defined" type="xsd:boolean"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioEQPresetInfoResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="ManageAudioEQPreset">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="operation" type="am:PresetOperationEnum"/>
+      <xsd:element minOccurs="0" name="parameters" type="am:PresetParameters"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="ManageAudioEQPresetResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioEQPresetConfig">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="config" type="am:EqPresetConfig"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioEQPresetConfigResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioPrefs">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioPrefsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="audioPreferences" type="am:AudioPreferences"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioPrefs">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="audioPreferences" type="am:AudioPreferences"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioPrefsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioChannelGains">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltType" type="am:EqCurveEltTypes"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioChannelGainsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="gains" type="am:ArrayOfEqGain"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioChannelGains">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltType" type="am:EqCurveEltTypes"/>
+      <xsd:element name="gains" type="am:ArrayOfEqGain"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioChannelGainsResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioNoise">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetAudioNoiseResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="enable" type="xsd:boolean"/>
+      <xsd:element name="config" type="am:AudioNoiseSettings"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioNoise">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="enable" type="xsd:boolean"/>
+      <xsd:element name="config" type="am:AudioNoiseSettings"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SetAudioNoiseResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </wsdl:types>
+ <wsdl:message name="GetAudioMacro">
+  <wsdl:part element="v1_0:GetAudioMacro" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMacroResponse">
+  <wsdl:part element="v1_0:GetAudioMacroResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMacroList">
+  <wsdl:part element="v1_0:GetAudioMacroList" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMacroListResponse">
+  <wsdl:part element="v1_0:GetAudioMacroListResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMacro">
+  <wsdl:part element="v1_0:SetAudioMacro" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMacroResponse">
+  <wsdl:part element="v1_0:SetAudioMacroResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMute">
+  <wsdl:part element="v1_0:GetAudioMute" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMuteResponse">
+  <wsdl:part element="v1_0:GetAudioMuteResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMute">
+  <wsdl:part element="v1_0:SetAudioMute" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMuteResponse">
+  <wsdl:part element="v1_0:SetAudioMuteResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMicrophone">
+  <wsdl:part element="v1_0:GetAudioMicrophone" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMicrophoneResponse">
+  <wsdl:part element="v1_0:GetAudioMicrophoneResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMicrophone">
+  <wsdl:part element="v1_0:SetAudioMicrophone" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMicrophoneResponse">
+  <wsdl:part element="v1_0:SetAudioMicrophoneResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioFader">
+  <wsdl:part element="v1_0:GetAudioFader" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioFaderResponse">
+  <wsdl:part element="v1_0:GetAudioFaderResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioFader">
+  <wsdl:part element="v1_0:SetAudioFader" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioFaderResponse">
+  <wsdl:part element="v1_0:SetAudioFaderResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioArrayDelays">
+  <wsdl:part element="v1_0:GetAudioArrayDelays" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioArrayDelaysResponse">
+  <wsdl:part element="v1_0:GetAudioArrayDelaysResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioArrayDelays">
+  <wsdl:part element="v1_0:SetAudioArrayDelays" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioArrayDelaysResponse">
+  <wsdl:part element="v1_0:SetAudioArrayDelaysResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMonitor">
+  <wsdl:part element="v1_0:GetAudioMonitor" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMonitorResponse">
+  <wsdl:part element="v1_0:GetAudioMonitorResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMonitorConfig">
+  <wsdl:part element="v1_0:GetAudioMonitorConfig" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMonitorConfigResponse">
+  <wsdl:part element="v1_0:GetAudioMonitorConfigResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMonitorConfig">
+  <wsdl:part element="v1_0:SetAudioMonitorConfig" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioMonitorConfigResponse">
+  <wsdl:part element="v1_0:SetAudioMonitorConfigResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEqPresetList">
+  <wsdl:part element="v1_0:GetAudioEqPresetList" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEqPresetListResponse">
+  <wsdl:part element="v1_0:GetAudioEqPresetListResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMeters">
+  <wsdl:part element="v1_0:GetAudioMeters" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioMetersResponse">
+  <wsdl:part element="v1_0:GetAudioMetersResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioForcePCM">
+  <wsdl:part element="v1_0:GetAudioForcePCM" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioForcePCMResponse">
+  <wsdl:part element="v1_0:GetAudioForcePCMResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioForcePCM">
+  <wsdl:part element="v1_0:SetAudioForcePCM" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioForcePCMResponse">
+  <wsdl:part element="v1_0:SetAudioForcePCMResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioRoomConfig">
+  <wsdl:part element="v1_0:GetAudioRoomConfig" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioRoomConfigResponse">
+  <wsdl:part element="v1_0:GetAudioRoomConfigResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioRoomInfo">
+  <wsdl:part element="v1_0:GetAudioRoomInfo" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioRoomInfoResponse">
+  <wsdl:part element="v1_0:GetAudioRoomInfoResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEQCurve">
+  <wsdl:part element="v1_0:GetAudioEQCurve" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEQCurveResponse">
+  <wsdl:part element="v1_0:GetAudioEQCurveResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEQPresetConfig">
+  <wsdl:part element="v1_0:GetAudioEQPresetConfig" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioEQPresetConfigResponse">
+  <wsdl:part element="v1_0:GetAudioEQPresetConfigResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioEQPresetInfo">
+  <wsdl:part element="v1_0:SetAudioEQPresetInfo" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioEQPresetInfoResponse">
+  <wsdl:part element="v1_0:SetAudioEQPresetInfoResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="ManageAudioEQPreset">
+  <wsdl:part element="v1_0:ManageAudioEQPreset" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="ManageAudioEQPresetResponse">
+  <wsdl:part element="v1_0:ManageAudioEQPresetResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioEQPresetConfig">
+  <wsdl:part element="v1_0:SetAudioEQPresetConfig" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioEQPresetConfigResponse">
+  <wsdl:part element="v1_0:SetAudioEQPresetConfigResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioPrefs">
+  <wsdl:part element="v1_0:GetAudioPrefs" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioPrefsResponse">
+  <wsdl:part element="v1_0:GetAudioPrefsResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioPrefs">
+  <wsdl:part element="v1_0:SetAudioPrefs" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioPrefsResponse">
+  <wsdl:part element="v1_0:SetAudioPrefsResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioChannelGains">
+  <wsdl:part element="v1_0:GetAudioChannelGains" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioChannelGainsResponse">
+  <wsdl:part element="v1_0:GetAudioChannelGainsResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioChannelGains">
+  <wsdl:part element="v1_0:SetAudioChannelGains" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioChannelGainsResponse">
+  <wsdl:part element="v1_0:SetAudioChannelGainsResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioNoise">
+  <wsdl:part element="v1_0:GetAudioNoise" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetAudioNoiseResponse">
+  <wsdl:part element="v1_0:GetAudioNoiseResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioNoise">
+  <wsdl:part element="v1_0:SetAudioNoise" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="SetAudioNoiseResponse">
+  <wsdl:part element="v1_0:SetAudioNoiseResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:portType name="AudioManagement_v1_0">
+  <wsdl:operation name="GetAudioMacro">
+   <wsdl:documentation>
+    GetAudioMacro
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMacro"/>
+   <wsdl:output message="tns:GetAudioMacroResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMacroList">
+   <wsdl:documentation>
+    GetAudioMacroList
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMacroList"/>
+   <wsdl:output message="tns:GetAudioMacroListResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMacro">
+   <wsdl:documentation>
+    SetAudioMacro
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioMacro"/>
+   <wsdl:output message="tns:SetAudioMacroResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMute">
+   <wsdl:documentation>
+    GetAudioMute
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMute"/>
+   <wsdl:output message="tns:GetAudioMuteResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMute">
+   <wsdl:documentation>
+    SetAudioMute
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioMute"/>
+   <wsdl:output message="tns:SetAudioMuteResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMicrophone">
+   <wsdl:documentation>
+    GetAudioMicrophone
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMicrophone"/>
+   <wsdl:output message="tns:GetAudioMicrophoneResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMicrophone">
+   <wsdl:documentation>
+    SetAudioMicrophone
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioMicrophone"/>
+   <wsdl:output message="tns:SetAudioMicrophoneResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioFader">
+   <wsdl:documentation>
+    GetAudioFader
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioFader"/>
+   <wsdl:output message="tns:GetAudioFaderResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioFader">
+   <wsdl:documentation>
+    SetAudioFader
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioFader"/>
+   <wsdl:output message="tns:SetAudioFaderResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioArrayDelays">
+   <wsdl:documentation>
+    GetAudioArrayDelays
+                    Returns the current audio array delays configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    arrayDelays (am:ArrayDelays) Audio Array Delays configuration
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioArrayDelays"/>
+   <wsdl:output message="tns:GetAudioArrayDelaysResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioArrayDelays">
+   <wsdl:documentation>
+    SetAudioArrayDelays
+                    Set the current audio array delays configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    arrayDelays (am:ArrayDelays) Audio Array Delays configuration
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioArrayDelays"/>
+   <wsdl:output message="tns:SetAudioArrayDelaysResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMonitor">
+   <wsdl:documentation>
+    GetAudioMonitor
+                    Returns audio monitor display text
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    value (string) Audio monitor display text.
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMonitor"/>
+   <wsdl:output message="tns:GetAudioMonitorResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMonitorConfig">
+   <wsdl:documentation>
+    GetAudioMonitorConfig
+                    Returns the current audio monitor configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    audioMonitor (am:AudioMonitor) Audio monitor configuration
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMonitorConfig"/>
+   <wsdl:output message="tns:GetAudioMonitorConfigResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMonitorConfig">
+   <wsdl:documentation>
+    SetAudioMonitorConfig
+                    Set the current audio monitor configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    audioMonitor (am:AudioMonitor) Audio monitor configuration
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioMonitorConfig"/>
+   <wsdl:output message="tns:SetAudioMonitorConfigResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEqPresetList">
+   <wsdl:documentation>
+    GetAudioEqPresetList
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    eqPresetList (am:am:ArrayOfAudioEqPreset) EQ Preset List
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioEqPresetList"/>
+   <wsdl:output message="tns:GetAudioEqPresetListResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMeters">
+   <wsdl:documentation>
+    GetAudioMeters
+                    Returns audio meters for all audio channels
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    isAllZeros (boolean) true is all levels are zero.
+                    audioLevelList (am:ArrayOfAudioLevel) Array of Audio Levels
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioMeters"/>
+   <wsdl:output message="tns:GetAudioMetersResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioForcePCM">
+   <wsdl:documentation>
+    GetAudioForcePCM
+                    Get the current force PCM status.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    enable (boolean) true if audio is forced in PCM.
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioForcePCM"/>
+   <wsdl:output message="tns:GetAudioForcePCMResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioForcePCM">
+   <wsdl:documentation>
+    SetAudioForcePCM
+                    Set the status for audio force PCM.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    enable (boolean) true to force audio in PCM.
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioForcePCM"/>
+   <wsdl:output message="tns:SetAudioForcePCMResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioRoomConfig">
+   <wsdl:documentation>
+    GetAudioRoomConfig
+                    Returns audio room configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    roomInfo (am:RoomInformation) Room information
+                    speakerCount (interger) Number of speaker
+                    speakers (am:ArrayOfSpeakerInfo) Speaker information
+                    arrayDelays (am:ArrayOfDelays) Speaker Array delays
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioRoomConfig"/>
+   <wsdl:output message="tns:GetAudioRoomConfigResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioRoomInfo">
+   <wsdl:documentation>
+    GetAudioRoomInfo
+                    Returns audio room information
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    speakerCount (integer) Number of speaker used.
+                    spearkers (am:ArrayOfSpeakerInfo) Array of peakers Information.
+                    arrayDelays  (am:ArrayOfDelays) Arrays of delays Information.
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioRoomInfo"/>
+   <wsdl:output message="tns:GetAudioRoomInfoResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEQCurve">
+   <wsdl:documentation>
+    GetAudioEQCurve
+                    Returns audio EQ gain curve for a specific eqPresetId and EltId.
+                    if no eqPresetId and EltId, current is returned.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    [eqPresetId] (unsignedInt) EQ Preset ID.
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+                    [eltId] (unsignedInt) EQ element ID.
+
+                 Response
+                    eqPresetId (unsignedInt) EQ Preset ID.
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+                    eltId (unsignedInt) EQ element ID.
+                    values (am:ArrayOfEqValue) Gain values for each band.
+                    perChannelGain (double) Gain per Channel.
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioEQCurve"/>
+   <wsdl:output message="tns:GetAudioEQCurveResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEQPresetConfig">
+   <wsdl:documentation>
+    GetAudioEQPresetConfig
+                    Returns audio EQ Preset Speaker or Array Configuration.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    [eqPresetId] (unsignedInt) EQ Preset ID.
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+                    [eltId] (unsignedInt) EQ element ID.
+
+                 Response
+                    config (am:EqPresetConfig) Preset Configuration for the eltType
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioEQPresetConfig"/>
+   <wsdl:output message="tns:GetAudioEQPresetConfigResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioEQPresetInfo">
+   <wsdl:documentation>
+    SetAudioEQPresetInfo
+                    Set audio EQ Preset Speaker or Array Configuration.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    eqPresetId (xsd:unsignedInt) EQ Preset ID.
+                    presetName (xsd:string) EQ Preset Name.
+                    defined (xsd:boolean) Preset is correctly defined.
+
+                 Response
+                   N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioEQPresetInfo"/>
+   <wsdl:output message="tns:SetAudioEQPresetInfoResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="ManageAudioEQPreset">
+   <wsdl:documentation>
+    ManageAudioEQPreset
+                    Manage EQ Preset, like reset, copy or save.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    eqPresetId (xsd:unsignedInt) EQ Preset ID.
+                    operation (PresetOperationEnum) Operation type to do on the preset
+                    parameters (am:PresetParameters) Parameters for this operation
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:ManageAudioEQPreset"/>
+   <wsdl:output message="tns:ManageAudioEQPresetResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioEQPresetConfig">
+   <wsdl:documentation>
+    SetAudioEQPresetConfig
+                    Set Audio EQ speaker or array preset configuration
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    config (am:EqPresetConfig) Preset Configuration for the eltType
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioEQPresetConfig"/>
+   <wsdl:output message="tns:SetAudioEQPresetConfigResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioPrefs">
+   <wsdl:documentation>
+    GetAudioPrefs
+                    Returns the current audio engine preferences
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                 Response
+                    audioPreferences (am:AudioPreferences)
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioPrefs"/>
+   <wsdl:output message="tns:GetAudioPrefsResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioPrefs">
+   <wsdl:documentation>
+    SetAudioPrefs
+                    Configure the current audio engine preference.
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    audioPreferences (am:AudioPreferences) Audio Preferences
+
+                 Response
+                   N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioPrefs"/>
+   <wsdl:output message="tns:SetAudioPrefsResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioChannelGains">
+   <wsdl:documentation>
+    GetAudioChannelGains
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    eqPresetId (xsd:unsignedInt) EQ Preset ID.
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+
+                 Response
+                    gains (am:ArrayOfEqGain) Array of elt gain
+
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioChannelGains"/>
+   <wsdl:output message="tns:GetAudioChannelGainsResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioChannelGains">
+   <wsdl:documentation>
+    SetAudioChannelGains
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    eqPresetId (xsd:unsignedInt) EQ Preset ID.
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+                    gains (am:ArrayOfEqGain) Array of elt gain to update
+
+
+                 Response
+                    N/A
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioChannelGains"/>
+   <wsdl:output message="tns:SetAudioChannelGainsResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioNoise">
+   <wsdl:documentation>
+    GetAudioNoise
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)
+
+
+                 Response
+                    enable (xsd:boolean)
+                    config (am:AudioNoiseSettings)
+
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetAudioNoise"/>
+   <wsdl:output message="tns:GetAudioNoiseResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioNoise">
+   <wsdl:documentation>
+    SetAudioNoise
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier)
+                    enable (xsd:boolean)
+                    config (am:AudioNoiseSettings)
+
+
+                 Response
+
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:SetAudioNoise"/>
+   <wsdl:output message="tns:SetAudioNoiseResponse"/>
+  </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:binding name="AudioManagement_v1_0_SOAPBinding" type="tns:AudioManagement_v1_0">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="GetAudioMacro">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMacroList">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMacro">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMute">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMute">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMicrophone">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMicrophone">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioFader">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioFader">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioArrayDelays">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioArrayDelays">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMonitor">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMonitorConfig">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioMonitorConfig">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEqPresetList">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioMeters">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioForcePCM">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioForcePCM">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioRoomConfig">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioRoomInfo">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEQCurve">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioEQPresetConfig">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioEQPresetInfo">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="ManageAudioEQPreset">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioEQPresetConfig">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioPrefs">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioPrefs">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioChannelGains">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioChannelGains">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetAudioNoise">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="SetAudioNoise">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:service name="AudioManagement_v1_0">
+  <wsdl:port binding="tns:AudioManagement_v1_0_SOAPBinding" name="SOAPOverHTTP">
+   <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/AudioManagement"/>
+  </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>

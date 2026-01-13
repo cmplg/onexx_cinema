@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"  xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:chk="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetcheck" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetcheck" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="AssetCheckId">
+		<xsd:restriction base="xsd:long">
+			<!-- Every asset check is assigned an uniq Id -->
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssetCheckType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Integrity">
+			<!-- Performs an integrity check on the data. For CPL assets, the referenced assets will be checked also -->
+			</xsd:enumeration>
+			<xsd:enumeration value="Sanity">
+			<!-- Performs quick sanity checks about the data and metadata -->
+			</xsd:enumeration>
+			<xsd:enumeration value="Security">
+			<!-- Performs security checks - this check can consume time. -->
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="AssetCheckItem">
+		<xsd:sequence>
+			<xsd:element name="assetCheckId" type="chk:AssetCheckId">
+			<!-- An asset check is assigned a uniq Id -->
+			</xsd:element>
+			<xsd:element name="assetCheckTitle" type="xsd:string">
+			<!-- human friendly asset check title -->
+			</xsd:element>
+			<xsd:element name="assetCheckType" type="chk:AssetCheckType">
+			<!-- kind of check that is to be run -->
+			</xsd:element>
+			<xsd:element name="assetId" type="com:Uuid">
+			<!--  UUID of the asset to be checked -->
+			</xsd:element>
+			<xsd:element name="detailCheckList" type="com:ArrayOfCheckItem">
+			<!-- detailed list of sub-check; this provides details of the underlying check being performed -->
+			</xsd:element>
+			<xsd:element name="checkItem" type="com:CheckItem">
+			<!-- global detail for this asset check -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAssetCheckItem">
+		<xsd:sequence>
+			<xsd:element name="assetCheck" type="chk:AssetCheckItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions name="BackupManagement_v1"
+    targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:bck="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup"
+    xmlns:bmn="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupmanagement"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:documentation>
+        Backup Management provides functions to backup and restore the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+                schemaLocation="Common.xsd" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup"
+                schemaLocation="Backup.xsd" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupmanagement"
+                schemaLocation="BackupManagement.xsd" />
+            <xsd:element name="StartBackupGenerate">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="repairAuto" type="xsd:boolean" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="path" type="xsd:string" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="description"
+                            type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartBackupGenerateResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="identifier" type="bmn:BackupGenerateIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupGenerateProgress">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="identifier" type="bmn:BackupGenerateIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupGenerateProgressResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="bck:OperationStatus" />
+                        <xsd:element name="logList" type="com:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteBackup">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="backupFilename" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteBackupResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartBackupRestore">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="backupFilename"
+                            type="xsd:string" />
+                        <xsd:element name="categoryList" type="com:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartBackupRestoreResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="identifier" type="bmn:BackupRestoreIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupRestoreProgress">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="identifier" type="bmn:BackupRestoreIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupRestoreProgressResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="bck:OperationStatus" />
+                        <xsd:element name="logList" type="bck:ArrayOfLog" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupInformation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupInformationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="systemAutoBackupUuid"
+                            type="com:Uuid" />
+                        <xsd:element maxOccurs="1" minOccurs="0" name="lastAutoBackup"
+                            type="bck:BackupInfo" />
+                        <xsd:element name="categoryList" type="bmn:ArrayOfCategory" />
+                        <xsd:element name="backupPathList" type="bmn:ArrayOfBackupPath" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartBackupTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="taskType" type="bmn:BackupTaskTypes" />
+                        <xsd:element name="parameters" type="bmn:BackupTaskParameters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartBackupTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="identifier" type="bmn:BackupRestoreIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupTaskProgress">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="taskType" type="bmn:BackupTaskTypes" />
+                        <xsd:element name="identifier" type="bmn:BackupRestoreIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetBackupTaskProgressResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="progress" type="bmn:BackupTaskProgressResponse" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="StartBackupGenerate">
+        <wsdl:part element="v1_0:StartBackupGenerate" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="StartBackupGenerateResponse">
+        <wsdl:part element="v1_0:StartBackupGenerateResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupGenerateProgress">
+        <wsdl:part element="v1_0:GetBackupGenerateProgress" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupGenerateProgressResponse">
+        <wsdl:part element="v1_0:GetBackupGenerateProgressResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteBackup">
+        <wsdl:part element="v1_0:DeleteBackup" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteBackupResponse">
+        <wsdl:part element="v1_0:DeleteBackupResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="StartBackupRestore">
+        <wsdl:part element="v1_0:StartBackupRestore" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="StartBackupRestoreResponse">
+        <wsdl:part element="v1_0:StartBackupRestoreResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupRestoreProgress">
+        <wsdl:part element="v1_0:GetBackupRestoreProgress" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupRestoreProgressResponse">
+        <wsdl:part element="v1_0:GetBackupRestoreProgressResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupInformation">
+        <wsdl:part element="v1_0:GetBackupInformation" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupInformationResponse">
+        <wsdl:part element="v1_0:GetBackupInformationResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="StartBackupTask">
+        <wsdl:part element="v1_0:StartBackupTask" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="StartBackupTaskResponse">
+        <wsdl:part element="v1_0:StartBackupTaskResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupTaskProgress">
+        <wsdl:part element="v1_0:GetBackupTaskProgress" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetBackupTaskProgressResponse">
+        <wsdl:part element="v1_0:GetBackupTaskProgressResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:portType name="BackupManagement_v1_0">
+        <wsdl:operation name="StartBackupGenerate">
+            <wsdl:documentation>
+                StartBackupGenerate
+                    Generate a system Backup.
+                    Check the generation progress for an identifier with GetBackupGenerateProgress.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    identifier (bmn:BackupRestoreIdentifier) Identifier for the backup generation return
+                    by BackupManagement operations.
+
+                Faults
+                    "Internal server error" : If the server detects an errors
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartBackupGenerate" />
+            <wsdl:output message="tns:StartBackupGenerateResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupGenerateProgress">
+            <wsdl:documentation>
+                GetBackupGenerateProgress
+                    Return the progress of a current backup generation.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    identifier (bmn:BackupRestoreIdentifier) Identifier for the backup generation return
+                    by BackupManagement operations.
+
+                Response
+                    status (bck:OperationStatus) System backup progress
+                    logList (com:ArrayOfString)  Logs
+
+                Faults
+                    "Internal server error" : If the server detects an error
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetBackupGenerateProgress" />
+            <wsdl:output message="tns:GetBackupGenerateProgressResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="DeleteBackup">
+            <wsdl:documentation>
+                DeleteBackup
+                    Delete a previous generated backup.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    nothing
+
+                Faults
+                    "Internal server error" : If the server detects an error
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteBackup" />
+            <wsdl:output message="tns:DeleteBackupResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="StartBackupRestore">
+            <wsdl:documentation>
+                StartBackupRestore
+                    Restore the system from a backup.
+                    Check the restoration progress for an identifier with GetBackupRestoreProgress.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    identifier (bmn:BackupRestoreIdentifier) Identifier for the backup generation return
+                    by BackupManagement operations.
+
+                Faults
+                    "Internal server error" : If the server detects an error
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartBackupRestore" />
+            <wsdl:output message="tns:StartBackupRestoreResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupRestoreProgress">
+            <wsdl:documentation>
+                GetBackupRestoreProgress
+                    Get the system backup restore progress.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    identifier (bmn:BackupRestoreIdentifier) Identifier for the backup generation return
+                    by BackupManagement operations.
+
+                Faults
+                    "Internal server error" : If the server detects an error
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetBackupRestoreProgress" />
+            <wsdl:output message="tns:GetBackupRestoreProgressResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupInformation">
+            <wsdl:documentation>
+                GetBackupInformation
+                    Get information about the current auto backup file
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    systemAutoBackupUuid (com:Uuid) backup's UUID - optional
+                    lastAutoBackup (bck:BackupInfo) backup information
+                    categoryList  (bmn:ArrayOfCategory) categories present in the backup
+                    backupPathList (bmn:ArrayOfBackupPath) backup path
+
+                Faults
+                    "Internal server error" : If the server detects an error
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetBackupInformation" />
+            <wsdl:output message="tns:GetBackupInformationResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="StartBackupTask">
+            <wsdl:documentation>
+                StartBackupTask
+                    Start a backup/restore operation based on BackupTaskTypes.
+                    Check the operation progress for an identifier with GetBackupTaskProgress.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskType (BackupTaskTypes)
+                    parameters (BackupTaskParameters)
+
+                Response
+                    identifier (bmn:BackupRestoreIdentifier) Identifier for the backup generation return
+                    by BackupManagement operations.
+
+                Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartBackupTask" />
+            <wsdl:output message="tns:StartBackupTaskResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupTaskProgress">
+            <wsdl:documentation>
+                GetBackupTaskProgress
+                    Get the backupTask progress.
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    taskType (BackupTaskTypes)
+                    parameters (bmn:BackupTaskProgressParameters)
+
+                Response
+                    progress (bmn:BackupTaskProgressResponse) Task Progress
+
+                Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetBackupTaskProgress" />
+            <wsdl:output message="tns:GetBackupTaskProgressResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BackupManagement_v1_0_SOAPBinding" type="tns:BackupManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="StartBackupGenerate">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupGenerateProgress">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteBackup">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="StartBackupRestore">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupRestoreProgress">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupInformation">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="StartBackupTask">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBackupTaskProgress">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BackupManagement_v1_0">
+        <wsdl:port binding="tns:BackupManagement_v1_0_SOAPBinding" name="SOAPOverHTTP">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/BackupManagement" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

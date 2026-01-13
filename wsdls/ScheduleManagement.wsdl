@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:sch="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/schedulemanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="ScheduleManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Schedule Management provides functions to List, add or delete a show schedule.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="ScheduleManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/schedulemanagement"/>
+            <xsd:element name="CreateSchedule">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="scheduleInfo" type="sch:ScheduleInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateScheduleResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScheduleList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="dateFrom" type="xsd:dateTime" minOccurs="0"/>
+                        <xsd:element name="dateTo" type="xsd:dateTime" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScheduleListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="scheduleList" type="sch:ArrayOfScheduleId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteSchedule">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="scheduleId" type="sch:ScheduleId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteScheduleResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScheduleInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="scheduleId" type="sch:ScheduleId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetScheduleInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="scheduleInfo" type="sch:ScheduleInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedulerStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSchedulerStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schedulerStatus" type="sch:SchedulerStatusInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartScheduler">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartSchedulerResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StopScheduler">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StopSchedulerResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CreateSchedule">
+        <wsdl:part name="parameters" element="v1_0:CreateSchedule"/>
+    </wsdl:message>
+    <wsdl:message name="CreateScheduleResponse">
+        <wsdl:part name="parameters" element="v1_0:CreateScheduleResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetScheduleList">
+        <wsdl:part name="parameters" element="v1_0:GetScheduleList"/>
+    </wsdl:message>
+    <wsdl:message name="GetScheduleListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetScheduleListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteSchedule">
+        <wsdl:part name="parameters" element="v1_0:DeleteSchedule"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteScheduleResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteScheduleResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetScheduleInfo">
+        <wsdl:part name="parameters" element="v1_0:GetScheduleInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetScheduleInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetScheduleInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetSchedulerStatus">
+        <wsdl:part name="parameters" element="v1_0:GetSchedulerStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetSchedulerStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetSchedulerStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="StartScheduler">
+        <wsdl:part name="parameters" element="v1_0:StartScheduler"/>
+    </wsdl:message>
+    <wsdl:message name="StartSchedulerResponse">
+        <wsdl:part name="parameters" element="v1_0:StartSchedulerResponse"/>
+    </wsdl:message>
+    <wsdl:message name="StopScheduler">
+        <wsdl:part name="parameters" element="v1_0:StopScheduler"/>
+    </wsdl:message>
+    <wsdl:message name="StopSchedulerResponse">
+        <wsdl:part name="parameters" element="v1_0:StopSchedulerResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ScheduleManagement_v1_0">
+        <wsdl:operation name="CreateSchedule">
+            <wsdl:documentation>
+                CreateSchedule
+                    Create a schedule with provided information
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    scheduleInfo (sch:ScheduleInfo) information to populate the schedule with
+                    checkForOverlapping (optional xsd:boolean) check if new schedule is overlapping with existing
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If SPL ID or datetime string in scheduleInfo is incorrect
+                    "Missing argument"      : If request does not contain scheduleInfo
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateSchedule"/>
+            <wsdl:output message="tns:CreateScheduleResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetScheduleList">
+            <wsdl:documentation>
+                GetScheduleList
+                    Get a list of available schedules by their ID
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    dateFrom (optional xsd:dateTime) return only schedules younger than
+                    dateTo (optional xsd:dateTime) return only schedules older than
+
+                Response
+                    scheduleList (sch:ArrayOfScheduleId) list of found schedule IDs
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If syntax of datetime string is incorrect
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetScheduleList"/>
+            <wsdl:output message="tns:GetScheduleListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteSchedule">
+            <wsdl:documentation>
+                DeleteSchedule
+                    Delete a schedule with provided ID
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    scheduleId (sch:ScheduleId) ID of schedule to delete
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not found"             : If schedule with provided ID does not exist
+                    "Missing argument"      : If request does not contain scheduleId
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteSchedule"/>
+            <wsdl:output message="tns:DeleteScheduleResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetScheduleInfo">
+            <wsdl:documentation>
+                GetScheduleInfo
+                    Get the info of a schedule
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    scheduleId (sch:ScheduleId) ID of schedule to get the info of
+
+                Response
+                    scheduleInfo (sch:ScheduleInfo) schedule information
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not found"             : If schedule with provided ID does not exist
+                    "Missing argument"      : If request does not contain scheduleId
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetScheduleInfo"/>
+            <wsdl:output message="tns:GetScheduleInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSchedulerStatus">
+            <wsdl:documentation>
+                GetSchedulerStatus
+                    Get the status of Scheduler
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    schedulerStatus (sch:SchedulerStatusInfo) one of: Running, Stopped, Unknown
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSchedulerStatus"/>
+            <wsdl:output message="tns:GetSchedulerStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="StartScheduler">
+            <wsdl:documentation>
+                StartScheduler
+                    Start the Scheduler
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartScheduler"/>
+            <wsdl:output message="tns:StartSchedulerResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="StopScheduler">
+            <wsdl:documentation>
+                StopScheduler
+                    Stop the Scheduler
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:StopScheduler"/>
+            <wsdl:output message="tns:StopSchedulerResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ScheduleManagement_v1_0_SOAPBinding" type="tns:ScheduleManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateSchedule">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetScheduleList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteSchedule">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetScheduleInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSchedulerStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="StartScheduler">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="StopScheduler">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ScheduleManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:ScheduleManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/ScheduleManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

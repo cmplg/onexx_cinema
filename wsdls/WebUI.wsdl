@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:sct="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol"
+    xmlns:wb="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/webui"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    name="WebUI_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+        WebUI provides functions for the webUI.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import schemaLocation="Common.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" />
+            <xsd:import schemaLocation="WebUI.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/webui" />
+            <xsd:import schemaLocation="ShowControl.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" />
+            <xsd:element name="GetFooter">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFooterResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="playbackStateInfo" type="sct:ShowStateInfo" />
+                        <xsd:element name="dataStorageState" type="com:WorkingStatusInfo" />
+                        <xsd:element name="activeIngest" type="xsd:boolean" />
+                        <xsd:element name="notificationUpdateCounter" type="xsd:unsignedLong" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetConnectionCount">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetConnectionCountResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="count" type="xsd:unsignedLong" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCounters">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCountersResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="connectionCounter" type="xsd:unsignedLong" />
+                        <xsd:element name="cacheCounters" type="wb:WebCacheCounters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RunScript">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="script" type="wb:ScriptIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RunScriptResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetFooter">
+        <wsdl:part name="parameters" element="v1_0:GetFooter" />
+    </wsdl:message>
+    <wsdl:message name="GetFooterResponse">
+        <wsdl:part name="parameters" element="v1_0:GetFooterResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetConnectionCount">
+        <wsdl:part name="parameters" element="v1_0:GetConnectionCount" />
+    </wsdl:message>
+    <wsdl:message name="GetConnectionCountResponse">
+        <wsdl:part name="parameters" element="v1_0:GetConnectionCountResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetCounters">
+        <wsdl:part name="parameters" element="v1_0:GetCounters" />
+    </wsdl:message>
+    <wsdl:message name="RunScript">
+        <wsdl:part element="v1_0:RunScript" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="RunScriptResponse">
+        <wsdl:part element="v1_0:RunScriptResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetCountersResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCountersResponse" />
+    </wsdl:message>
+    <wsdl:portType name="WebUI_v1_0">
+        <wsdl:operation name="GetFooter">
+            <wsdl:documentation>
+                GetFooter
+                    Retrieve system state for the webui footer (playback, storage, ingest, notifications)
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    playbackStateInfo (sct:ShowStateInfo)
+                    dataStorageState (com:WorkingStatusInfo)
+                    activeIngest (xsd:boolean)
+                    notificationUpdateCounter (xsd:unsignedLong)
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetFooter" />
+            <wsdl:output message="tns:GetFooterResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetConnectionCount">
+            <wsdl:documentation>
+                GetConnectionCount
+                    Retrieve WebUI connected users count.
+
+                Arguments
+                    Nothing.
+
+                Response
+                    count (xsd:unsignedLong) Connected users count
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetConnectionCount" />
+            <wsdl:output message="tns:GetConnectionCountResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetCounters">
+            <wsdl:documentation>
+                GetCounters
+                    Retrieve content list refresh timestamps and connection count (for caching purposes)
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    connectionCounter (xsd:unsignedLong) Connected users count (same value as from GetConnectionCount)
+                    cacheCounters (wb:WebCacheCounters) SPL, CPL, KDM lists refresh timestamps
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCounters" />
+            <wsdl:output message="tns:GetCountersResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="RunScript">
+            <wsdl:documentation>
+                RunScript
+                    Execute script based on its Token name
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    script (wb:ScriptIdentifier) Script Token to run
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If the server detects an error
+                    "Invalid argument" : If a wrong token is used
+            </wsdl:documentation>
+            <wsdl:input message="tns:RunScript" />
+            <wsdl:output message="tns:RunScriptResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WebUI_v1_0_SOAPBinding" type="tns:WebUI_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetFooter">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetConnectionCount">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCounters">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunScript">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="WebUI_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:WebUI_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/WebUI" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

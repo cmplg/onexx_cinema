@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONEXX CINEMA MANAGEMENT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --bg: #050505; --card: #0d0d0d; --border: #222; --blue: #58a6ff; --green: #2ea043; --orange: #d29922; }
+        body { background: var(--bg); color: #ccc; font-family: 'Inter', sans-serif; margin: 0; }
+        
+        .navbar { background: #000; border-bottom: 1px solid var(--border); padding: 10px 30px; position: sticky; top: 0; z-index: 1000; height: 80px; }
+        .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 30px; }
+        .nav-link-sw { color: #555; text-decoration: none; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .nav-link-sw.active { color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 5px; }
+        #clock { font-family: 'JetBrains Mono'; font-size: 2.2rem; color: #fff; font-weight: 800; }
+
+        /* Status Badge */
+        .status-badge { font-size: 0.6rem; font-weight: 800; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 5px; }
+        .badge-playing { background: rgba(46, 160, 67, 0.1); color: var(--green); border: 1px solid var(--green); }
+        .badge-paused { background: rgba(210, 153, 34, 0.1); color: var(--orange); border: 1px solid var(--orange); }
+        .badge-empty { background: #111; color: #555; border: 1px solid #222; }
+        .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background-color: currentColor; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Overview Cards */
+        .studio-card { background: var(--card); border: 1px solid var(--border); margin: 15px 25px; border-radius: 8px; overflow: hidden; }
+        .th-label { font-family: 'Orbitron'; font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .pg-playlist { background: #000; height: 14px; border-radius: 3px; border: 1px solid #222; margin-bottom: 8px; overflow: hidden; }
+        .pg-cpl { background: #000; height: 8px; border-radius: 2px; border: 1px solid #222; overflow: hidden; }
+        .bar-fill { height: 100%; background: #fff; transition: width 1s linear; }
+        .bar-blue { background: var(--blue) !important; }
+
+        .time-row { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #888; margin-top: 10px; }
+        .btn-tms { background: #222; border: 1px solid #444; color: #fff; width: 38px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; }
+        .btn-tms:hover { background: var(--blue); color: #000; }
+        .custom-checkbox { width: 25px; height: 25px; cursor: pointer; accent-color: var(--blue); }
+
+        /* Content Table */
+        .content-container { padding: 30px; }
+        .content-table { width: 100%; color: #eee; border-collapse: separate; border-spacing: 0 4px; }
+        .content-table th { background: #000; color: #555; font-size: 0.65rem; text-transform: uppercase; padding: 15px; border-bottom: 1px solid var(--border); }
+        .content-table td { padding: 15px; background: #111; font-size: 0.85rem; border-top: 1px solid var(--border); }
+        .badge-th { background: rgba(88, 166, 255, 0.1); color: var(--blue); padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; margin-right: 5px; }
+
+        .sub-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .btn-tab { background: #111; border: 1px solid var(--border); color: #fff; padding: 8px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-tab.active { background: var(--blue); color: #000; border-color: var(--blue); }
+
+        /* Modal */
+        .modal-content { background: #111; border: 1px solid var(--border); color: #fff; }
+        .list-group-item { background: #111; border: 1px solid #222; color: #ccc; cursor: pointer; }
+        .list-group-item:hover { background: var(--blue); color: #000; }
+
+        @media (max-width: 768px) { .nav-center { position: relative; left: 0; transform: none; margin-top: 10px; } .navbar { height: auto; flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand">ONEXX NOC</span>
+        <div class="nav-center">
+            <div id="btn-overview" class="nav-link-sw active" onclick="showView('overview')">Screen Overview</div>
+            <div id="btn-content" class="nav-link-sw" onclick="showView('content')">Content</div>
+        </div>
+        <div id="clock">00:00:00</div>
+    </div>
+</nav>
+
+<!-- VIEW: OVERVIEW -->
+<div id="view-overview"><div id="studio-container"></div></div>
+
+<!-- VIEW: CONTENT -->
+<div id="view-content" class="d-none content-container">
+    <div class="sub-nav">
+        <button id="sub-cpl" class="btn-tab active" onclick="loadLibrary()">CPL Library</button>
+        <button id="sub-th1" class="btn-tab" onclick="loadStudioPlaylists(1)">TH 1 Playlists</button>
+        <button id="sub-th2" class="btn-tab" onclick="loadStudioPlaylists(2)">TH 2 Playlists</button>
+        <button id="sub-th3" class="btn-tab" onclick="loadStudioPlaylists(3)">TH 3 Playlists</button>
+    </div>
+    <div id="content-display"></div>
+</div>
+
+<!-- MODAL: LOAD PLAYLIST -->
+<div class="modal fade" id="loadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="modalTitle">Load Playlist</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body"><div id="playlist-list" class="list-group"></div></div>
+    </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function format(s) { if (!s || s<=0) return "00:00:00"; let h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=Math.floor(s%60); return [h,m,sec].map(v=>v<10?"0"+v:v).join(":"); }
+
+    function showView(v) {
+        document.getElementById('view-overview').classList.toggle('d-none', v !== 'overview');
+        document.getElementById('view-content').classList.toggle('d-none', v !== 'content');
+        document.getElementById('btn-overview').classList.toggle('active', v === 'overview');
+        document.getElementById('btn-content').classList.toggle('active', v === 'content');
+        if(v === 'content') loadLibrary();
+    }
+
+    async function loadLibrary() {
+        updateActiveTab('sub-cpl');
+        const disp = document.getElementById('content-display');
+        disp.innerHTML = '<div class="text-center p-5">Scanning servers...</div>';
+        const res = await fetch('/api/content_library');
+        const data = await res.json();
+        let html = `<table class="content-table"><thead><tr><th>Title of CPL</th><th>Studios</th><th>Duration</th><th>Size</th><th>KDM</th></tr></thead><tbody>`;
+        data.forEach(c => {
+            let badges = c.studios.map(s => `<span class="badge-th">${s}</span>`).join('');
+            html += `<tr><td class="text-white fw-bold">${c.title}</td><td>${badges}</td><td>${c.duration}</td><td>${c.size}</td><td class="text-success fw-bold">${c.kdm}</td></tr>`;
+        });
+        disp.innerHTML = html + `</tbody></table>`;
+    }
+
+    async function loadStudioPlaylists(id) {
+        updateActiveTab('sub-th' + id);
+        const disp = document.getElementById('content-display');
+        disp.innerHTML = '<div class="text-center p-5">Loading TH ' + id + ' SPL...</div>';
+        const res = await fetch('/api/playlists/' + id);
+        const data = await res.json();
+        let html = `<div class="row">`;
+        data.forEach(p => { html += `<div class="col-md-4 mb-3"><div class="p-3 bg-dark border border-secondary rounded"><div class="text-white fw-bold">${p.title}</div><small class="text-muted">${p.uuid}</small></div></div>`; });
+        disp.innerHTML = html + `</div>`;
+    }
+
+    function updateActiveTab(id) { document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+    async function openLoadModal(studioId) {
+        document.getElementById('modalTitle').innerText = "Load Playlist - TH " + studioId;
+        const listDiv = document.getElementById('playlist-list');
+        listDiv.innerHTML = '<div class="text-center p-4">Fetching...</div>';
+        const modal = new bootstrap.Modal(document.getElementById('loadModal'));
+        modal.show();
+        const res = await fetch('/api/playlists/' + studioId);
+        const data = await res.json();
+        listDiv.innerHTML = '';
+        data.forEach(p => {
+            const btn = document.createElement('div');
+            btn.className = 'list-group-item';
+            btn.innerHTML = `<strong>${p.title}</strong>`;
+            btn.onclick = async () => { if(confirm(`Load "${p.title}"?`)) { await fetch(`/api/control/${studioId}/load_${p.uuid}`); modal.hide(); loadStatus(); } };
+            listDiv.appendChild(btn);
+        });
+    }
+
+    async function loadStatus() {
+        if (document.getElementById('view-overview').classList.contains('d-none')) return;
+        const res = await fetch('/api/all_status');
+        const studios = await res.json();
+        const container = document.getElementById('studio-container');
+        container.innerHTML = '';
+        studios.forEach(s => {
+            const id = s.studio_info.id;
+            const isAuto = s.scheduler.active;
+            const state = s.playback.state;
+            const title = s.playback.spl_title;
+
+            let badgeHtml = (title === 'No Playlist' || state === 'Stopped') ? `<div class="status-badge badge-empty">NO PLAYLIST LOADED</div>` :
+                            (state === 'Play' ? `<div class="status-badge badge-playing"><div class="pulse-dot"></div> PLAYING</div>` : `<div class="status-badge badge-paused">PAUSED</div>`);
+
+            container.innerHTML += `
+            <div class="studio-card">
+                <div class="card-body-sw">
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="text-center" style="min-width:85px"><div class="th-label mb-2">TH ${id}</div>${badgeHtml}</div>
+                        <div style="flex:1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="text-white fw-bold" style="font-size:0.95rem">${title}</span>
+                                <span class="small text-info text-truncate" style="max-width:400px">${s.playback.cpl_title}</span>
+                            </div>
+                            <div class="pg-playlist"><div class="bar-fill" style="width:${s.playback.spl_progress}%"></div></div>
+                            <div class="pg-cpl"><div class="bar-fill bar-blue" style="width:${s.playback.cpl_progress}%"></div></div>
+                            <div class="time-row">
+                                <div class="d-flex gap-4"><span>ELAPSED: ${format(s.playback.spl_pos)}</span><span class="text-white">REM: ${format(s.playback.spl_dur - s.playback.spl_pos)}</span></div>
+                                ${isAuto ? `<div class="lock-text"><i class="fa fa-lock me-2"></i>Scheduler active. Controls locked.</div>` : 
+                                `<div class="d-flex gap-1" style="margin-top:-5px">
+                                    <button class="btn-tms" title="Load" onclick="openLoadModal(${id})"><i class="fa fa-folder-open text-info"></i></button>
+                                    <button class="btn-tms" title="Play" onclick="control(${id},'play')"><i class="fa fa-play text-success"></i></button>
+                                    <button class="btn-tms" title="Pause" onclick="control(${id},'pause')"><i class="fa fa-pause text-warning"></i></button>
+                                    <button class="btn-tms" title="Eject" onclick="control(${id},'eject')"><i class="fa fa-eject text-danger"></i></button>
+                                </div>`}
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="checkbox" class="custom-checkbox" id="sc-${id}" ${isAuto?'checked':''} onchange="toggleSc(${id})">
+                                    <span class="small fw-bold text-muted">SCHEDULE</span>
+                                </div>
+                                <div class="d-flex gap-3">
+                                    <div class="text-end"><small class="d-block text-muted" style="font-size:0.5rem">Proj</small><span class="small fw-bold text-success">${s.projector.lamp}</span></div>
+                                    <div class="text-end"><small class="d-block text-muted" style="font-size:0.5rem">Temp</small><span class="small fw-bold text-info">${s.system.temp}</span></div>
+                                    <div class="text-end"><small class="d-block text-muted" style="font-size:0.5rem">Disk</small><span class="small fw-bold text-white">${s.storage.fullness}%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>`;
+        });
+    }
+
+    async function toggleSc(id) { const s = document.getElementById(`sc-${id}`).checked ? 'on' : 'off'; await fetch(`/api/control/${id}/toggle_scheduler?status=${s}`); loadStatus(); }
+    async function control(id, act) { if (act === 'eject' && !confirm("Eject TH " + id + "?")) return; await fetch(`/api/control/${id}/${act}`); loadStatus(); }
+
+    setInterval(loadStatus, 1000);
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('id-ID',{hour12:false}); }, 1000);
+    loadStatus();
+</script>
+</body>
+</html>

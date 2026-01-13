@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2015, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/audiomanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/audiomanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="AudioMacro">
+		<xsd:sequence>
+			<xsd:element name="macroId" type="xsd:unsignedInt"/>
+			<xsd:element name="macroName" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAudioMacro">
+		<xsd:sequence>
+			<xsd:element name="macro" type="ns:AudioMacro" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AudioEqPreset">
+    <xsd:sequence>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eqPresetName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfAudioEqPreset">
+    <xsd:sequence>
+      <xsd:element name="eqPreset" type="ns:AudioEqPreset" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+	</xsd:complexType>
+  <xsd:complexType name="EqPresetConfig">
+    <xsd:sequence>
+    <!--
+      eqPresetId (unsignedInt)
+                    eltType (am:EqCurveEltTypes) Type of the Eq Curve.
+                    eltId (unsignedInt) EQ element ID.
+                    localEqBypass (xsd:boolean) True if localEQ is bypass.
+                    autoEqBypass (xsd:boolean) True if autoEQ is bypass.
+                    eltGain (xsd:double) Speaker Gain.
+                    bassGain (xsd:double)  Bass Gain.
+                    trebleGain (xsd:double) Treble Gain.
+                    treble_cutoff_frequency (xsd:string) Treble cutoff frequency.
+                    bandGains (am:ArrayOfEqGain) Band gains.
+                    grossmanBandGains (am:ArrayOfEqGain) Grossman band gains.
+                    grossmanBandsPerFader (xsd:int) Grossman bands per fader.
+                    grossmanBandsOffset (xsd:int) Grossman bands offset.
+                    [subwooferEqStages] (am:ArrayOfSubwooferConfig) Subwoofer EQ Stages configuration (N/A for arrays type).
+                    [screenLossFilter] (xsd:boolean) Screen loss filter (N/A for arrays type).
+                    mismatchedAutoEq (xsd:boolean) Mismatched autoEQ.
+   -->
+    <xsd:element name="eqPresetId" type="xsd:unsignedInt">
+          <xsd:annotation>
+            <xsd:documentation>EQ Preset Identifier.</xsd:documentation>
+          </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="eltType" type="ns:EqCurveEltTypes"/>
+    <xsd:element name="eltId" type="xsd:unsignedInt"/>
+    <xsd:element name="localEqBypass" type="xsd:boolean"/>
+    <xsd:element name="autoEqBypass" type="xsd:boolean"/>
+    <xsd:element name="eltGain" type="xsd:double"/>
+    <xsd:element name="bassGain" type="xsd:double"/>
+    <xsd:element name="trebleGain" type="xsd:double"/>
+    <xsd:element name="trebleCutOffFrequency" type="xsd:string"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="bandGains" type="ns:ArrayOfEqGain"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="grossmanBandGains" type="ns:ArrayOfEqGain"/>
+    <xsd:element name="grossmanBandsPerFader" type="xsd:int"/>
+    <xsd:element name="grossmanBandsOffset" type="xsd:int"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="subwooferEqStages" type="ns:ArrayOfSubwooferConfig"/>
+    <xsd:element minOccurs="0" name="screenLossFilter" type="xsd:boolean"/>
+    <xsd:element name="mismatchedAutoEq" type="xsd:boolean"/>
+   </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AudioLevel">
+    <xsd:sequence>
+      <xsd:element name="levelIdx" type="xsd:unsignedInt"/>
+      <xsd:element name="peakLevel" type="xsd:unsignedInt"/>
+      <xsd:element name="rmsLevel" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfAudioLevel">
+    <xsd:sequence>
+      <xsd:element name="audioLevel" type="ns:AudioLevel" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ScreenInformation">
+    <xsd:sequence>
+      <xsd:element name="width" type="xsd:double"/>
+      <xsd:element name="height" type="xsd:double"/>
+      <xsd:element name="positionX" type="xsd:double"/>
+      <xsd:element name="positionY" type="xsd:double"/>
+      <xsd:element name="positionZ" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AudioPreferences">
+    <xsd:sequence>
+      <xsd:element name="centerChannelBypassEnable" type="xsd:boolean"/>
+      <xsd:element name="fadeIn" type="xsd:double"/>
+      <xsd:element name="fadeOut" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayDelays">
+    <xsd:sequence>
+      <xsd:element name="useDefaults" type="xsd:boolean"/>
+      <xsd:element name="lssRssDelayMs" type="xsd:unsignedInt"/>
+      <xsd:element name="lrsRrsDelayMs" type="xsd:unsignedInt"/>
+      <xsd:element name="ltsRtsDelayMs" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MonitorConfig">
+    <xsd:sequence>
+      <xsd:element name="sourceType" type="xsd:int"/>
+      <xsd:element name="sourceIndex" type="xsd:unsignedInt"/>
+      <xsd:element name="display" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ElevationsInformation">
+    <xsd:sequence>
+      <xsd:element name="screen" type="xsd:double"/>
+      <xsd:element name="twoThirds" type="xsd:double"/>
+      <xsd:element name="booth" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RoomInformation">
+    <xsd:sequence>
+      <xsd:element name="exhibitor" type="xsd:string"/>
+      <xsd:element name="auditorium" type="xsd:string"/>
+      <xsd:element name="theaterName" type="xsd:string"/>
+      <xsd:element name="city" type="xsd:string"/>
+      <xsd:element name="state" type="xsd:string"/>
+      <xsd:element name="country" type="xsd:string"/>
+      <xsd:element name="widthMeters" type="xsd:double"/>
+      <xsd:element name="heightMeters" type="xsd:double"/>
+      <xsd:element name="depthMeters" type="xsd:double"/>
+      <xsd:element name="screenWall" type="xsd:double"/>
+      <xsd:element name="boothWall" type="xsd:double"/>
+      <xsd:element name="houseLeftWall" type="xsd:double"/>
+      <xsd:element name="houseRightWall" type="xsd:double"/>
+      <xsd:element name="flatScreen" type="ns:ScreenInformation"/>
+      <xsd:element name="scopeScreen" type="ns:ScreenInformation"/>
+      <xsd:element name="floor" type="ns:ElevationsInformation"/>
+      <xsd:element name="ceiling" type="ns:ElevationsInformation"/>
+      <xsd:element name="calculatedSurroundDelayMs" type="xsd:unsignedInt"/>
+      <xsd:element name="speakerCount" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="OutputFeedTypeEnum">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="unknown">
+        <!-- Unknown output feed type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="none">
+        <!-- unused feed !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="analog">
+        <!-- Analog output feed !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="digital">
+        <!-- Digital output feed !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="aes3">
+        <!-- AES3 output feed !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EqCurveEltTypes">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="Unknown">
+        <!-- Unknown eq element type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="speaker">
+        <!-- speaker element !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="arrays">
+        <!-- arrays element !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SpeakerArrayIdEnum">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="not used">
+        <!-- Unknown Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="L">
+        <!-- Left  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="R">
+        <!-- Right Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="C">
+        <!-- Center Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LFE">
+        <!-- LFE Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LSS">
+        <!-- LSS Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RSS">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LB">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RB">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LC">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RC">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LS_D">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RS_D">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LN_F">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RN_F">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="CB">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LS">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RS">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LW">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RW">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="LE">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="RE">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="HRC">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="CC">
+        <!--  Speaker Identification !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SpeakerTypeEnum">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="unknown">
+        <!-- Unknown Speaker type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="screen">
+        <!-- Screen Speaker type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="surround">
+        <!-- Surround Speaker type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="subwoofer">
+        <!-- Subwoofer Speaker type !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="AudioOutputFeed">
+    <xsd:sequence>
+      <xsd:element name="type" type="ns:OutputFeedTypeEnum"/>
+      <xsd:element name="channel" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SpeakerDelay">
+    <xsd:sequence>
+      <xsd:element name="arrayId" type="ns:SpeakerArrayIdEnum"/>
+      <xsd:element name="delayMs" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfSpeakerInfo">
+    <xsd:sequence>
+      <xsd:element name="speakerInfo" type="ns:SpeakerInfo"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfAudioOutputFeed">
+    <xsd:sequence>
+      <xsd:element name="outputFeed" type="ns:AudioOutputFeed" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfSpeakerIndice">
+    <xsd:sequence>
+      <xsd:element name="speakerIndice" type="xsd:int"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfSpeakerArrayID">
+    <xsd:sequence>
+      <xsd:element name="arrayId" type="ns:SpeakerArrayIdEnum"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfDelays">
+    <xsd:sequence>
+      <xsd:element name="delay" type="ns:SpeakerDelay"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SpeakerInfo">
+    <xsd:sequence>
+      <xsd:element name="speakerIndex" type="xsd:unsignedInt"/>
+      <xsd:element name="speakerName" type="xsd:string"/>
+      <xsd:element name="outputFeed" type="ns:AudioOutputFeed"/>
+      <xsd:element name="speakerArrays" type="ns:ArrayOfSpeakerArrayID"/>
+      <xsd:element name="speakerType" type="ns:SpeakerTypeEnum"/>
+      <xsd:element name="positionX" type="xsd:double"/>
+      <xsd:element name="positionY" type="xsd:double"/>
+      <xsd:element name="positionZ" type="xsd:double"/>
+      <xsd:element name="bassMgmtSubwooferId" type="xsd:int"/>
+      <xsd:element name="speakerModelName" type="xsd:string"/>
+      <xsd:element name="isDown" type="xsd:boolean"/>
+      <xsd:element name="isGroup" type="xsd:boolean"/>
+      <xsd:element name="numGroupElements" type="xsd:int"/>
+      <xsd:element name="numCrossoverWays" type="xsd:int"/>
+      <xsd:element name="crossoverOutputs"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EqGain">
+    <xsd:sequence>
+      <xsd:element name="index" type="xsd:unsignedInt"/>
+      <xsd:element name="dB" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfEqGain">
+    <xsd:sequence>
+      <xsd:element name="gain" type="ns:EqGain"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SubwooferStageConfig">
+    <xsd:sequence>
+      <xsd:element name="index" type="xsd:unsignedInt"/>
+      <xsd:element name="frequency" type="xsd:unsignedInt"/>
+      <xsd:element name="gain" type="xsd:double"/>
+      <xsd:element name="bandWidth" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ArrayOfSubwooferConfig">
+    <xsd:sequence>
+      <xsd:element name="stage" type="ns:SubwooferStageConfig"  minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PresetOperationEnum">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="edit">
+        <!-- Edit a Preset with PresetEditParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="editMode">
+        <!-- Get current edit preset mode !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="disable">
+        <!-- Disable preset with PresetDisableParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="save">
+        <!-- Save preset with PresetSaveParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="reset">
+        <!-- Reset preset with PresetResetEqParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="copy">
+        <!-- Copy preset to another with PresetCopyParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="copyEq">
+        <!-- Copy Speaker or Array EQ preset to another with PresetCopyEqParameters !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="resetEq">
+        <!-- Reset Speaker or Array EQ preset with PresetResetEqParameters !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="EQCurve">
+    <xsd:sequence>
+      <xsd:element name="eqPresetId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltType" type="ns:EqCurveEltTypes"/>
+      <xsd:element minOccurs="0" name="eltId" type="xsd:unsignedInt"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="gains" type="ns:ArrayOfEqGain"/>
+      <xsd:element name="perEltGain" type="xsd:double"/>
+      <xsd:element minOccurs="0" name="autoEqBypass" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetEditParameters">
+    <xsd:sequence>
+      <xsd:element name="enable" type="xsd:unsignedInt"/>
+      <xsd:element minOccurs="0" name="owner" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetCopyParameters">
+    <xsd:sequence>
+      <xsd:element name="eqPresetDestId" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetSaveParameters">
+    <xsd:sequence>
+      <xsd:element name="eqPresetName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetConfigureParameters">
+    <xsd:sequence>
+      <xsd:element name="eqPresetName" type="xsd:string"/>
+      <xsd:element name="defined" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetCopyEqParameters">
+    <xsd:sequence>
+      <xsd:element name="eltType" type="ns:EqCurveEltTypes"/>
+      <xsd:element name="eltId" type="xsd:unsignedInt"/>
+      <xsd:element name="eqPresetDestId" type="xsd:unsignedInt"/>
+      <xsd:element name="eltDestId" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetResetEqParameters">
+    <xsd:sequence>
+      <xsd:element name="eltType" type="ns:EqCurveEltTypes"/>
+      <xsd:element name="eltId" type="xsd:unsignedInt"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PresetParameters">
+    <xsd:choice>
+      <xsd:element name="edit"        type="ns:PresetEditParameters"/>
+      <xsd:element name="configure"   type="ns:PresetConfigureParameters"/>
+      <xsd:element name="copy"        type="ns:PresetCopyParameters"/>
+      <xsd:element name="save"        type="ns:PresetSaveParameters"/>
+      <xsd:element name="copyEq"      type="ns:PresetCopyEqParameters"/>
+      <xsd:element name="resetEq"     type="ns:PresetResetEqParameters"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:simpleType name="NoiseSignalTypes">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="pinkNoise">
+        <!-- PinkNoise signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="100HzSine">
+        <!-- 100HzSine signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="1KHzSine">
+        <!-- 1KHzSine signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="10KHzSine">
+        <!-- 10KHzSine signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="thump">
+        <!-- Thump signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="program">
+        <!-- Program signal type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="sweep">
+        <!-- Sweep signal type !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NoiseModes">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="speaker">
+        <!-- Speaker noise mode !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="array">
+        <!-- Array noise mode !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="rotate">
+        <!-- Rotate noise mode !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="snap">
+        <!-- Snap noise mode !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="AudioNoiseSettings">
+    <xsd:sequence>
+      <xsd:element name="signalType" type="ns:NoiseSignalTypes"/>
+      <xsd:element name="signalMode" type="ns:NoiseModes"/>
+      <xsd:element name="speakerIndices" type="ns:ArrayOfSpeakerIndice"/>
+      <xsd:element name="speakerArrays" type="ns:ArrayOfSpeakerArrayID"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

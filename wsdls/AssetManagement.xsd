@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="AssetInfo">  
+		<xsd:sequence>
+			<xsd:element name="uuid" type="com:Uuid"/>
+			<xsd:element name="size" type="xsd:unsignedLong"/>
+			<xsd:element name="parentList" type="com:ArrayOfUuid"/>
+			<!-- String value can be "Local" or any NAS name !-->
+			<xsd:element name="storageList" type="com:ArrayOfString" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAssetInfo">
+		<xsd:sequence>
+			<xsd:element name="assetInfo" type="ns:AssetInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="OperationType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Copy"/>
+			<xsd:enumeration value="Delete"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="AssetOperation">  
+		<xsd:sequence>
+			<xsd:element name="uuid" type="com:Uuid"/>
+			<xsd:element name="location" type="xsd:string"/>
+			<xsd:element name="src" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAssetOperation">
+		<xsd:sequence>
+			<xsd:element name="operation" type="ns:AssetOperation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="OperationStatus">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Idle"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Complete"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

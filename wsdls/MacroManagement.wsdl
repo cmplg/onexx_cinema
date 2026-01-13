@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:mcr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/macromanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="MacroManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Macro Management provides functions to list or run macro.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="MacroManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/macromanagement"/>
+            <xsd:element name="GetMacroList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetMacroListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="macroList" type="com:ArrayOfUuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetMacroInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="uuid" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetMacroInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="macroInfo" type="mcr:MacroInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RunMacro">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="name" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RunMacroResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="completion" type="mcr:MacroExecutionStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetMacroList">
+        <wsdl:part name="parameters" element="v1_0:GetMacroList"/>
+    </wsdl:message>
+    <wsdl:message name="GetMacroListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetMacroListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetMacroInfo">
+        <wsdl:part name="parameters" element="v1_0:GetMacroInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetMacroInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetMacroInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RunMacro">
+        <wsdl:part name="parameters" element="v1_0:RunMacro"/>
+    </wsdl:message>
+    <wsdl:message name="RunMacroResponse">
+        <wsdl:part name="parameters" element="v1_0:RunMacroResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="MacroManagement_v1_0">
+        <wsdl:operation name="GetMacroList">
+            <wsdl:documentation>
+                GetMacroList
+                    Gets the list of macro UUIDs available on the server
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+
+                Response
+                    macroList (com:ArrayOfUuid) list of available macro UUIDs
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetMacroList"/>
+            <wsdl:output message="tns:GetMacroListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetMacroInfo">
+            <wsdl:documentation>
+                GetMacroInfo
+                    Gets the macro information
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    uuid (com:Uuid) UUID of requested macro
+
+                Response
+                    macroInfo (mcr:MacroInfo) information on requested macro
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Invalid argument"      : If provided UUID is invalid
+                    "Not found"             : If macro with provided UUID is not found
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetMacroInfo"/>
+            <wsdl:output message="tns:GetMacroInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="RunMacro">
+            <wsdl:documentation>
+                RunMacro
+                    Runs the chosen macro
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                    name (string) title of macro to be executed
+
+                Response
+                    completion (mcr:MacroExecutionStatus) status of executed macro
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+                    "Invalid argument"      : If provided macro name is invalid
+            </wsdl:documentation>
+            <wsdl:input message="tns:RunMacro"/>
+            <wsdl:output message="tns:RunMacroResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MacroManagement_v1_0_SOAPBinding" type="tns:MacroManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetMacroList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetMacroInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunMacro">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="MacroManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:MacroManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/MacroManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

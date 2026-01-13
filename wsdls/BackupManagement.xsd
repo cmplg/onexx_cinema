@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bck="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup" xmlns:bmn="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup" schemaLocation="Backup.xsd"/>
+	<xsd:simpleType name="BackupGenerateIdentifier">
+		<xsd:restriction base="xsd:unsignedLong"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="BackupRestoreIdentifier">
+		<xsd:restriction base="xsd:unsignedLong"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Category">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="description" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCategory">
+		<xsd:sequence>
+			<xsd:element name="category" type="bmn:Category" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BackupPath">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="path" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfBackupPath">
+		<xsd:sequence>
+			<xsd:element name="backupPath" type="bmn:BackupPath" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  <xsd:simpleType name="DefaultOutputTypes">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="aes67">
+        <!-- AES67 as default audio output type !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="aes3">
+        <!-- AES3 as default audio output type !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BackupTaskTypes">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="backupAudioSettings">
+        <!-- Backup Audio Engine Settings task !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="resetAudioSettings">
+        <!-- Reset Audio Engine Settings task !-->
+      </xsd:enumeration>
+      <xsd:enumeration value="restoreAudioSettings">
+        <!-- Restore Audio Engine Settings task !-->
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="backupAudioResetParameters">
+    <xsd:sequence>
+      <xsd:element name="defaultOutputType" type="bmn:DefaultOutputTypes"/>
+      <xsd:element name="all" type="xsd:boolean"/>
+      <xsd:element name="auditorium" type="xsd:boolean"/>
+      <xsd:element name="eq" type="xsd:boolean"/>
+      <xsd:element name="array_delays" type="xsd:boolean"/>
+      <xsd:element name="preferences" type="xsd:boolean"/>
+      <xsd:element name="operational_state" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="backupAudioRestoreParameters">
+    <xsd:sequence>
+      <xsd:element name="backupFilename" type="xsd:string"/>
+      <xsd:element name="all" type="xsd:boolean"/>
+      <xsd:element name="auditorium" type="xsd:boolean"/>
+      <xsd:element name="eq" type="xsd:boolean"/>
+      <xsd:element name="array_delays" type="xsd:boolean"/>
+      <xsd:element name="preferences" type="xsd:boolean"/>
+      <xsd:element name="operational_state" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getTaskProcessParameters">
+   <xsd:sequence>
+    <xsd:element name="identifier" type="bmn:BackupRestoreIdentifier"/>
+   </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BackupTaskParameters">
+    <xsd:choice>
+      <xsd:element name="resetAudio" type="bmn:backupAudioResetParameters"/>
+      <xsd:element name="restoreAudio" type="bmn:backupAudioRestoreParameters"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="BackupTaskProgressResponse">
+   <xsd:sequence>
+      <xsd:element name="status" type="bck:OperationStatus"/>
+      <xsd:element minOccurs="0" name="path" type="xsd:string"/>
+   </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

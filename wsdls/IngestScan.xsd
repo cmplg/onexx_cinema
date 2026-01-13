@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:scn="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestscan" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestscan" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="AssetTypeInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Assetmap"/>
+			<xsd:enumeration value="PackagingList"/>
+			<xsd:enumeration value="CompositionPlaylist"/>
+			<xsd:enumeration value="KeyMessage"/>
+			<xsd:enumeration value="LicenseMessage"/>
+			<xsd:enumeration value="ShowPlaylist"/>
+			<xsd:enumeration value="PackageFile"/>
+			<xsd:enumeration value="ZipFile"/>
+			<xsd:enumeration value="TSFile"/>
+			<xsd:enumeration value="UFOFile"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IngestScanStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Idle"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Failed"/>
+			<xsd:enumeration value="Cancelled"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="IngestScanStatus">
+		<xsd:sequence>
+			<xsd:element name="assetmapCount" type="xsd:int"/>
+			<xsd:element name="pklCount" type="xsd:int"/>
+			<xsd:element name="cplCount" type="xsd:int"/>
+			<xsd:element name="kdmCount" type="xsd:int"/>
+			<xsd:element name="dlmCount" type="xsd:int"/>
+			<xsd:element name="splCount" type="xsd:int"/>
+			<xsd:element name="pkgCount" type="xsd:int"/>
+			<xsd:element name="otherCount" type="xsd:int"/>
+			<xsd:element name="status" type="scn:IngestScanStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ScanAsset">
+		<xsd:sequence>
+			<xsd:element name="id" type="com:Uuid"/>
+			<xsd:element name="type" type="scn:AssetTypeInfo"/>
+			<xsd:element name="uri" type="xsd:anyURI"/>
+			<xsd:element name="description" type="xsd:string"/>
+			<xsd:element name="isComplete" type="xsd:boolean"/>
+			<xsd:element name="isAlreadyIngested" type="xsd:boolean"/>
+			<xsd:element name="is3D" type="xsd:boolean"/>
+			<xsd:element name="notValidBefore" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="notValidAfter" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="parent_id" type="com:Uuid" minOccurs="0"/>
+			<xsd:element name="level" type="xsd:int"/>
+			<xsd:element name="isAtmos" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isVision" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isVisionGen2" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isDCIHDR" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isDCISDR" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="duration" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="kind" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="isCaption" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isSubtitle" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="playbackCount" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="consumedPlaybackCount" type="xsd:int" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAssets">
+		<xsd:sequence>
+			<xsd:element name="asset" type="scn:ScanAsset" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfType">
+		<xsd:sequence>
+			<xsd:element name="type" type="scn:AssetTypeInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dis="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/discovery" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/discovery" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="DiscoveryItem">
+		<xsd:sequence>
+			<xsd:element name="creationTime" type="xsd:dateTime">
+			<!-- timestamp indication of when the item was first detected -->
+			</xsd:element>
+			<xsd:element name="lastSeenTimeOut" type="xsd:unsignedInt">
+			<!-- number of seconds since the last time the device was detected as alive. The item is removed from the list when this value becomes large (usually 30 seconds, but it may vary depedning on implementation) -->
+			</xsd:element>
+			<xsd:element name="ipAddress" type="com:IpAddress">
+			<!-- IP address of the item -->
+			</xsd:element>
+			<xsd:element name="productName" type="xsd:string"/>
+			<xsd:element name="version" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="hostName" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfDiscoveryItem">
+		<xsd:sequence>
+			<xsd:element name="resource" type="dis:DiscoveryItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

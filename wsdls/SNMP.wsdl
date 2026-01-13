@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:con="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/snmp" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SNMPManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                SNMP provides functions to query SNMP of the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:element name="GetSNMP">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="oid" type="com:ObjectIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSNMPResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="snmpType" type="xsd:string"/>
+                        <xsd:element name="snmpValue" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetSNMP">
+        <wsdl:part name="parameters" element="v1_0:GetSNMP"/>
+    </wsdl:message>
+    <wsdl:message name="GetSNMPResponse">
+        <wsdl:part name="parameters" element="v1_0:GetSNMPResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SNMPManagement_v1_0">
+        <wsdl:operation name="GetSNMP">
+            <wsdl:documentation>
+                GetSNMP
+                    Return SNMP property value according to specified OID.
+
+                Arguments
+                    sessionId (string): Session id returned by Login request.
+                    oid (string)
+
+                Response
+                    value (string)
+
+                Faults
+                    "Authentication failed" : If username and/or password are invalid.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSNMP"/>
+            <wsdl:output message="tns:GetSNMPResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SNMPManagement_v1_0_SOAPBinding" type="tns:SNMPManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetSNMP">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SNMPManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:SNMPManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/SNMPManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

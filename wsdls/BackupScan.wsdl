@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:bck="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup" xmlns:bsc="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupscan" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BackupScan_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Backup Scan provides functions to retreive the list of available backup archives.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="Backup.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backup"/>
+			<xsd:import schemaLocation="BackupScan.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/backupscan"/>
+			<xsd:element name="StartBackupScan">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="StartBackupScanResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="identifier" type="bsc:BackupScanIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CancelBackupScan">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="identifier" type="bsc:BackupScanIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CancelBackupScanResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupScanProgress">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="identifier" type="bsc:BackupScanIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupScanProgressResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="bck:OperationStatus"/>
+						<xsd:element name="logList" type="com:ArrayOfString"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupScanResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="identifier" type="bsc:BackupScanIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupScanResultResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="backupList" type="com:ArrayOfString"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupFileInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="backupFilename" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetBackupFileInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="info" type="bck:BackupInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="StartBackupScan">
+		<wsdl:part name="parameters" element="v1_0:StartBackupScan"/>
+	</wsdl:message>
+	<wsdl:message name="StartBackupScanResponse">
+		<wsdl:part name="parameters" element="v1_0:StartBackupScanResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupScanResult">
+		<wsdl:part name="parameters" element="v1_0:GetBackupScanResult"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupScanResultResponse">
+		<wsdl:part name="parameters" element="v1_0:GetBackupScanResultResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupFileInfo">
+		<wsdl:part name="parameters" element="v1_0:GetBackupFileInfo"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupFileInfoResponse">
+		<wsdl:part name="parameters" element="v1_0:GetBackupFileInfoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="CancelBackupScan">
+		<wsdl:part name="parameters" element="v1_0:CancelBackupScan"/>
+	</wsdl:message>
+	<wsdl:message name="CancelBackupScanResponse">
+		<wsdl:part name="parameters" element="v1_0:CancelBackupScanResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupScanProgress">
+		<wsdl:part name="parameters" element="v1_0:GetBackupScanProgress"/>
+	</wsdl:message>
+	<wsdl:message name="GetBackupScanProgressResponse">
+		<wsdl:part name="parameters" element="v1_0:GetBackupScanProgressResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="BackupScan_v1_0">
+		<wsdl:operation name="StartBackupScan">
+			<wsdl:documentation>
+				StartBackupScan
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:StartBackupScan"/>
+			<wsdl:output message="tns:StartBackupScanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupScanResult">
+			<wsdl:documentation>
+				GetBackupScanResult
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetBackupScanResult"/>
+			<wsdl:output message="tns:GetBackupScanResultResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupFileInfo">
+			<wsdl:documentation>
+				GetBackupFileInfo
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetBackupFileInfo"/>
+			<wsdl:output message="tns:GetBackupFileInfoResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CancelBackupScan">
+			<wsdl:documentation>
+				CancelBackupScan
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:CancelBackupScan"/>
+			<wsdl:output message="tns:CancelBackupScanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupScanProgress">
+			<wsdl:documentation>
+				GetBackupScanProgress
+
+				Arguments
+
+				Response
+
+				Faults
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetBackupScanProgress"/>
+			<wsdl:output message="tns:GetBackupScanProgressResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BackupScan_v1_0_SOAPBinding" type="tns:BackupScan_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="StartBackupScan">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupScanResult">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupFileInfo">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CancelBackupScan">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetBackupScanProgress">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BackupScan_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:BackupScan_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/BackupScan"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:str="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/storagemanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/storagemanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="SmartProperty">
+		<xsd:sequence>
+			<xsd:element name="propertyName" type="xsd:token"/>
+			<xsd:element name="propertyValue" type="xsd:string"/>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfSmartProperties">
+		<xsd:sequence>
+			<xsd:element name="smart" type="str:SmartProperty" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RaidInfo">
+		<xsd:sequence>
+			<xsd:element name="level" type="str:RaidType"/>
+			<xsd:element name="size" type="xsd:int"/>
+			<xsd:element name="rebuild" type="com:Percentage"/>
+			<xsd:element name="state" type="str:RaidState"/>
+			<xsd:element name="activeUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+			<xsd:element name="inactiveUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+			<xsd:element name="spareUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PasInfo">
+		<xsd:sequence>
+			<xsd:element name="bus" type="xsd:string"/>
+			<xsd:element name="smartList" type="str:ArrayOfSmartProperties" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NasInfo">
+		<xsd:sequence>
+			<xsd:element name="annotationText" type="xsd:string"/>
+			<xsd:element name="protocol" type="xsd:string"/>
+			<xsd:element name="linkCount" type="xsd:int"/>
+			<xsd:element name="networkState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="mountState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="linkState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="manageState" type="com:WorkingStatusInfo" minOccurs="0"/>
+			<xsd:element name="manageValue" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="snmpState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="fanState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="temperatureState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="diskState" type="com:WorkingStatusInfo"/>
+			<xsd:element name="volumeState" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MsNasProperty">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:token"/>
+			<xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfMsNasProperties">
+		<xsd:sequence>
+			<xsd:element name="property" type="str:MsNasProperty" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MsNasInfo">
+		<xsd:sequence>
+			<xsd:element name="activeUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+			<xsd:element name="inactiveUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+			<xsd:element name="spareUnitList" type="str:ArrayOfStorageUnit" minOccurs="0"/>
+			<xsd:element name="accessList" type="str:ArrayOfMsNasProperties" minOccurs="0"/>
+			<xsd:element name="configList" type="str:ArrayOfMsNasProperties" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IOLateInfo">
+		<xsd:sequence>
+			<xsd:element name="devLatency" type="xsd:long"/>
+			<xsd:element name="raidLatency" type="xsd:long"/>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PsdInfo">
+			<xsd:sequence>
+					<xsd:element name="linkCount" type="xsd:int"/>
+					<xsd:element name="linkState" type="com:WorkingStatusInfo"/>
+			</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BadBlockInfo">
+		<xsd:sequence>
+			<xsd:element name="count" type="xsd:long"/>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="StorageUnitType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="RAID"/>
+			<xsd:enumeration value="PAS"/>
+			<xsd:enumeration value="NAS"/>
+			<xsd:enumeration value="MS-NAS"/>
+			<xsd:enumeration value="PSD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StorageType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Data"/>
+			<xsd:enumeration value="System"/>
+			<xsd:enumeration value="Removable"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RaidType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown">
+				<!--Unknown-->
+			</xsd:enumeration>
+			<xsd:enumeration value="Linear">
+				<!--linear raid-->
+			</xsd:enumeration>
+			<xsd:enumeration value="Stripe"/>
+			<xsd:enumeration value="Mirror"/>
+			<xsd:enumeration value="Raid3"/>
+			<xsd:enumeration value="Raid5"/>
+			<!--Unknown-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RaidState">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown">
+				<!--Unknown-->
+			</xsd:enumeration>
+			<xsd:enumeration value="Error">
+				<!--linear raid-->
+			</xsd:enumeration>
+			<xsd:enumeration value="Normal"/>
+			<xsd:enumeration value="Recovering"/>
+			<xsd:enumeration value="Degraded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="StorageInfo">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="capacity" type="xsd:long">
+				<!-- storage capacity in megabyte !-->
+			</xsd:element>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+			<xsd:element name="type" type="str:StorageType"/>
+			<xsd:element name="fullness" type="com:Percentage"/>
+			<xsd:element name="storageUnit" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StorageUnitInfo">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="capacity" type="xsd:long">
+				<!-- storage unit capacity in megabyte !-->
+			</xsd:element>
+			<xsd:element name="state" type="com:WorkingStatusInfo"/>
+			<xsd:element name="type" type="str:StorageUnitType"/>
+			<xsd:element name="model" type="xsd:string"/>
+			<xsd:element name="version" type="xsd:string"/>
+			<xsd:element name="serial" type="xsd:string"/>
+			<xsd:element name="iolate" type="str:IOLateInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="badblockInfo" type="str:BadBlockInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="raidInfo" type="str:RaidInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="pasInfo" type="str:PasInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="badblockInfo" type="str:BadBlockInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="nasInfo" type="str:NasInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="msNasInfo" type="str:MsNasInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="psdInfo" type="str:PsdInfo" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfStorage">
+		<xsd:sequence>
+			<xsd:element name="storage" type="str:StorageInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfStorageUnit">
+		<xsd:sequence>
+			<xsd:element name="storageUnit" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="StorageInitStatus">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="idle"/>
+			<xsd:enumeration value="running"/>
+			<xsd:enumeration value="success"/>
+			<xsd:enumeration value="failure"/>
+            <xsd:enumeration value="warning"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Protocol">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="http"/>
+			<xsd:enumeration value="https"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActionType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="test_access"/>
+			<xsd:enumeration value="test_config"/>
+			<xsd:enumeration value="initial_setup"/>
+			<xsd:enumeration value="repair"/>
+			<xsd:enumeration value="reset"/>
+			<xsd:enumeration value="start_config"/>
+			<xsd:enumeration value="stop_config"/>
+			<xsd:enumeration value="discover_first_init_and_tests"/>
+			<xsd:enumeration value="discover_first_init_and_tests_shared"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfProcessStatus">
+		<xsd:sequence>
+			<xsd:element name="process" type="str:ProcessStatus" minOccurs="0" maxOccurs="unbounded">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessStatus">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="status" type="str:StorageInitStatus"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="PfNSActionType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="mount"/>
+			<xsd:enumeration value="unmount"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

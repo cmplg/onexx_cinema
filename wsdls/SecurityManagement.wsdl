@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:secu="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/securitymanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SecurityManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <documentation>
+                Security Management provides functions to handle network and system security.
+    </documentation>
+    <types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="SecurityManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/securitymanagement"/>
+            <xsd:element name="SetClearListeningLevel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="level" type="secu:ListeningLevel"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetClearListeningLevelResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetClearListeningLevel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetClearListeningLevelResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="level" type="secu:ListeningLevel"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AllowNetworkService">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="serviceName" type="secu:NetworkServiceName"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AllowNetworkServiceResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="BlockNetworkService">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="serviceName" type="secu:NetworkServiceName"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="BlockNetworkServiceResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkServiceStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="serviceName" type="secu:NetworkServiceName"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNetworkServiceStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="serviceStatus" type="secu:NetworkServiceStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearLockSystem">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearLockSystemResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetLockSystem">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="desc" type="xsd:string"/>
+                        <xsd:element name="timeout" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetLockSystemResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLockSystemStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLockSystemStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="lock" type="xsd:boolean"/>
+                        <xsd:element name="desc" type="xsd:string"/>
+                        <xsd:element name="timeout" type="xsd:int"/>
+                        <xsd:element name="ipAddress" type="xsd:string"  minOccurs="0"/>
+                        <xsd:element name="username" type="xsd:string"  minOccurs="0"/>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"  minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="SetClearListeningLevel">
+        <part name="parameters" element="v1_0:SetClearListeningLevel"/>
+    </message>
+    <message name="SetClearListeningLevelResponse">
+        <part name="parameters" element="v1_0:SetClearListeningLevelResponse"/>
+    </message>
+    <message name="GetClearListeningLevel">
+        <part name="parameters" element="v1_0:GetClearListeningLevel"/>
+    </message>
+    <message name="GetClearListeningLevelResponse">
+        <part name="parameters" element="v1_0:GetClearListeningLevelResponse"/>
+    </message>
+    <message name="AllowNetworkService">
+        <part name="parameters" element="v1_0:AllowNetworkService"/>
+    </message>
+    <message name="AllowNetworkServiceResponse">
+        <part name="parameters" element="v1_0:AllowNetworkServiceResponse"/>
+    </message>
+    <message name="BlockNetworkService">
+        <part name="parameters" element="v1_0:BlockNetworkService"/>
+    </message>
+    <message name="BlockNetworkServiceResponse">
+        <part name="parameters" element="v1_0:BlockNetworkServiceResponse"/>
+    </message>
+    <message name="GetNetworkServiceStatus">
+        <part name="parameters" element="v1_0:GetNetworkServiceStatus"/>
+    </message>
+    <message name="GetNetworkServiceStatusResponse">
+        <part name="parameters" element="v1_0:GetNetworkServiceStatusResponse"/>
+    </message>
+    <message name="ClearLockSystem">
+        <part name="parameters" element="v1_0:ClearLockSystem"/>
+    </message>
+    <message name="ClearLockSystemResponse">
+        <part name="parameters" element="v1_0:ClearLockSystemResponse"/>
+    </message>
+    <message name="SetLockSystem">
+        <part name="parameters" element="v1_0:SetLockSystem"/>
+    </message>
+    <message name="SetLockSystemResponse">
+        <part name="parameters" element="v1_0:SetLockSystemResponse"/>
+    </message>
+    <message name="GetLockSystemStatus">
+        <part name="parameters" element="v1_0:GetLockSystemStatus"/>
+    </message>
+    <message name="GetLockSystemStatusResponse">
+        <part name="parameters" element="v1_0:GetLockSystemStatusResponse"/>
+    </message>
+    <portType name="SecurityManagement_v1_0">
+        <operation name="SetClearListeningLevel">
+            <documentation>
+                 SetClearListeningLevel
+                    Change Level for accepting connection.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    level: (secu:ListeningLevel): level "LocalOnly" or "Full"
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:SetClearListeningLevel"/>
+            <output message="tns:SetClearListeningLevelResponse"/>
+        </operation>
+        <operation name="GetClearListeningLevel">
+            <documentation>
+                 GetClearListeningLevel
+                    Return the Level for accepting connection.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    level: (secu:ListeningLevel): level for accepting connection
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:GetClearListeningLevel"/>
+            <output message="tns:GetClearListeningLevelResponse"/>
+        </operation>
+        <operation name="AllowNetworkService">
+            <documentation>
+                AllowNetworkService
+                    Allow a Service to receive remote connection.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    serviceName: (secu:NetworkServiceName): Service name
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:AllowNetworkService"/>
+            <output message="tns:AllowNetworkServiceResponse"/>
+        </operation>
+        <operation name="BlockNetworkService">
+            <documentation>
+                 BlockNetworkService
+                    Block a Service to receive remote connection.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    serviceName: (secu:NetworkServiceName): Service name
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:BlockNetworkService"/>
+            <output message="tns:BlockNetworkServiceResponse"/>
+        </operation>
+        <operation name="GetNetworkServiceStatus">
+            <documentation>
+                 GetNetworkServiceStatus
+                    Return the Service state.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    serviceStatus: (secu:NetworkServiceStatus): Service status
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:GetNetworkServiceStatus"/>
+            <output message="tns:GetNetworkServiceStatusResponse"/>
+        </operation>
+        <operation name="ClearLockSystem">
+            <documentation>
+                 ClearLockSystem
+                    Unlock the sytem if previously locked by SetLockSystem.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:ClearLockSystem"/>
+            <output message="tns:ClearLockSystemResponse"/>
+        </operation>
+        <operation name="SetLockSystem">
+            <documentation>
+                 SetLockSystem
+                    Lock the sytem to prevent actions on it (ie: Show control).
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    desc (xsd:string) reason of the lock
+                    timeout (xsd:int) Timeout before the lock is released (in second)
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:SetLockSystem"/>
+            <output message="tns:SetLockSystemResponse"/>
+        </operation>
+        <operation name="GetLockSystemStatus">
+            <documentation>
+                 ClearLockSystem
+                    Return the lock sytem status.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    lock (xsd: boolean)
+                    desc (xsd:string) reason of the lock
+                    timeout (xsd:int) timeout before the lock is released (in second)
+                    [ipAddress] (xsd:string) IP Address of the client who locked the system.
+                    [username] (xsd:string)  Username of the client who locked the system.
+                    [sessionId] (com:SessionIdentifier) SessionId of the client who locked the system.
+
+                Faults
+                    "Internal server error": If a system error occurred
+
+            </documentation>
+            <input message="tns:GetLockSystemStatus"/>
+            <output message="tns:GetLockSystemStatusResponse"/>
+        </operation>
+    </portType>
+    <binding name="SecurityManagement_v1_0_SOAPBinding" type="tns:SecurityManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="SetClearListeningLevel">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetClearListeningLevel">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="AllowNetworkService">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="BlockNetworkService">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetNetworkServiceStatus">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="ClearLockSystem">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SetLockSystem">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetLockSystemStatus">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="SecurityManagement_v1_0">
+        <port name="SOAPOverHTTP" binding="tns:SecurityManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/SecurityManagement"/>
+        </port>
+    </service>
+</definitions>

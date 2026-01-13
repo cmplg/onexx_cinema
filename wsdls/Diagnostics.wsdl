@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions name="Diagnostics_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:diag="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/diagnostics"
+    xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:documentation>
+        Diagnotics provides functions to generate report or run a system diagnotic.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+                schemaLocation="Common.xsd" />
+            <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/diagnostics"
+                schemaLocation="Diagnostics.xsd" />
+            <xsd:element name="GenerateReport">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GenerateReportResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="report" type="xsd:base64Binary" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateReportTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CreateReportTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="reportId" type="diag:ReportId" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteReportTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="reportId" type="diag:ReportId" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteReportTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetReportTaskList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetReportTaskListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="reportList" type="diag:ArrayOfReportTaskInfo" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="startDiagnosticTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="type" type="diag:DiagnosticTaskType" />
+                        <xsd:element minOccurs="0" name="param" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="startDiagnosticTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskId" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getDiagnosticTaskStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="taskId" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getDiagnosticTaskStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="taskId" type="xsd:int" />
+                        <xsd:element name="status" type="diag:DiagnosticTaskStatus" />
+                        <xsd:element name="progress" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="cancelDiagnosticTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                        <xsd:element name="taskId" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="cancelDiagnosticTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GenerateReport">
+        <wsdl:part element="v1_0:GenerateReport" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GenerateReportResponse">
+        <wsdl:part element="v1_0:GenerateReportResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="CreateReportTask">
+        <wsdl:part element="v1_0:CreateReportTask" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="CreateReportTaskResponse">
+        <wsdl:part element="v1_0:CreateReportTaskResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteReportTask">
+        <wsdl:part element="v1_0:DeleteReportTask" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="DeleteReportTaskResponse">
+        <wsdl:part element="v1_0:DeleteReportTaskResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetReportTaskList">
+        <wsdl:part element="v1_0:GetReportTaskList" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="GetReportTaskListResponse">
+        <wsdl:part element="v1_0:GetReportTaskListResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="startDiagnosticTask">
+        <wsdl:part element="v1_0:startDiagnosticTask" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="startDiagnosticTaskResponse">
+        <wsdl:part element="v1_0:startDiagnosticTaskResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="getDiagnosticTaskStatus">
+        <wsdl:part element="v1_0:getDiagnosticTaskStatus" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="getDiagnosticTaskStatusResponse">
+        <wsdl:part element="v1_0:getDiagnosticTaskStatusResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="cancelDiagnosticTask">
+        <wsdl:part element="v1_0:cancelDiagnosticTask" name="parameters" />
+    </wsdl:message>
+    <wsdl:message name="cancelDiagnosticTaskResponse">
+        <wsdl:part element="v1_0:cancelDiagnosticTaskResponse" name="parameters" />
+    </wsdl:message>
+    <wsdl:portType name="Diagnostics_v1_0">
+        <wsdl:operation name="GenerateReport">
+            <wsdl:documentation>
+                GenerateReport
+                    This is method that generates and returns in synchronous way system report.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    Compressed system report encoded using Base64 scheme
+
+                Faults
+                    "Undefined error" : generated in case of internal server fault
+            </wsdl:documentation>
+            <wsdl:input message="tns:GenerateReport" />
+            <wsdl:output message="tns:GenerateReportResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="CreateReportTask">
+            <wsdl:documentation>
+                CreateReportTask
+                    This is method starts generation of system report. Contrary to GenerateReport it works
+                    in an asynchronous way.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    ID of report being generated
+
+                Faults
+                    "Internal server error" : generated in case of internal server fault
+            </wsdl:documentation>
+            <wsdl:input message="tns:CreateReportTask" />
+            <wsdl:output message="tns:CreateReportTaskResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="DeleteReportTask">
+            <wsdl:documentation>
+                DeleteReportTask
+                    Once Report Task job completes it generates a report file stored on the system. This method is used
+                    to delete such report file.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    reportId (int) ID of report to be deleted
+
+                Response
+                    returns nothing on success.
+
+                Faults
+                    "Invalid argument" : generated if report ID is wrong
+                    "Resource busy" : generated if report is still being generated
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteReportTask" />
+            <wsdl:output message="tns:DeleteReportTaskResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetReportTaskList">
+            <wsdl:documentation>
+                GetReportTaskList
+                    System keeps track of last 10 reports. This method returns their status.
+                    Once Report Task job completes it generates a report file stored on the system.
+                    The system report is available via the URL :
+                    http://{unit_addr}/dc/dcp/rest/v1/FileManagement/report/{filename}
+                    More information: Check FileManagement Rest service.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    List of available reports with their status, report file location, generation date and ID
+
+                Faults
+                    "Internal server error" : generated in case of server fault
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetReportTaskList" />
+            <wsdl:output message="tns:GetReportTaskListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="startDiagnosticTask">
+            <wsdl:documentation>
+                startDiagnosticTask
+                    Starts diagostic task for a given disk
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    type  StorageSMART - for SMART short test
+                            StorageBenchmark - for read performance test
+                    param disk to be tested, for example raid_hdd1
+
+                Response
+                    ID of created task
+
+                Faults
+                    "Internal server error" : generated  when 8 diagnostics tasks are already running
+            </wsdl:documentation>
+            <wsdl:input message="tns:startDiagnosticTask" />
+            <wsdl:output message="tns:startDiagnosticTaskResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="getDiagnosticTaskStatus">
+            <wsdl:documentation>
+                getDiagnosticTaskStatus
+                    Returns status of diagnostic task
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    taskId Task ID for which we want to obtain information
+
+                Response
+                    Task ID, its status (running completed etc.) and progress
+
+                Faults
+                    "Invalid argument" : generated for wrong task ID
+            </wsdl:documentation>
+            <wsdl:input message="tns:getDiagnosticTaskStatus" />
+            <wsdl:output message="tns:getDiagnosticTaskStatusResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="cancelDiagnosticTask">
+            <wsdl:documentation>
+                cancelDiagnosticTask
+                    This cancels running diagnostic task
+
+                Arguments
+                    SessionId (string) returned by SessionManagement/Login
+                    taskId Task ID for which we want to obtain information
+
+                Response
+                    returns nothing on success.
+
+                Faults
+                    "Internal server error" : generated in case of wrong task ID
+            </wsdl:documentation>
+            <wsdl:input message="tns:cancelDiagnosticTask" />
+            <wsdl:output message="tns:cancelDiagnosticTaskResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Diagnostics_v1_0_SOAPBinding" type="tns:Diagnostics_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GenerateReport">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CreateReportTask">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteReportTask">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetReportTaskList">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="startDiagnosticTask">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getDiagnosticTaskStatus">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="cancelDiagnosticTask">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Diagnostics_v1_0">
+        <wsdl:port binding="tns:Diagnostics_v1_0_SOAPBinding" name="SOAPOverHTTP">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/Diagnostics" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

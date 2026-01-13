@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sct="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+    <xsd:simpleType name="LoopModeType">
+        <xsd:restriction base="xsd:token">
+            <!--  Unknown State or not configured -->
+            <xsd:enumeration value="Unknown"/>
+            <!-- At the ShowPlaylist's end the show goes in Pause mode -->
+            <xsd:enumeration value="Pause"/>
+            <!-- At the ShowPlaylist's end the show restart at the first CPL -->
+            <xsd:enumeration value="Replay"/>
+            <!-- At the ShowPlaylist's end the show rewinds -->
+            <xsd:enumeration value="Rewind"/>
+            <!-- At the ShowPlaylist's end the show stop and eject -->
+            <xsd:enumeration value="Eject"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShowStateInfo">
+        <xsd:restriction base="xsd:token">
+            <xsd:enumeration value="Unknown"/>
+            <xsd:enumeration value="Stop"/>
+            <xsd:enumeration value="Play"/>
+            <xsd:enumeration value="Pause"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="ShowLoadingStatus">
+        <xsd:sequence>
+            <xsd:element name="progress" type="com:Percentage"/>
+            <xsd:element name="stage" type="xsd:string"/>
+            <xsd:element name="errorCode" type="xsd:unsignedInt"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ShowStatus">
+        <xsd:sequence>
+            <xsd:element name="splId" type="com:Uuid"/>
+            <xsd:element name="splTitle" type="xsd:string"/>
+            <xsd:element name="stateInfo" type="sct:ShowStateInfo"/>
+            <xsd:element name="splPosition" type="com:Seconds"/>
+            <xsd:element name="splDuration" type="com:Seconds"/>
+            <xsd:element name="cplId" type="com:Uuid"/>
+            <xsd:element name="cplTitle" type="xsd:string"/>
+            <xsd:element name="eventId" type="com:Uuid"/>
+            <xsd:element name="elementId" type="com:Uuid"/>
+            <xsd:element name="elementPosition" type="com:Seconds"/>
+            <xsd:element name="elementDuration" type="com:Seconds"/>
+            <xsd:element name="editRate" type="com:Rational"/>
+            <xsd:element name="editPosition" type="xsd:int"/>
+            <xsd:element name="editDuration" type="xsd:int"/>
+            <xsd:element name="editOffset" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="framesPerEdit" type="xsd:int"/>
+            <xsd:element name="kdmId" type="com:Uuid"/>
+            <!-- indicates if current show is a recovery !-->
+            <xsd:element name="recovery" type="xsd:boolean"/>
+            <xsd:element name="loadingStatus" type="sct:ShowLoadingStatus" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="ElementStateInfo">
+        <xsd:restriction base="xsd:token">
+            <xsd:enumeration value="Unknown"/>
+            <xsd:enumeration value="Pending"/>
+            <xsd:enumeration value="Running"/>
+            <xsd:enumeration value="Completed"/>
+            <xsd:enumeration value="CompletedWithErrors"/>
+            <xsd:enumeration value="Aborted"/>
+            <xsd:enumeration value="Failed"/>
+            <xsd:enumeration value="NotExecuted"/>
+            <xsd:enumeration value="Waiting"/>
+            <xsd:enumeration value="Validating"/>
+            <xsd:enumeration value="ValidationFailed"/>
+            <xsd:enumeration value="Resuming"/>
+            <xsd:enumeration value="Suspending"/>
+            <xsd:enumeration value="Suspended"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="ShowElementStatus">
+        <xsd:sequence>
+            <xsd:element name="elementId" type="com:Uuid"/>
+            <xsd:element name="stateInfo" type="sct:ElementStateInfo"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ArrayOfPlaybackElementStatus">
+        <xsd:sequence>
+            <xsd:element name="elementStatus" type="sct:ShowElementStatus" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="CPLValidation">
+        <xsd:sequence>
+            <xsd:element name="errorCode" type="xsd:int"/>
+            <xsd:element name="errorText" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ShowLockStatus">
+        <xsd:sequence>
+            <xsd:element name="locked" type="xsd:boolean"/>
+            <xsd:element name="owningLock" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="peerName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="peerIPAddress" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ngs="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/ingestmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="ContentTypeInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Assetmap"/>
+			<xsd:enumeration value="PackagingList"/>
+			<xsd:enumeration value="CompositionPlaylist"/>
+			<xsd:enumeration value="KeyMessage"/>
+			<xsd:enumeration value="LicenseMessage"/>
+			<xsd:enumeration value="ShowPlaylist"/>
+			<xsd:enumeration value="PackageFile"/>
+			<xsd:enumeration value="ZipFile"/>
+			<xsd:enumeration value="TSFile"/>
+			<xsd:enumeration value="UFOFile"/>
+			<xsd:enumeration value="LicenseDeliveryMessage"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaskId">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IngestTaskStateInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Paused"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Scheduled"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="Failed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="IngestTask">
+		<xsd:sequence>
+			<xsd:element name="taskId" type="ngs:TaskId"/>
+			<!-- number of available event message starting from index 0 !-->
+			<xsd:element name="eventCount" type="xsd:int"/>
+			<xsd:element name="state" type="ngs:IngestTaskStateInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfIngestTask">
+		<xsd:sequence>
+			<xsd:element name="ingestTask" type="ngs:IngestTask" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ParamDescriptionType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="NetworkShare"/>
+			<xsd:enumeration value="ShippingDrive"/>
+			<xsd:enumeration value="MainStorage"/>
+			<xsd:enumeration value="Share"/>
+			<xsd:enumeration value="ThirdPartyNAS"/>
+			<!-- the ingest task was automatically created by the Main storage NAS.
+			The ingest task runs without needing the Server -->
+			<xsd:enumeration value="AutomaticOffline"/>
+			<!-- the ingest task was automatically created by the Server.
+			The ingest task needs the Server to run -->
+			<xsd:enumeration value="AutomaticOnline"/>
+			<!-- the ingest task was manually created.
+			The ingest task needs the Server to run -->
+			<xsd:enumeration value="ManualOnline"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ParamDescription">
+		<xsd:sequence>
+			<xsd:element name="type" type="ngs:ParamDescriptionType"/>
+			<xsd:element name="description" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskParameters">
+		<xsd:sequence>
+			<!-- <xsd:element name="ip" type="xsd:string"/> !-->
+			<xsd:element name="uri" type="xsd:anyURI"/>
+			<!--  !-->
+			<xsd:element name="contentType" type="ngs:ContentTypeInfo"/>
+			<!-- for security reasons, if credential shall not be embedded !-->
+			<!-- in the URI, use optional Username and Properties fields !-->
+			<!-- this applies only for protocol requiring authentication !-->
+			<!-- like a FTP remote server !-->
+			<xsd:element name="username" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="password" type="xsd:string" minOccurs="0"/>
+			<!-- raw options to pass to the ingest engine !-->
+			<!-- shall not be used !-->
+			<xsd:element name="rawOptions" type="xsd:string"/>
+			<!-- location of the asset db to ingest to. Value can be "Local" or any NAS name !-->
+			<xsd:element name="destination" type="xsd:string" minOccurs="0"/>
+			<!-- description of the source this task is ingesting from -->
+			<xsd:element name="sourceDescription" type="ngs:ParamDescription" minOccurs="0"/>
+			<!-- description of the destination this task is ingesting to -->
+			<xsd:element name="destinationDescription" type="ngs:ParamDescription" minOccurs="0"/>
+			<!-- description of the method used to ingest -->
+			<xsd:element name="methodDescription" type="ngs:ParamDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskProperties">
+		<xsd:sequence>
+			<!-- human friendly description of the task !-->
+			<xsd:element name="description" type="xsd:string" minOccurs="0"/>
+			<!-- human friendly description of the task's creator !-->
+			<xsd:element name="creator" type="xsd:string" minOccurs="0"/>
+			<!-- raw options to pass to the ingest engine !-->
+			<!-- shall not be used !-->
+			<xsd:element name="scheduledStartDate" type="xsd:dateTime" minOccurs="0"/>
+			<!-- field that may be used by creator to store opaque data - like a private reference !-->
+			<xsd:element name="privateData" type="xsd:string" minOccurs="0"/>
+			<!-- priority. Highest the number, highest the assocaited priority !-->
+			<xsd:element name="priority" type="xsd:int" minOccurs="0"/>
+			<!-- shall the task be run in parralel with other existing tasks ? !-->
+			<!-- or shall it be run only by itself !-->
+			<xsd:element name="multitasking" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskInfos">
+		<xsd:sequence>
+			<!-- ip address of enity that created the task !-->
+			<xsd:element name="ipAddress" type="xsd:string"/>
+			<xsd:element name="creationDate" type="xsd:dateTime"/>
+			<xsd:element name="startedDate" type="xsd:dateTime"/>
+			<xsd:element name="finishedDate" type="xsd:dateTime" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskStatus">
+		<xsd:sequence>
+			<xsd:element name="errorCount" type="xsd:int"/>
+			<xsd:element name="warningCount" type="xsd:int"/>
+			<xsd:element name="eventCount" type="xsd:int"/>
+			<xsd:element name="state" type="ngs:IngestTaskStateInfo"/>
+			<xsd:element name="actionProgress" type="xsd:int"/>
+			<xsd:element name="totalProgress" type="xsd:int"/>
+			<xsd:element name="pendingAction" type="xsd:int"/>
+			<xsd:element name="currentAction" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskEvent">
+		<xsd:sequence>
+			<xsd:element name="date" type="xsd:dateTime"/>
+			<xsd:element name="level" type="com:CriticityInfo"/>
+			<xsd:element name="message" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfIngestTaskEvent">
+		<xsd:sequence>
+			<xsd:element name="event" type="ngs:IngestTaskEvent" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IngestTaskFullInfo">
+		<xsd:sequence>	
+			<xsd:element name="taskId" type="ngs:TaskId"/>
+			<xsd:element name="eventCount" type="xsd:int"/>
+			<xsd:element name="state" type="ngs:IngestTaskStateInfo"/>
+			<xsd:element name="taskParameters" type="ngs:IngestTaskParameters"/>
+			<xsd:element name="taskProperties" type="ngs:IngestTaskProperties"/>
+			<xsd:element name="taskInfos" type="ngs:IngestTaskInfos"/>
+			<xsd:element name="taskStatus" type="ngs:IngestTaskStatus"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="ArrayOfIngestTaskFullInfo">
+		<xsd:sequence>
+			<xsd:element name="ingestTask" type="ngs:IngestTaskFullInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

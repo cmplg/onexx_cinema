@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:dis="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/discovery"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    name="Discovery_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+        Discovery provides functions to get the list of Dolby devices present on the same network.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import schemaLocation="Discovery.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/discovery" />
+            <xsd:import schemaLocation="Common.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" />
+            <xsd:element name="GetDiscoveryList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetDiscoveryListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="updateCounter" type="xsd:unsignedLong" />
+                        <xsd:element name="discoveryList" type="dis:ArrayOfDiscoveryItem" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetDiscoveryList">
+        <wsdl:part name="parameters" element="v1_0:GetDiscoveryList" />
+    </wsdl:message>
+    <wsdl:message name="GetDiscoveryListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetDiscoveryListResponse" />
+    </wsdl:message>
+    <wsdl:portType name="Discovery_v1_0">
+        <wsdl:operation name="GetDiscoveryList">
+            <wsdl:documentation>
+                GetDiscoveryList
+                    Returns the list of Dolby device discovered on the network
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    updateCounter (int): Incrementation Update counter
+                    discoveryList (dis:ArrayOfDiscoveryItem): Discovered device
+
+                Faults
+                    "Internal server error" : if a system error occurred
+                    "not authenticated" : if inactive/bad sessionID passed
+                    "permission denied" : if user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetDiscoveryList" />
+            <wsdl:output message="tns:GetDiscoveryListResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Discovery_v1_0_SOAPBinding" type="tns:Discovery_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetDiscoveryList">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Discovery_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:Discovery_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/Discovery" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

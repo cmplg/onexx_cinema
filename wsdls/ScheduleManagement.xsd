@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sch="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/schedulemanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/schedulemanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="ScheduleId">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfScheduleId">
+		<xsd:sequence>
+			<xsd:element name="scheduleId" type="sch:ScheduleId" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LoopModeInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Default"/>
+			<xsd:enumeration value="PlayOnce"/>
+			<xsd:enumeration value="PlayLoop"/>
+			<xsd:enumeration value="PlayRewind"/>
+			<xsd:enumeration value="PlayEject"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LoadingPolicyInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Default"/>
+			<xsd:enumeration value="Idle"/>
+			<xsd:enumeration value="Pause"/>
+			<xsd:enumeration value="Force"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ScheduleStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Success"/>
+			<xsd:enumeration value="Failure"/>
+			<xsd:enumeration value="Aborted"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SchedulerStatusInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Stopped"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ScheduleInfo">
+		<xsd:sequence>
+      <!-- [ReadOnly] ScheduleId is returned after a creation. It can not be set -->
+			<xsd:element name="scheduleId" type="sch:ScheduleId" minOccurs="0"/>
+			<xsd:element name="splId" type="com:Uuid"/>
+			<xsd:element name="timeStart" type="xsd:dateTime"/>
+			<xsd:element name="duration" type="com:Seconds" minOccurs="0"/>
+			<xsd:element name="statusMode" type="sch:ScheduleStatusInfo" minOccurs="0"/>
+			<xsd:element name="loopMode" type="sch:LoopModeInfo" minOccurs="0"/>
+			<xsd:element name="loadingPolicy" type="sch:LoadingPolicyInfo" minOccurs="0"/>
+			<xsd:element name="annotationText" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

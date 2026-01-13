@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:net="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/networkmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/networkmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="Network">
+		<xsd:sequence>
+			<xsd:element name="interface" type="xsd:string"/>
+			<xsd:element name="configurable" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfNetwork">
+		<xsd:sequence>
+			<xsd:element name="network" type="net:Network" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="NetworkHardwareAddress">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetworkConfigType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Static"/>
+			<xsd:enumeration value="Dhcp"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="NetworkConfig">
+		<xsd:sequence>
+			<xsd:element name="interface" type="xsd:string"/>
+			<xsd:element name="hostname" type="xsd:string"/>
+			<xsd:element name="type" type="net:NetworkConfigType"/>
+			<xsd:element name="ipAddress" type="xsd:string"/>
+			<xsd:element name="netmask" type="xsd:string"/>
+			<xsd:element name="gateway" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NetworkInfo">
+		<xsd:sequence>
+			<xsd:element name="interface" type="xsd:string"/>
+			<xsd:element name="active" type="xsd:boolean"/>
+			<xsd:element name="ipAddress" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="netmask" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="hardwareAddress" type="net:NetworkHardwareAddress" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

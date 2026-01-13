@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:ast="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetmanagement" name="AssetManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Asset Management provides functions to manage asset (link copy or delete).
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="AssetManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/assetmanagement"/>
+            <xsd:element name="GetAssetList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetAssetListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="assetList" type="ast:ArrayOfAssetInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartAssetOperation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="type" type="ast:OperationType"/>
+                        <xsd:element name="list" type="ast:ArrayOfAssetOperation"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StartAssetOperationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AssetOperationStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AssetOperationStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="ast:OperationStatus"/>
+                        <xsd:element name="progress" type="com:Rational"/>
+                        <xsd:element name="totalProgress" type="com:Rational"/>
+                        <xsd:element name="logs" type="com:ArrayOfString"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearAssetOperation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ClearAssetOperationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetAssetList">
+        <wsdl:part name="parameters" element="v1_0:GetAssetList"/>
+    </wsdl:message>
+    <wsdl:message name="GetAssetListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetAssetListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="StartAssetOperation">
+        <wsdl:part name="parameters" element="v1_0:StartAssetOperation"/>
+    </wsdl:message>
+    <wsdl:message name="StartAssetOperationResponse">
+        <wsdl:part name="parameters" element="v1_0:StartAssetOperationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AssetOperationStatus">
+        <wsdl:part name="parameters" element="v1_0:AssetOperationStatus"/>
+    </wsdl:message>
+    <wsdl:message name="AssetOperationStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:AssetOperationStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ClearAssetOperation">
+        <wsdl:part name="parameters" element="v1_0:ClearAssetOperation"/>
+    </wsdl:message>
+    <wsdl:message name="ClearAssetOperationResponse">
+        <wsdl:part name="parameters" element="v1_0:ClearAssetOperationResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="AssetManagement_v1_0">
+        <wsdl:operation name="GetAssetList">
+            <wsdl:documentation>
+                GetAssetList
+                    Return asset list
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    assetList (ast:ArrayOfAssetInfo) list of assets
+
+                Faults
+                    "Session not found" : If the session id is invalid.
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetAssetList"/>
+            <wsdl:output message="tns:GetAssetListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="StartAssetOperation">
+            <wsdl:documentation>
+                StartAssetOperation
+                    Start the chosen operation on a number of assets
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    type (ast:OperationType) type of operation, one of: Copy, Delete
+                    list (ast:ArrayOfAssetOperation) assets to perform the operation on
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Session not found" : If the session id is invalid.
+                    "Invalid argument" : If operation type or asset data in list is incorrect
+            </wsdl:documentation>
+            <wsdl:input message="tns:StartAssetOperation"/>
+            <wsdl:output message="tns:StartAssetOperationResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="AssetOperationStatus">
+            <wsdl:documentation>
+                AssetOperationStatus
+                    Report the status of operations being performed
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    status (ast:OperationStatus) status of opreation, one of: Idle, Running, Complete
+                    progress (com:Rational) progress of current operation
+                    totalProgress (com:Rational) progress of the whole list of operations
+                    logs (com:ArrayOfString) logs reported from operations
+
+                Faults
+                    "Session not found" : If the session id is invalid.
+            </wsdl:documentation>
+            <wsdl:input message="tns:AssetOperationStatus"/>
+            <wsdl:output message="tns:AssetOperationStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ClearAssetOperation">
+            <wsdl:documentation>
+                ClearAssetOperation
+                    Cancel the currently running operations and set the status to Idle
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Session not found" : If the session id is invalid.
+            </wsdl:documentation>
+            <wsdl:input message="tns:ClearAssetOperation"/>
+            <wsdl:output message="tns:ClearAssetOperationResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AssetManagement_v1_0_SOAPBinding" type="tns:AssetManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetAssetList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="StartAssetOperation">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AssetOperationStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ClearAssetOperation">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AssetManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:AssetManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/AssetManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

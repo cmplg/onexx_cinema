@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kdm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/kdmmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/kdmmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="KDMInfo">
+		<xsd:sequence>
+			<xsd:element name="uuid" type="com:Uuid"/>
+			<xsd:element name="cplId" type="com:Uuid"/>
+			<xsd:element name="notValidBeforeString" type="xsd:dateTime"/>
+			<xsd:element name="notValidAfterString" type="xsd:dateTime"/>
+			<xsd:element name="encryptionKeysCount" type="xsd:unsignedInt"/>
+			<xsd:element name="keyList" type="kdm:ArrayOfKeyId" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="keyValidity" type="kdm:KeyValidity" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="deviceListCount" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="deviceList" type="kdm:ArrayOfThumbprint" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="isDeviceListValid" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ppvCount" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ppvConsumed" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfKdmInfo">
+		<xsd:sequence>
+			<xsd:element name="kdmInfo" type="kdm:KDMInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfKdmId">
+		<xsd:sequence>
+			<xsd:element name="kdmId" type="com:Uuid" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfKeyId">
+		<xsd:sequence>
+			<xsd:element name="keyId" type="com:Uuid" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfThumbprint">
+		<xsd:sequence>
+			<xsd:element name="thumbprint" type="xsd:base64Binary" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="KeyValidity">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="NotYetValid"/>
+			<xsd:enumeration value="Valid"/>
+			<xsd:enumeration value="Expired"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

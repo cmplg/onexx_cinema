@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:dlm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/dlmmanagement" name="DLMManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                DLM Management provides functions to manage DML.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="DLMManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/dlmmanagement"/>
+			<xsd:element name="GetDLMList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDLMListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="dlmList" type="dlm:ArrayOfDlmId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteDLM">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="dlmId" type="com:Uuid"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteDLMResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDLMContent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="dlmId" type="com:Uuid"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDLMContentResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="content" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetDLMContent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="content" type="xsd:base64Binary"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetDLMContentResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetDLMList">
+		<wsdl:part name="parameters" element="v1_0:GetDLMList"/>
+	</wsdl:message>
+	<wsdl:message name="GetDLMListResponse">
+		<wsdl:part name="parameters" element="v1_0:GetDLMListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteDLM">
+		<wsdl:part name="parameters" element="v1_0:DeleteDLM"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteDLMResponse">
+		<wsdl:part name="parameters" element="v1_0:DeleteDLMResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetDLMContent">
+		<wsdl:part name="parameters" element="v1_0:GetDLMContent"/>
+	</wsdl:message>
+	<wsdl:message name="GetDLMContentResponse">
+		<wsdl:part name="parameters" element="v1_0:GetDLMContentResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SetDLMContent">
+		<wsdl:part name="parameters" element="v1_0:SetDLMContent"/>
+	</wsdl:message>
+	<wsdl:message name="SetDLMContentResponse">
+		<wsdl:part name="parameters" element="v1_0:SetDLMContentResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="DLMManagement_v1_0">
+		<wsdl:operation name="GetDLMList">
+			<wsdl:documentation>
+                 GetDLMList
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetDLMList"/>
+			<wsdl:output message="tns:GetDLMListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteDLM">
+			<wsdl:documentation>
+                 DeleteDLM
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:DeleteDLM"/>
+			<wsdl:output message="tns:DeleteDLMResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetDLMContent">
+			<wsdl:documentation>
+                 GetDLMContent
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetDLMContent"/>
+			<wsdl:output message="tns:GetDLMContentResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SetDLMContent">
+			<wsdl:documentation>
+                 SetDLMContent
+
+                 Arguments
+
+
+                 Response
+
+
+                 Faults
+
+			</wsdl:documentation>
+			<wsdl:input message="tns:SetDLMContent"/>
+			<wsdl:output message="tns:SetDLMContentResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DLMManagement_v1_0_SOAPBinding" type="tns:DLMManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetDLMList">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteDLM">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDLMContent">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetDLMContent">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DLMManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:DLMManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/DLMManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

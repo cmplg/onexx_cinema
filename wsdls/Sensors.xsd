@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sen="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sensors" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sensors" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="SensorInfo">
+		<xsd:sequence>
+			<xsd:element name="sensorTitle" type="xsd:string"/>
+			<xsd:element name="sensorValue" type="xsd:int"/>
+			<xsd:element name="sensorUnit" type="xsd:string"/>
+			<xsd:element name="sensorModule" type="xsd:string"/>
+			<xsd:element name="status" type="com:WorkingStatusInfo"/>
+			<xsd:element name="lowThreshold" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="highThreshold" type="xsd:int" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfSensor">
+		<xsd:sequence>
+			<xsd:element name="sensor" type="sen:SensorInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

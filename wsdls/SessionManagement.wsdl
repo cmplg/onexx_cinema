@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sess="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sessionmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SessionManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <documentation>
+                Session Management provides functions related to user session.
+    </documentation>
+    <types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="SessionManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/sessionmanagement"/>
+            <xsd:element name="Login">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="username" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoginResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Logout">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LogoutResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="WhoAmI">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="WhoAmIResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="group" type="xsd:string"/>
+                        <xsd:element name="userLevel" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Relogin">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="username" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ReloginResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="Login">
+        <part name="parameters" element="v1_0:Login"/>
+    </message>
+    <message name="LoginResponse">
+        <part name="parameters" element="v1_0:LoginResponse"/>
+    </message>
+    <message name="Logout">
+        <part name="parameters" element="v1_0:Logout"/>
+    </message>
+    <message name="LogoutResponse">
+        <part name="parameters" element="v1_0:LogoutResponse"/>
+    </message>
+    <message name="WhoAmI">
+        <part name="parameters" element="v1_0:WhoAmI"/>
+    </message>
+    <message name="WhoAmIResponse">
+        <part name="parameters" element="v1_0:WhoAmIResponse"/>
+    </message>
+    <message name="Relogin">
+        <part name="parameters" element="v1_0:Relogin"/>
+    </message>
+    <message name="ReloginResponse">
+        <part name="parameters" element="v1_0:ReloginResponse"/>
+    </message>
+    <portType name="SessionManagement_v1_0">
+        <operation name="Login">
+            <documentation>
+                 Login
+                    Validates user cridentials, if authentication succeeds, it starts a new session.
+
+                 Arguments
+                    username (string): System username.
+                    password (string): Corresponding password stored in the system.
+
+                 Response
+                    sessionId (string) : If authentication succeeds.
+                              (the session id is sent with every request)
+
+                 Faults
+                    "Authentication failed" : If username and/or password are invalid.
+
+            </documentation>
+            <input message="tns:Login"/>
+            <output message="tns:LoginResponse"/>
+        </operation>
+        <operation name="Logout">
+            <documentation>
+                 Logout
+                    Terminates the session.
+
+                 Arguments
+                    sessionId (string): The session to be ended.
+
+                 Response
+                    return (int): 1 on success.
+
+                 Faults
+                    "Session not found" : If the session id is invalid.
+    </documentation>
+            <input message="tns:Logout"/>
+            <output message="tns:LogoutResponse"/>
+        </operation>
+        <operation name="WhoAmI">
+            <documentation>
+                 WhoAmI
+                    Return user level.
+
+                 Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                 Response
+                    level (int): 0 (), 1 (), 2 (), 3 (), 4 ()
+
+                 Faults
+                    "Session not found" : If the session id is invalid.
+
+    </documentation>
+            <input message="tns:WhoAmI"/>
+            <output message="tns:WhoAmIResponse"/>
+        </operation>
+        <operation name="Relogin">
+            <documentation>
+                 Relogin
+                    Login with different credentials to change user level without ending the session.
+
+                 Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    username (string): System username.
+                    password (string): Corresponding password stored in the system.
+
+                 Response
+                    return (int): 1 on success.
+
+                 Faults
+                    "Session not found" : If the session id is invalid.
+
+    </documentation>
+            <input message="tns:Relogin"/>
+            <output message="tns:ReloginResponse"/>
+        </operation>
+    </portType>
+    <binding name="SessionManagement_v1_0_SOAPBinding" type="tns:SessionManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="Login">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="Logout">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="WhoAmI">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="Relogin">
+            <soap:operation soapAction="" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="SessionManagement_v1_0">
+        <port name="SOAPOverHTTP" binding="tns:SessionManagement_v1_0_SOAPBinding">
+            <soap:address location="http://10.201.22.34:10000/dc/dcp/ws/v1/SessionManagement"/>
+        </port>
+    </service>
+</definitions>

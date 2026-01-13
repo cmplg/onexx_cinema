@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:pwr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/powermanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="PowerManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                PowerManagement provides functions to halt or reboot the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="PowerManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/powermanagement"/>
+            <xsd:element name="Shutdown">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="delayMinutes" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ShutdownResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Reboot">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="delayMinutes" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RebootResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelShutdown">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelShutdownResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelReboot">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="CancelRebootResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Standby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StandbyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Wakeup">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="WakeupResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Shutdown">
+        <wsdl:part name="parameters" element="v1_0:Shutdown"/>
+    </wsdl:message>
+    <wsdl:message name="ShutdownResponse">
+        <wsdl:part name="parameters" element="v1_0:ShutdownResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Reboot">
+        <wsdl:part name="parameters" element="v1_0:Reboot"/>
+    </wsdl:message>
+    <wsdl:message name="RebootResponse">
+        <wsdl:part name="parameters" element="v1_0:RebootResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelShutdown">
+        <wsdl:part name="parameters" element="v1_0:CancelShutdown"/>
+    </wsdl:message>
+    <wsdl:message name="CancelShutdownResponse">
+        <wsdl:part name="parameters" element="v1_0:CancelShutdownResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelReboot">
+        <wsdl:part name="parameters" element="v1_0:CancelReboot"/>
+    </wsdl:message>
+    <wsdl:message name="CancelRebootResponse">
+        <wsdl:part name="parameters" element="v1_0:CancelRebootResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Standby">
+        <wsdl:part name="parameters" element="v1_0:Standby"/>
+    </wsdl:message>
+    <wsdl:message name="StandbyResponse">
+        <wsdl:part name="parameters" element="v1_0:StandbyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Wakeup">
+        <wsdl:part name="parameters" element="v1_0:Wakeup"/>
+    </wsdl:message>
+    <wsdl:message name="WakeupResponse">
+        <wsdl:part name="parameters" element="v1_0:WakeupResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="PowerManagement_v1_0">
+        <wsdl:operation name="Shutdown">
+            <wsdl:documentation>
+                 Shutdown
+                    Shutdown the system after a delay.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    delayMinutes (integer) number of minutes before shutting down the system (where 0 means now)
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Shutdown"/>
+            <wsdl:output message="tns:ShutdownResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Reboot">
+            <wsdl:documentation>
+                 Reboot
+                    Reboot the system after a delay.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    delayMinutes (integer) number of minutes before rebooting the system (where 0 means now)
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Reboot"/>
+            <wsdl:output message="tns:RebootResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelShutdown">
+            <wsdl:documentation>
+                 CancelShutdown
+                    Cancel the shutdown of the system.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:CancelShutdown"/>
+            <wsdl:output message="tns:CancelShutdownResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelReboot">
+            <wsdl:documentation>
+                 CancelReboot
+                    Cancel the reboot of the system.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:CancelReboot"/>
+            <wsdl:output message="tns:CancelRebootResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Standby">
+            <wsdl:documentation>
+                 Standby
+                    Standy the system.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Standby"/>
+            <wsdl:output message="tns:StandbyResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Wakeup">
+            <wsdl:documentation>
+                 Wakeup
+                    Wakeup the system after a standby.
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Wakeup"/>
+            <wsdl:output message="tns:WakeupResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PowerManagement_v1_0_SOAPBinding" type="tns:PowerManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Shutdown">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Reboot">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelShutdown">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelReboot">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Standby">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Wakeup">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PowerManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:PowerManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/PowerManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

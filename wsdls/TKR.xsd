@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tkr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/tkr" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/tkr" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="TkrId">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TkrTaskStateInfo">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="Failed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="TkrKdmInfo">
+		<xsd:sequence>
+			<xsd:element name="kdmId" type="com:Uuid"/>
+			<xsd:element name="kdmState" type="xsd:string"/>
+			<xsd:element name="kdmNotValidAfter" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfTkrKdmInfo">
+		<xsd:sequence>
+			<xsd:element name="kdmInfo" type="tkr:TkrKdmInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TkrTaskItem">
+		<xsd:sequence>
+			<xsd:element name="taskId" type="tkr:TkrId"/>
+			<xsd:element name="state" type="tkr:TkrTaskStateInfo"/>
+			<xsd:element name="cplId" type="com:Uuid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfTkrTaskItem">
+		<xsd:sequence>
+			<xsd:element name="tkrTaskItem" type="tkr:TkrTaskItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TkrTaskInfo">
+		<xsd:sequence>
+			<xsd:element name="taskId" type="tkr:TkrId"/>
+			<xsd:element name="stage" type="xsd:string"/>
+			<xsd:element name="state" type="tkr:TkrTaskStateInfo"/>
+			<xsd:element name="retrieveDate" type="xsd:dateTime"/>
+			<xsd:element name="cplId" type="com:Uuid"/>
+			<xsd:element name="url" type="xsd:anyURI"/>
+			<xsd:element name="errorMessage" type="xsd:string"/>
+			<xsd:element name="kdmList" type="tkr:ArrayOfTkrKdmInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfTkrTaskInfo">
+		<xsd:sequence>
+			<xsd:element name="tkrTaskInfo" type="tkr:TkrTaskInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

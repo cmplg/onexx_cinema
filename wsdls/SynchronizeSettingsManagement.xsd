@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright 2020 Dolby Laboratories, Inc.
+	All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Dolby Laboratories, Inc.
+		1275 Market Street
+		San Francisco, CA 94103-1410 USA
+		T +1-415-558-0200
+		F +1-415-645-4000
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sync="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/synchronizesettingsmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/synchronizesettingsmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+
+	<xsd:simpleType name="TaskStatus">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Idle"/>
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Success"/>
+			<xsd:enumeration value="Failure"/>
+            <xsd:enumeration value="Warning"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActionType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="CompareMacro"/>
+			<xsd:enumeration value="CompareSchedule"/>
+			<xsd:enumeration value="CompareAssetMapping"/>
+			<xsd:enumeration value="SyncMacro"/>
+			<xsd:enumeration value="SyncSchedule"/>
+			<xsd:enumeration value="SyncAssetMapping"/>
+			<xsd:enumeration value="CompareDevices"/>
+			<xsd:enumeration value="SyncDevices"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="ActionCompareResults">
+		<xsd:sequence>
+			<xsd:element name="differs" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ActionSyncResults">
+		<xsd:sequence>
+			<xsd:element name="updated" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ActionResults">
+		<xsd:choice>
+			<xsd:element name="compare" type="sync:ActionCompareResults"/>
+			<xsd:element name="sync" type="sync:ActionSyncResults"/>
+		</xsd:choice>
+	</xsd:complexType>
+</xsd:schema>

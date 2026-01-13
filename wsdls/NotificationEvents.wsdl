@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:not="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/notificationevents" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="NotificationEvents_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Notification Events provides functions to list and tag system notification.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="NotificationEvents.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/notificationevents"/>
+            <xsd:element name="GetNotificationStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="database" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNotificationStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="updateCounter" type="xsd:unsignedLong"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNotificationList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="database" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="lowId" type="xsd:unsignedLong" minOccurs="0"/>
+                        <xsd:element name="highId" type="xsd:unsignedLong" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetNotificationListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="eventList" type="not:ArrayOfEventInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetEventTag">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="database" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="eventId" type="not:EventId"/>
+                        <xsd:element name="tag" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetEventTagResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ResetEventTag">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="database" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="eventId" type="not:EventId"/>
+                        <xsd:element name="tag" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ResetEventTagResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetNotificationStatus">
+        <wsdl:part name="parameters" element="v1_0:GetNotificationStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetNotificationStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetNotificationStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetNotificationList">
+        <wsdl:part name="parameters" element="v1_0:GetNotificationList"/>
+    </wsdl:message>
+    <wsdl:message name="GetNotificationListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetNotificationListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetEventTag">
+        <wsdl:part name="parameters" element="v1_0:SetEventTag"/>
+    </wsdl:message>
+    <wsdl:message name="SetEventTagResponse">
+        <wsdl:part name="parameters" element="v1_0:SetEventTagResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ResetEventTag">
+        <wsdl:part name="parameters" element="v1_0:ResetEventTag"/>
+    </wsdl:message>
+    <wsdl:message name="ResetEventTagResponse">
+        <wsdl:part name="parameters" element="v1_0:ResetEventTagResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="NotificationEvents_v1_0">
+        <wsdl:operation name="GetNotificationStatus">
+            <wsdl:documentation>
+                GetNotificationStatus
+                    This command returns notification DB status by returning notification counter
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    database  (xsd:string) optional, name of the notification DB
+
+                Response
+                    updateCounter" (xsd:unsignedLong) notification update counter
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetNotificationStatus"/>
+            <wsdl:output message="tns:GetNotificationStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetNotificationList">
+            <wsdl:documentation>
+                GetNotificationList
+                    Get list of notification info objects of Id rangining from lowId to highId
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    database  (xsd:string) optional, name of the notification DB
+                    lowId     (xsd:unsignedLong) optional, lower notification id limit
+                    highId    (xsd:unsignedLong optionl, upper notification id limit
+
+                Response
+                    eventList (not:ArrayOfEventInfo) list of notification event info objects
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetNotificationList"/>
+            <wsdl:output message="tns:GetNotificationListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetEventTag">
+            <wsdl:documentation>
+                SetEventTag
+                    Set tag on notification event from the database
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login
+                    database    (xsd:string) optional, name of the notification DB
+                    eventId     (not:EventId) notification event id to tag
+                    tag         (xsd:string) tag name
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "not found" : If eventId is not found in database
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetEventTag"/>
+            <wsdl:output message="tns:SetEventTagResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResetEventTag">
+            <wsdl:documentation>
+                ResetEventTag
+                    Remove tag from the notification event from the database
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login
+                    database    (xsd:string) optional, name of the notification DB
+                    eventId     (not:EventId) notification event id to tag
+                    tag         (xsd:string) tag name
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "not found" : If eventId is not found in database
+            </wsdl:documentation>
+            <wsdl:input message="tns:ResetEventTag"/>
+            <wsdl:output message="tns:ResetEventTagResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="NotificationEvents_v1_0_SOAPBinding" type="tns:NotificationEvents_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetNotificationStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetNotificationList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetEventTag">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResetEventTag">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="NotificationEvents_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:NotificationEvents_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/NotificationEvents"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

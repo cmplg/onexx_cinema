@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:kdm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/kdmmanagement" name="KDMManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                KDM Management provides functions to interact with KDM.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="KDMManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/kdmmanagement"/>
+            <xsd:element name="GetKDMList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="target" type="com:DeviceTarget" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kdmList" type="kdm:ArrayOfKdmId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteKDM">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="kdmId" type="com:Uuid"/>
+                        <xsd:element name="target" type="com:DeviceTarget" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteKDMResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="kdmId" type="com:Uuid"/>
+                        <xsd:element name="target" type="com:DeviceTarget" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kdmInfo" type="kdm:KDMInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="kdmId" type="com:Uuid"/>
+                        <xsd:element name="target" type="com:DeviceTarget" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetKDMContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetKDMContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMListInfo">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="target" type="com:DeviceTarget" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetKDMListInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kdmList" type="kdm:ArrayOfKdmInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetKDMList">
+        <wsdl:part name="parameters" element="v1_0:GetKDMList"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetKDMListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteKDM">
+        <wsdl:part name="parameters" element="v1_0:DeleteKDM"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteKDMResponse">
+        <wsdl:part name="parameters" element="v1_0:DeleteKDMResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMInfo">
+        <wsdl:part name="parameters" element="v1_0:GetKDMInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetKDMInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMContent">
+        <wsdl:part name="parameters" element="v1_0:GetKDMContent"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMContentResponse">
+        <wsdl:part name="parameters" element="v1_0:GetKDMContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetKDMContent">
+        <wsdl:part name="parameters" element="v1_0:SetKDMContent"/>
+    </wsdl:message>
+    <wsdl:message name="SetKDMContentResponse">
+        <wsdl:part name="parameters" element="v1_0:SetKDMContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMListInfo">
+        <wsdl:part name="parameters" element="v1_0:GetKDMListInfo"/>
+    </wsdl:message>
+    <wsdl:message name="GetKDMListInfoResponse">
+        <wsdl:part name="parameters" element="v1_0:GetKDMListInfoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="KDMManagement_v1_0">
+        <wsdl:operation name="GetKDMList">
+            <wsdl:documentation>
+                GetKDMList
+                   Retrieve a list of uuids of ingested KDM on the system (or targeted for device uuid)
+                   In case of chase, the secondary unit can be accessible using the device uuid:
+                   urn:uuid:C7a33000-0000-0000-0000-000000000001
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   kdmId (com:Uuid) uuid of KDM
+                   target (optional com:DeviceTarget) contain uuid of target device
+
+                Response
+                   kdmInfo (kdm:KDMInfo) structure of KDM information (uuid, cpl id, key list, device list)
+
+                Faults
+                   "Internal server error"  : If system error occured
+                   "Invalid argument"       : If argument is incorrect
+                   "Missing argument"       : If argument is not present in request
+                   "Not authenticated"      : If inactive/bad sessionID passed
+                   "Permission denied"      : If user not privileged to perform operation
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetKDMList"/>
+            <wsdl:output message="tns:GetKDMListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteKDM">
+            <wsdl:documentation>
+                DeleteKDM
+                 Delete KDM by uuid (or targeted for device uuid)
+                 In case of chase, the secondary unit can be accessible using the device uuid:
+                 urn:uuid:C7a33000-0000-0000-0000-000000000001
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   kdmId (com:Uuid) uuid of KDM
+                   target (optional com:DeviceTarget) contain uuid of target device
+
+                Response
+                   return nothing on success.
+
+                Faults
+                   "Internal server error" : If system error occured
+                   "Invalid argument"      : If argument is incorrect
+                   "Missing argument"      : If argument is not present in request
+                   "Not authenticated"     : If inactive/bad sessionID passed
+                   "Permission denied"     : If user not privileged to perform operation
+                   "Not found"              : If KDM is not found
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:DeleteKDM"/>
+            <wsdl:output message="tns:DeleteKDMResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMInfo">
+            <wsdl:documentation>
+                GetKDMInfo
+                   Retrieve KDM info structure of desired KDM id (or targeted for device uuid)
+                   In case of chase, the secondary unit can be accessible using the device uuid:
+                   urn:uuid:C7a33000-0000-0000-0000-000000000001
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   kdmId (com:Uuid) uuid of KDM
+                   target (optional com:DeviceTarget) contain uuid of target device
+
+                Response
+                   kdmList (kdm:ArrayOfKdmInfo) array of kdm info structures
+
+                Faults
+                   "Internal server error"  : If system error occured
+                   "Invalid argument"       : If argument is incorrect
+                   "Missing argument"       : If argument is not present in request
+                   "Not authenticated"      : If inactive/bad sessionID passed
+                   "Permission denied"      : If user not privileged to perform operation
+                   "Not found"              : If KDM is not found
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetKDMInfo"/>
+            <wsdl:output message="tns:GetKDMInfoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMContent">
+            <wsdl:documentation>
+                GetKDMContent
+                  Retrieve KDM content referenced by uuid, encoded in base64 (or targeted for device uuid)
+                  In case of chase, the secondary unit can be accessible using the device uuid:
+                  urn:uuid:C7a33000-0000-0000-0000-000000000001
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   kdmId (com:Uuid) uuid of KDM
+                   target (optional com:DeviceTarget) contain uuid of target device
+
+                Response
+                   content (xsd:base64Binary) Base64 packed SPL XML, max size is 1MB unpacked
+
+                Faults
+                   "Internal server error"  : If system error occured
+                   "Invalid argument"       : If argument is incorrect
+                   "Missing argument"       : If argument is not present in request
+                   "Not authenticated"      : If inactive/bad sessionID passed
+                   "Permission denied"      : If user not privileged to perform operation
+                   "Not found"              : If KDM is not found
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetKDMContent"/>
+            <wsdl:output message="tns:GetKDMContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetKDMContent">
+            <wsdl:documentation>
+                SetKDMContent
+                  Ingests KDM of provided content (or targeted for device uuid)
+                  In case of chase, secondary's unit KDM is transferred.
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   content (xsd:base64Binary) Base64 packed SPL XML, max size is 1MB unpacked
+
+                Response
+                   return nothing on success.
+
+                Faults
+                   "Internal server error" : If system error occured
+                   "Invalid argument"      : If argument is incorrect
+                   "Missing argument"      : If argument is not present in request
+                   "Not authenticated"     : If inactive/bad sessionID passed
+                   "Permission denied"     : If user not privileged to perform operation
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetKDMContent"/>
+            <wsdl:output message="tns:SetKDMContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMListInfo">
+            <wsdl:documentation>
+                GetKDMListInfo
+                   Retrieve a list of KDM info structures available on the system or target device (or targeted for device uuid)
+                   In case of chase, the secondary unit can be accessible using the device uuid:
+                   urn:uuid:C7a33000-0000-0000-0000-000000000001
+
+                Arguments
+                   sessionId (com:SessionIdentifier) returned by SessionManagement/Login
+                   target (optional com:DeviceTarget) contain uuid of target device
+
+                Response
+                   kdmList (kdm:ArrayOfKdmInfo) array of kdm info structures
+
+                Faults
+                   "Internal server error"  : If system error occured
+                   "Invalid argument"       : If argument is incorrect
+                   "Missing argument"       : If argument is not present in request
+                   "Not authenticated"      : If inactive/bad sessionID passed
+                   "Permission denied"      : If user not privileged to perform operation
+                   "Resource not available" : If server is busy
+                   "Undefined error"        : If undefined error occured
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetKDMListInfo"/>
+            <wsdl:output message="tns:GetKDMListInfoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="KDMManagement_v1_0_SOAPBinding" type="tns:KDMManagement_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetKDMList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteKDM">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetKDMContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetKDMListInfo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="KDMManagement_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:KDMManagement_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/KDMManagement"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

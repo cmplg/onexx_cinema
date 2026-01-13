@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:log="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/logmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/logmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:complexType name="LogFiltering">
+		<xsd:sequence>
+			<xsd:element name="lowId" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="highId" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="lowTimestamp" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="highTimestamp" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="cplId" type="com:Uuid" minOccurs="0"/>
+			<xsd:element name="kdmId" type="com:Uuid" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="DatabaseId">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="SecurityManager"/>
+			<xsd:enumeration value="System"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LogSnapshotState">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Running"/>
+			<xsd:enumeration value="Failed"/>
+			<xsd:enumeration value="Completed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LogSnapshotId">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+	<xsd:complexType name="LogSnapshotInfo">
+		<xsd:sequence>
+			<xsd:element name="snapshotId" type="log:LogSnapshotId"/>
+			<xsd:element name="filename" type="xsd:string"/>
+			<xsd:element name="state" type="log:LogSnapshotState"/>
+			<xsd:element name="creationDate" type="xsd:dateTime"/>
+			<xsd:element name="databaseId" type="log:DatabaseId"/>
+			<xsd:element name="filters" type="log:LogFiltering"/>
+			<xsd:element name="size" type="xsd:unsignedLong">
+				<!-- log snapshot size in bytes -->
+			</xsd:element>
+			<xsd:element name="title" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfLogSnapshot">
+		<xsd:sequence>
+			<xsd:element name="snapshot" type="log:LogSnapshotInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LogRecordId">
+		<xsd:restriction base="xsd:unsignedLong"/>
+	</xsd:simpleType>
+	<xsd:complexType name="LogRecordProperty">
+		<xsd:sequence>
+			<xsd:element name="propertyName" type="xsd:string"/>
+			<xsd:element name="propertyValue" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfLogRecordProperty">
+		<xsd:sequence>
+			<xsd:element name="property" type="log:LogRecordProperty" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LogRecordInfo">
+		<xsd:sequence>
+			<xsd:element name="recId" type="log:LogRecordId"/>
+			<xsd:element name="recDate" type="xsd:dateTime"/>
+			<xsd:element name="recClass" type="xsd:token"/>
+			<xsd:element name="recType" type="xsd:token"/>
+			<xsd:element name="recSubtype" type="xsd:token"/>
+			<xsd:element name="recPriority" type="xsd:token"/>
+			<xsd:element name="recCreator" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="recKeywords" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="recDeviceSourceId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="recErrorCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="recReserved" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="recPropertyList" type="log:ArrayOfLogRecordProperty"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfLogRecord">
+		<xsd:sequence>
+			<xsd:element name="record" type="log:LogRecordInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="QueryLogFiltering">
+		<xsd:sequence>
+			<xsd:element name="lowId" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="highId" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="lowTimestamp" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="highTimestamp" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="class" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="type" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="subtype" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="priority" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="creator" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="keyword" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="deviceSourceId" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

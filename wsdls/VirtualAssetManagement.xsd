@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:virt="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/virtualassetmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/virtualassetmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	
+	<xsd:simpleType name="VirtualClipCreationId">
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="VirtualAssetType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="SDI"/>
+			<xsd:enumeration value="HDMI"/>
+			<xsd:enumeration value="Streamit"/>
+			<!-- <xsd:enumeration value="Pattern"/> -->
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="VirtualAssetHDMIParameters">
+		<xsd:sequence>
+			<xsd:element name="contentTitleText" type="xsd:string"/>
+			<xsd:element name="duration" type="xsd:unsignedInt" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="VirtualAssetSDIParameters">
+		<xsd:sequence>
+			<xsd:element name="contentTitleText" type="xsd:string"/>
+			<xsd:element name="duration" type="xsd:unsignedInt" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="VirtualAssetStreamitParameters">
+		<xsd:sequence>
+			<xsd:element name="contentTitleText" type="xsd:string"/>
+			<xsd:element name="ipAddress" type="xsd:string"/>
+			<xsd:element name="channel" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="duration" type="xsd:unsignedInt" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="VirtualAssetParameters">
+		<xsd:choice>
+			<xsd:element name="hdmi" type="virt:VirtualAssetHDMIParameters"/>
+			<xsd:element name="sdi" type="virt:VirtualAssetSDIParameters"/>
+			<xsd:element name="streamit" type="virt:VirtualAssetStreamitParameters"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+</xsd:schema>

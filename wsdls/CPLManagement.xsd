@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cplmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cplmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="StereoscopicModeType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="2D"/>
+			<xsd:enumeration value="SideBySide"/>
+			<xsd:enumeration value="TopBottom"/>
+			<xsd:enumeration value="RowInterleaved"/>
+			<xsd:enumeration value="MVC"/>
+			<xsd:enumeration value="FrameSequential"/>
+			<xsd:enumeration value="FrameSequentialIOnly"/>
+			<xsd:enumeration value="CheckerBoard"/>
+			<xsd:enumeration value="Sensio"/>
+			<xsd:enumeration value="RealD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CPLPropertyType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="HFR"/>
+			<xsd:enumeration value="HBR"/>
+			<xsd:enumeration value="Caption"/>
+			<xsd:enumeration value="Subtitle"/>
+			<xsd:enumeration value="ProjectorData"/>
+			<xsd:enumeration value="Atmos"/>
+			<xsd:enumeration value="VI"/>
+			<xsd:enumeration value="DBox"/>
+			<xsd:enumeration value="HI"/>
+			<xsd:enumeration value="QuickIngest"/>
+			<xsd:enumeration value="Vision"/>
+			<xsd:enumeration value="Vision Gen2"/>
+			<xsd:enumeration value="DCI HDR"/>
+			<xsd:enumeration value="DCI SDR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Setting">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Default"/>
+			<xsd:enumeration value="Custom"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ArrayOfCplProperties">
+		<xsd:sequence>
+			<xsd:element name="property" type="ns:CPLPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CPLInfo">
+		<xsd:sequence>
+			<!-- The unique identifier of the composition -->
+			<xsd:element name="uuid" type="com:Uuid"/>
+			<!-- composition duration in Edit units. (refer to EditRate property) -->
+			<xsd:element name="durationEdits" type="xsd:unsignedInt"/>
+			<xsd:element name="storageKind" type="xsd:string"/>
+			<!-- composition title !-->
+			<xsd:element name="contentTitleText" type="xsd:string"/>
+			<xsd:element name="contentKind" type="xsd:string"/>
+			<xsd:element name="stereoscopicMode" type="ns:StereoscopicModeType" minOccurs="0"/>
+			<xsd:element name="editRate" type="com:Rational"/>
+			<xsd:element name="editRateFPS" type="xsd:double"/>
+			<xsd:element name="pictureWidth" type="xsd:unsignedInt"/>
+			<xsd:element name="pictureHeight" type="xsd:unsignedInt"/>
+			<xsd:element name="pictureEncodingAlgorithm" type="xsd:string"/>
+			<xsd:element name="pictureEncryptionAlgorithm" type="xsd:string"/>
+			<!-- Number of audio channels. Can be null for audio-less composition !-->
+			<xsd:element name="soundChannelCount" type="xsd:unsignedInt"/>
+			<!-- Number of bits per audio samples. DCI restricts it to be 24 bits !-->
+			<xsd:element name="soundQuantizationBits" type="xsd:unsignedByte"/>
+			<xsd:element name="soundEncodingAlgorithm" type="xsd:string"/>
+			<xsd:element name="soundEncryptionAlgorithm" type="xsd:string"/>
+			<xsd:element name="assetInfoList" type="ns:ArrayOfAssetInfo" minOccurs="0" />
+			<!-- Number of different encryption keys to decipher content. Can be used to detect encrypted content. -->
+			<xsd:element name="encryptionKeysCount" type="xsd:unsignedInt"/>
+			<!-- List of encryption keys required to decipher all the data !-->
+			<xsd:element name="encryptionKeys" type="com:ArrayOfUuid" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="framesPerEdit" type="xsd:unsignedByte"/>
+			<xsd:element name="is3D" type="xsd:boolean"/>
+			<xsd:element name="standardCompliance" type="com:ComplianceInfo"/>
+			<xsd:element name="soundSamplingRate" type="com:Rational"/>
+			<xsd:element name="contentVersionId" type="com:Uuid" minOccurs="0"/>
+			<!-- CPL Asset completeness. KDM present is not part of it -->
+			<xsd:element name="playable" type="xsd:boolean"/>
+			<xsd:element name="propertyList" type="ns:ArrayOfCplProperties"/>
+			<xsd:element name="assets" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+			<!-- The size of the related media data in bytes -->
+			<xsd:element name="cplSizeInBytes" type="xsd:unsignedLong"/>
+			<xsd:element name="packageSizeInBytes" type="xsd:unsignedLong"/>
+			<xsd:element name="markersCount" type="xsd:unsignedInt"/>
+			<xsd:element name="markerList" type="ns:ArrayOfMarkers" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="isAtmosEncrypted" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCplInfo">
+		<xsd:sequence>
+			<xsd:element name="cplInfo" type="ns:CPLInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StorageInfo">
+		<xsd:sequence>
+			<xsd:element name="storage" type="xsd:string"/>
+			<xsd:element name="quickIngest" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="used" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfStorageInfo">
+		<xsd:sequence>
+			<xsd:element name="storageInfo" type="ns:StorageInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssetInfo">
+		<xsd:sequence>
+			<!-- The unique identifier of the composition -->
+			<xsd:element name="uuid" type="com:Uuid"/>
+			<xsd:element name="type" type="xsd:string"/>
+			<xsd:element name="sizeInBytes" type="xsd:unsignedLong" minOccurs="0"/>
+			<xsd:element name="encryptionKey" type="com:Uuid" minOccurs="0"/>
+			<xsd:element name="storageInfoList" type="ns:ArrayOfStorageInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfAssetInfo">
+		<xsd:sequence>
+			<xsd:element name="assetInfo" type="ns:AssetInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Marker">
+		<xsd:sequence>
+			<xsd:element name="label" type="xsd:string"/>
+			<xsd:element name="offset" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfMarkers">
+		<xsd:sequence>
+			<xsd:element name="marker" type="ns:Marker" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCplId">
+		<xsd:sequence>
+			<xsd:element name="cplId" type="com:Uuid" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

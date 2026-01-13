@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cleanupmanager" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/cleanupmanager" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xsd:simpleType name="CleanupType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="IncompleteCPLs"/>
+			<xsd:enumeration value="OrphanAssets"/>
+			<xsd:enumeration value="IncomingPaths"/>
+			<xsd:enumeration value="All"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Cleanup">
+			<xsd:element name="type" type="ns:CleanupType"/>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfCleanup">
+		<xsd:sequence>
+			<xsd:element name="cleanup" type="ns:Cleanup" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="RepositoryName">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="data"/>
+			<xsd:enumeration value="usb0"/>
+			<xsd:enumeration value="usb1"/>
+			<xsd:enumeration value="usb2"/>
+			<xsd:enumeration value="usb3"/>
+			<xsd:enumeration value="usb4"/>
+			<xsd:enumeration value="usb5"/>
+			<xsd:enumeration value="usb6"/>
+			<xsd:enumeration value="usb7"/>
+			<xsd:enumeration value="esata0"/>
+			<xsd:enumeration value="esata1"/>
+			<xsd:enumeration value="esata2"/>
+			<xsd:enumeration value="esata3"/>
+			<xsd:enumeration value="esata4"/>
+			<xsd:enumeration value="esata5"/>
+			<xsd:enumeration value="esata6"/>
+			<xsd:enumeration value="esata7"/>
+			<xsd:enumeration value="nas1"/>
+			<xsd:enumeration value="nas2"/>
+			<xsd:enumeration value="nas3"/>
+			<xsd:enumeration value="nas4"/>
+			<xsd:enumeration value="nas5"/>
+			<xsd:enumeration value="nas6"/>
+			<xsd:enumeration value="nas7"/>
+			<xsd:enumeration value="nas8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

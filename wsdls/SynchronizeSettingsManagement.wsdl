@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Copyright 2020 Dolby Laboratories, Inc.
+	All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Dolby Laboratories, Inc.
+		1275 Market Street
+		San Francisco, CA 94103-1410 USA
+		T +1-415-558-0200
+		F +1-415-645-4000
+
+-->
+<wsdl:definitions name="SynchronizeSettingsManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sync="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/synchronizesettingsmanagement" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:documentation>
+  Synchronous Management provides functions to compare or retreive configuration from another unit.
+ </wsdl:documentation>
+ <wsdl:types>
+  <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+   <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+   <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+   <xsd:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/synchronizesettingsmanagement" schemaLocation="SynchronizeSettingsManagement.xsd"/>
+   <xsd:element name="StartSyncTask">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+      <xsd:element name="action" type="sync:ActionType"/>
+	  <xsd:element name="username" type="xsd:string"/>
+	  <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="ipAddress" type="com:IpAddress"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="StartSyncTaskResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="status" type="sync:TaskStatus"/>
+      <xsd:element name="pendingAction" type="sync:ActionType"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetSyncTaskStatus">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetSyncTaskStatusResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="status" type="sync:TaskStatus"/>
+	  <xsd:element name="pendingAction" type="sync:ActionType"/>
+	  <xsd:element name="result" type="sync:ActionResults"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </wsdl:types>
+ <wsdl:message name="StartSyncTask">
+  <wsdl:part element="v1_0:StartSyncTask" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetSyncTaskStatus">
+  <wsdl:part element="v1_0:GetSyncTaskStatus" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="GetSyncTaskStatusResponse">
+  <wsdl:part element="v1_0:GetSyncTaskStatusResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:message name="StartSyncTaskResponse">
+  <wsdl:part element="v1_0:StartSyncTaskResponse" name="parameters"/>
+ </wsdl:message>
+ <wsdl:portType name="SynchronizeSettingsManagement_v1_0">
+  <wsdl:operation name="StartSyncTask">
+   <wsdl:documentation>
+    StartSyncTask
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) 
+					action (sync:ActionType) 
+					username (string): Remote System username.
+                    password (string): Corresponding password stored in the remote system.
+					ipAddress (com:IpAddress) 
+					
+                 Response
+                    status (sync:TaskStatus) 
+                    pendingAction (sync:ActionType) 
+
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:StartSyncTask"/>
+   <wsdl:output message="tns:StartSyncTaskResponse"/>
+  </wsdl:operation>
+  <wsdl:operation name="GetSyncTaskStatus">
+   <wsdl:documentation>
+    GetSyncTaskStatus
+                    Returns the EQ Preset List
+
+                 Arguments
+                    sessionId (com:SessionIdentifier) 
+
+
+                 Response
+                    status (sync:TaskStatus) 
+					pendingAction (sync:ActionType) 
+					result (sync:ActionResults)
+
+                 Faults
+                    "Internal server error" : If the server detects an error
+                    "Resource busy" : If CP is unavailable.
+   </wsdl:documentation>
+   <wsdl:input message="tns:GetSyncTaskStatus"/>
+   <wsdl:output message="tns:GetSyncTaskStatusResponse"/>
+  </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:binding name="SynchronizeSettingsManagement_v1_0_SOAPBinding" type="tns:SynchronizeSettingsManagement_v1_0">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="StartSyncTask">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="GetSyncTaskStatus">
+   <soap:operation soapAction="" style="document"/>
+   <wsdl:input>
+    <soap:body use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:service name="SynchronizeSettingsManagement_v1_0">
+  <wsdl:port binding="tns:SynchronizeSettingsManagement_v1_0_SOAPBinding" name="SOAPOverHTTP">
+   <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/SynchronizeSettingsManagement"/>
+  </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>

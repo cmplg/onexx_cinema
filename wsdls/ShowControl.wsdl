@@ -1,0 +1,1013 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:sct="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ShowControl_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Show Control provides functions to load, play, eject or ... the show.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="ShowControl.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/showcontrol"/>
+            <xsd:element name="Play">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PlayResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Pause">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PauseResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Eject">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="EjectResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SkipForward">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SkipForwardResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SkipBackward">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SkipBackwardResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpForward">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <!-- number of seconds to jump ahead of timeline !-->
+                        <xsd:element name="offset" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpForwardResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpBackward">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <!-- number of seconds to jump ahead of timeline !-->
+                        <xsd:element name="offset" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpBackwardResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpTimecode">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <!--  !-->
+                        <xsd:element name="timecode" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpTimecodeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpElement">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <!--  !-->
+                        <xsd:element name="elementId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="JumpElementResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetLoopMode">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <!--  !-->
+                        <xsd:element name="loopMode" type="sct:LoopModeType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetLoopModeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLoopMode">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLoopModeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!--  !-->
+                        <xsd:element name="loopMode" type="sct:LoopModeType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadShowAsset">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="splId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadShowAssetResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadClip">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="clipId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadClipResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadShowContent">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="content" type="xsd:base64Binary"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoadShowContentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetShowStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetShowStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!--  !-->
+                        <xsd:element name="showStatus" type="sct:ShowStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetShowLockStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetShowLockStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="showLockStatus" type="sct:ShowLockStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElementListStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetElementListStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!--  !-->
+                        <xsd:element name="elementList" type="sct:ArrayOfPlaybackElementStatus"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLoadingStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetLoadingStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="progress" type="com:Percentage"/>
+                        <xsd:element name="stage" type="xsd:string"/>
+                        <xsd:element name="errorCode" type="xsd:unsignedInt"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetErrorStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetErrorStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="date" type="xsd:dateTime"/>
+                        <xsd:element name="errorCode" type="xsd:unsignedInt"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <xsd:element name="kdmId" type="com:Uuid"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Play">
+        <wsdl:part name="parameters" element="v1_0:Play"/>
+    </wsdl:message>
+    <wsdl:message name="PlayResponse">
+        <wsdl:part name="parameters" element="v1_0:PlayResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Pause">
+        <wsdl:part name="parameters" element="v1_0:Pause"/>
+    </wsdl:message>
+    <wsdl:message name="PauseResponse">
+        <wsdl:part name="parameters" element="v1_0:PauseResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Eject">
+        <wsdl:part name="parameters" element="v1_0:Eject"/>
+    </wsdl:message>
+    <wsdl:message name="EjectResponse">
+        <wsdl:part name="parameters" element="v1_0:EjectResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SkipForward">
+        <wsdl:part name="parameters" element="v1_0:SkipForward"/>
+    </wsdl:message>
+    <wsdl:message name="SkipForwardResponse">
+        <wsdl:part name="parameters" element="v1_0:SkipForwardResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SkipBackward">
+        <wsdl:part name="parameters" element="v1_0:SkipBackward"/>
+    </wsdl:message>
+    <wsdl:message name="SkipBackwardResponse">
+        <wsdl:part name="parameters" element="v1_0:SkipBackwardResponse"/>
+    </wsdl:message>
+    <wsdl:message name="JumpForward">
+        <wsdl:part name="parameters" element="v1_0:JumpForward"/>
+    </wsdl:message>
+    <wsdl:message name="JumpForwardResponse">
+        <wsdl:part name="parameters" element="v1_0:JumpForwardResponse"/>
+    </wsdl:message>
+    <wsdl:message name="JumpBackward">
+        <wsdl:part name="parameters" element="v1_0:JumpBackward"/>
+    </wsdl:message>
+    <wsdl:message name="JumpBackwardResponse">
+        <wsdl:part name="parameters" element="v1_0:JumpBackwardResponse"/>
+    </wsdl:message>
+    <wsdl:message name="JumpTimecode">
+        <wsdl:part name="parameters" element="v1_0:JumpTimecode"/>
+    </wsdl:message>
+    <wsdl:message name="JumpTimecodeResponse">
+        <wsdl:part name="parameters" element="v1_0:JumpTimecodeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="JumpElement">
+        <wsdl:part name="parameters" element="v1_0:JumpElement"/>
+    </wsdl:message>
+    <wsdl:message name="JumpElementResponse">
+        <wsdl:part name="parameters" element="v1_0:JumpElementResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetLoopMode">
+        <wsdl:part name="parameters" element="v1_0:GetLoopMode"/>
+    </wsdl:message>
+    <wsdl:message name="GetLoopModeResponse">
+        <wsdl:part name="parameters" element="v1_0:GetLoopModeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetLoopMode">
+        <wsdl:part name="parameters" element="v1_0:SetLoopMode"/>
+    </wsdl:message>
+    <wsdl:message name="SetLoopModeResponse">
+        <wsdl:part name="parameters" element="v1_0:SetLoopModeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LoadShowAsset">
+        <wsdl:part name="parameters" element="v1_0:LoadShowAsset"/>
+    </wsdl:message>
+    <wsdl:message name="LoadShowAssetResponse">
+        <wsdl:part name="parameters" element="v1_0:LoadShowAssetResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LoadClip">
+        <wsdl:part name="parameters" element="v1_0:LoadClip"/>
+    </wsdl:message>
+    <wsdl:message name="LoadClipResponse">
+        <wsdl:part name="parameters" element="v1_0:LoadClipResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LoadShowContent">
+        <wsdl:part name="parameters" element="v1_0:LoadShowContent"/>
+    </wsdl:message>
+    <wsdl:message name="LoadShowContentResponse">
+        <wsdl:part name="parameters" element="v1_0:LoadShowContentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetShowStatus">
+        <wsdl:part name="parameters" element="v1_0:GetShowStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetShowStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetShowStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetShowLockStatus">
+        <wsdl:part name="parameters" element="v1_0:GetShowLockStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetShowLockStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetShowLockStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetElementListStatus">
+        <wsdl:part name="parameters" element="v1_0:GetElementListStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetElementListStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetElementListStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetLoadingStatus">
+        <wsdl:part name="parameters" element="v1_0:GetLoadingStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetLoadingStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetLoadingStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetErrorStatus">
+        <wsdl:part name="parameters" element="v1_0:GetErrorStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetErrorStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetErrorStatusResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ShowControl_v1_0">
+        <wsdl:operation name="Play">
+            <wsdl:documentation>
+                Play
+                    Start the current CPL loaded in the current ShowPlaylist
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Play"/>
+            <wsdl:output message="tns:PlayResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Pause">
+            <wsdl:documentation>
+                Pause
+                    Pause the current CPL loaded in the current ShowPlaylist
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+
+            </wsdl:documentation>
+            <wsdl:input message="tns:Pause"/>
+            <wsdl:output message="tns:PauseResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Eject">
+            <wsdl:documentation>
+                Eject
+                    Eject the current ShowPlaylist
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:Eject"/>
+            <wsdl:output message="tns:EjectResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SkipForward">
+            <wsdl:documentation>
+                SkipForward
+                    Skip Forward to the new CPL in the current ShowPlaylist
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:SkipForward"/>
+            <wsdl:output message="tns:SkipForwardResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SkipBackward">
+            <wsdl:documentation>
+                SkipBackward
+                    Skip backward to the previous CPL in the current ShowPlaylist
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:SkipBackward"/>
+            <wsdl:output message="tns:SkipBackwardResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="JumpForward">
+            <wsdl:documentation>
+                JumpForward
+                    Jump forward in the current loaded CPL
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    offset (integer)  Jump offset in second
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If offset argument is not of integer type
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:JumpForward"/>
+            <wsdl:output message="tns:JumpForwardResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="JumpBackward">
+            <wsdl:documentation>
+                JumpBackward
+                    Jump backward in the current loaded CPL
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    offset (integer)  Jump offset in second
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If offset argument is not of integer type
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:JumpBackward"/>
+            <wsdl:output message="tns:JumpBackwardResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="JumpTimecode">
+            <wsdl:documentation>
+                JumpTimecode
+                    Jump to Timecode in the current loaded CPL
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    timecode (integer) Timecode to jump at (hh:mm:ss:ff)
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If timecode argument is not in correct format
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:JumpTimecode"/>
+            <wsdl:output message="tns:JumpTimecodeResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="JumpElement">
+            <wsdl:documentation>
+                JumpElement
+                    Jump to an Element in the current loaded ShowPlaylist
+                    Note: Show has to be in Pause
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    timecode (integer) Timecode to jump at (hh:mm:ss:ff)
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:JumpElement"/>
+            <wsdl:output message="tns:JumpElementResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetLoopMode">
+            <wsdl:documentation>
+                SetLoopMode
+                    Set the ShowPlaylist loop mode.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    loopMode" (sct:LoopModeType) Loop Mode to apply
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Invalid argument"      : If elementId argument is not of a correct UUID
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetLoopMode"/>
+            <wsdl:output message="tns:SetLoopModeResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetLoopMode">
+            <wsdl:documentation>
+                GetLoopMode
+                    Get the ShowPlaylist loop mode.
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    loopMode" (sct:LoopModeType) Loop Mode applied
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetLoopMode"/>
+            <wsdl:output message="tns:GetLoopModeResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoadShowAsset">
+            <wsdl:documentation>
+                LoadShowAsset
+                    Load a ShowPlaylist from UUID
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    splId (com:Uuid) UUID of ShowPlaylist
+
+                Response
+                    loopMode" (sct:LoopModeType) Loop Mode applied
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:LoadShowAsset"/>
+            <wsdl:output message="tns:LoadShowAssetResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoadClip">
+            <wsdl:documentation>
+                LoadClip
+                    Load a Content Playlist from UUID
+                    Note: this will create a new ShowPlaylist with this Content Playlist
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    clipId (com:Uuid) UUID of Content Playlist
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:LoadClip"/>
+            <wsdl:output message="tns:LoadClipResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoadShowContent">
+            <wsdl:documentation>
+                LoadShowContent
+                    Load a Content Playlist from XML Content
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+                    content (base64Binary) ShowPlaylist XML content in Base64
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:LoadShowContent"/>
+            <wsdl:output message="tns:LoadShowContentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetShowStatus">
+            <wsdl:documentation>
+                GetShowStatus
+                    Return ShowPlaylist Status
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    showStatus (sct:ShowStatus)  ShowPlaylist Status
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetShowStatus"/>
+            <wsdl:output message="tns:GetShowStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetShowLockStatus">
+            <wsdl:documentation>
+                GetShowLockStatus
+                    Return Show Lock Status
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    locked (boolean) true if the current Show is locked
+                    [owningLock] (boolean)
+                    [peerName] (string)
+                    [peerIPAddress] (string)
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetShowLockStatus"/>
+            <wsdl:output message="tns:GetShowLockStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetElementListStatus">
+            <wsdl:documentation>
+                GetElementListStatus
+                    Return show element list status
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    elementList (sct:ArrayOfPlaybackElementStatus) - List of Show elements status
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetElementListStatus"/>
+            <wsdl:output message="tns:GetElementListStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetLoadingStatus">
+            <wsdl:documentation>
+                GetLoadingStatus
+                    Return Load SPL status (Percentage, stage description, error code)
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    progress  (com:Percentage) - Load SPL progress percentage
+                    stage     (string)         - Load SPL stage decription
+                    errorCode (unsignedInt)    - Last PlayerErrorCode
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "Missing argument"      : If argument is not present in request
+                    "Not authenticated"     : If inactive/bad sessionID passed
+                    "Permission denied"     : If user not privileged to perform operation
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetLoadingStatus"/>
+            <wsdl:output message="tns:GetLoadingStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetErrorStatus">
+
+                        <xsd:element name="date" type="xsd:dateTime"/>
+                        <xsd:element name="errorCode" type="xsd:unsignedInt"/>
+                        <xsd:element name="cplId" type="com:Uuid"/>
+                        <xsd:element name="kdmId" type="com:Uuid"/>
+            <wsdl:documentation>
+                GetErrorStatus
+                    Return Show Error Status
+
+                Arguments
+                    sessionId (string) returned by SessionManagement/Login
+
+                Response
+                    date (dateTime) when Show error appears
+                    errorCode (unsignedInt) Error Code
+
+                        PlayerErrorCodeSuccess                    = 0
+                        /* Unknown error         */
+                        PlayerErrorCodeUnknown                    = 1
+                        PlayerErrorCodeKdmNotFound                = 2
+                        PlayerErrorCodeKdmEndOfEngagement         = 3
+                        PlayerErrorCodeSmsCommandFailed           = 4
+
+                        PlayerErrorCodeOdeticsdNotRunning         = 5
+
+                        PlayerErrorCodeMissingFirmware            = 6
+                        PlayerErrorCodeSelectFirmware             = 7
+
+                        PlayerErrorCodeKdmNoPPV                   = 8
+
+                        PlayerErrorCodeProjectorError             = 0x0A
+
+                        PlayerErrorCodeImbErrorStart              = 0x80
+                        /* IMB state             */
+                        PlayerErrorCodeImbPhysicalMarriageBroken  = 0x81
+                        PlayerErrorCodeImbLogicalMarriageBroken   = 0x82
+                        PlayerErrorCodeImbInactiveMarriage        = 0x83
+                        PlayerErrorCodeImbServiceDoorOpen         = 0x84
+                        PlayerErrorCodeImbServiceDoorNotArmed     = 0x85
+                        PlayerErrorCodeImbNotConnected            = 0x86
+
+                        /* cf. AssetLibErrorEnum */
+                        PlayerErrorCodeAssetLibErrorStart         = 0x100
+                        PlayerErrorCodeAssetLibErrorEnd           = 0x200
+
+                    cplId (com:Uuid) CPL Uuid concerned by the error
+                    kdmId (com:Uuid) KDM Uuid concerned by the error
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetErrorStatus"/>
+            <wsdl:output message="tns:GetErrorStatusResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ShowControl_v1_0_SOAPBinding" type="tns:ShowControl_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Play">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Pause">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Eject">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SkipForward">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SkipBackward">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="JumpForward">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="JumpBackward">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="JumpTimecode">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="JumpElement">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetLoopMode">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLoopMode">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoadShowAsset">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoadClip">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoadShowContent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetShowStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetShowLockStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetElementListStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLoadingStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetErrorStatus">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ShowControl_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:ShowControl_v1_0_SOAPBinding">
+            <soap:address location="http://10.201.22.34:10000/dc/dcp/ws/v1/ShowControl"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2011, Doremi Labs, Inc.
+        All rights reserved.
+
+    Redistribution in source or binary forms, with or without
+    modification, are NOT permitted.
+
+        Doremi Labs, Inc.
+        1020 Chestnut St.
+        Burbank, CA 91506
+        Tel : (818) 562 1101
+        Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1"
+    xmlns:ovr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systemoverview"
+    xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"
+    xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    name="SystemOverview_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+        System Overview provides functions to have an overview of the system.
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:import schemaLocation="Common.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" />
+            <xsd:import schemaLocation="SystemOverview.xsd"
+                namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systemoverview" />
+            <xsd:element name="GetSystemOverview">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSystemOverviewResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="time" type="xsd:dateTime" />
+                        <xsd:element name="playback" type="ovr:PlaybackInfo" />
+                        <xsd:element name="storage" type="ovr:StorageInfo" />
+                        <xsd:element name="projector" type="ovr:ProjectorInfo" />
+                        <xsd:element name="scheduler" type="ovr:SchedulerInfo" />
+                        <xsd:element name="ingest" type="ovr:IngestInfo" />
+                        <xsd:element name="status" type="ovr:OverviewStatusInfo" />
+                        <xsd:element name="power" type="ovr:PowerInfo" />
+                        <xsd:element name="counters" type="ovr:CountersInfo" />
+                        <xsd:element name="live" type="ovr:LiveInfo" minOccurs="0" />
+                        <xsd:element name="record" type="ovr:RecordInfo" minOccurs="0" />
+                        <xsd:element name="chase" type="ovr:ChaseInfo" minOccurs="0" />
+                        <xsd:element name="export" type="ovr:ExportInfo" minOccurs="0" />
+                        <xsd:element name="audio" type="ovr:AudioInfo" minOccurs="0" />
+                        <xsd:element name="lock_system" type="ovr:LockSystemInfo" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSystemStatus">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSystemStatusResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="storage" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="hardware" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="network" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="projectors" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="securityManager" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="time" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="administration" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="playback" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="security" type="ovr:ArrayOfComponentStatusInfo" />
+                        <xsd:element name="connections" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="inputFeeds" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="outputFeeds" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="AvInputs" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="AvOutputs" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="nas" type="ovr:ArrayOfComponentStatusInfo" minOccurs="0" />
+                        <xsd:element name="installation" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                        <xsd:element name="audio" type="ovr:ArrayOfComponentStatusInfo"
+                            minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetSystemOverview">
+        <wsdl:part name="parameters" element="v1_0:GetSystemOverview" />
+    </wsdl:message>
+    <wsdl:message name="GetSystemOverviewResponse">
+        <wsdl:part name="parameters" element="v1_0:GetSystemOverviewResponse" />
+    </wsdl:message>
+    <wsdl:message name="GetSystemStatus">
+        <wsdl:part name="parameters" element="v1_0:GetSystemStatus" />
+    </wsdl:message>
+    <wsdl:message name="GetSystemStatusResponse">
+        <wsdl:part name="parameters" element="v1_0:GetSystemStatusResponse" />
+    </wsdl:message>
+    <wsdl:portType name="SystemOverview_v1_0">
+        <wsdl:operation name="GetSystemOverview">
+            <wsdl:documentation>
+                GetSystemOverview
+                    Gets overview of the system
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login.
+
+                Response
+                    time (xsd:dateTime)  time information.
+                    playback (ovr:PlaybackInfo)  playback information.
+                    storage (ovr:StorageInfo)  storage information.
+                    projector (ovr:ProjectorInfo)  projector information.
+                    scheduler (ovr:SchedulerInfo)  scheduler information.
+                    ingest (ovr:IngestInfo)  ingest information.
+                    status (ovr:OverviewStatusInfo)  status information.
+                    power (ovr:PowerInfo)  power information.
+                    counters (ovr:CountersInfo)  counters information.
+                    live (ovr:LiveInfo)  live information.
+                    record (ovr:RecordInfo)  record information.
+                    chase (ovr:ChaseInfo)  chase information.
+                    export (ovr:ExportInfo)  export information.
+                    audio (ovr:AudioInfo)  audio information.
+                    lock_system (ovr:LockSystemInfo)  lock_system information.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSystemOverview" />
+            <wsdl:output message="tns:GetSystemOverviewResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="GetSystemStatus">
+            <wsdl:documentation>
+                GetSystemStatus
+                    Gets status of the system
+
+                Arguments
+                    sessionId (com:SessionIdentifier) returned by SessionManagement/Login.
+
+                Response
+                    storage (ovr:ArrayOfComponentStatusInfo)  storage component information.
+                    hardware (ovr:ArrayOfComponentStatusInfo)  hardware component information.
+                    network (ovr:ArrayOfComponentStatusInfo)  network component information.
+                    projectors (ovr:ArrayOfComponentStatusInfo)  projectors component information.
+                    securityManager (ovr:ArrayOfComponentStatusInfo)  securityManager component information.
+                    time (ovr:ArrayOfComponentStatusInfo)  time component information.
+                    administration (ovr:ArrayOfComponentStatusInfo)  administration component information.
+                    playback (ovr:ArrayOfComponentStatusInfo)  playback component information.
+                    security (ovr:ArrayOfComponentStatusInfo)  security component information.
+                    connections (ovr:ArrayOfComponentStatusInfo)  connections component information.
+                    inputFeeds (ovr:ArrayOfComponentStatusInfo)  inputFeeds component information.
+                    outputFeeds (ovr:ArrayOfComponentStatusInfo)  outputFeeds component information.
+                    AvInputs (ovr:ArrayOfComponentStatusInfo)  AvInputs component information.
+                    AvOutputs (ovr:ArrayOfComponentStatusInfo)  AvOutputs component information.
+                    nas (ovr:ArrayOfComponentStatusInfo)  nas component information.
+                    installation (ovr:ArrayOfComponentStatusInfo)  installation component information.
+                    audio (ovr:ArrayOfComponentStatusInfo)  audio component information.
+                    
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "not authenticated" : If inactive/bad sessionID passed
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSystemStatus" />
+            <wsdl:output message="tns:GetSystemStatusResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SystemOverview_v1_0_SOAPBinding" type="tns:SystemOverview_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetSystemOverview">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSystemStatus">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SystemOverview_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:SystemOverview_v1_0_SOAPBinding">
+            <soap:address location="http://10.201.22.34:10000/dc/dcp/ws/v1/SystemOverview" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Herve MORILLON (DoremiLabs Inc) -->
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:tm="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/datetimemanagement" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" name="DateTimeManagement_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Date Time Management provides functions related to date and time.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="DateTimeManagement.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/datetimemanagement"/>
+			<xsd:element name="GetTime">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="clockId" type="xsd:token" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetTimeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="time" type="xsd:dateTime"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetTime">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="clockId" type="xsd:token" minOccurs="0"/>
+						<xsd:element name="time" type="xsd:dateTime"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetTimeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetTimeZone">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetTimeZoneResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="timezone" type="xsd:string"/>
+						<!-- current offset in minutes to UTC, after RFC3339: Numeric offsets are calculated as "local time minus UTC".  !-->
+						<xsd:element name="timeShift" type="xsd:int"/>
+						<!-- Date and Time when the next scheduled Daylight Saving Time change will occur !-->
+						<xsd:element name="scheduledDST" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetTimeZone">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="timezone" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetTimeZoneResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetNTPStatus">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetNTPStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<!-- all NTP servers currently configured as a source for NTP service separated by a space !-->
+						<xsd:element name="serverList" type="xsd:string"/>
+						<!-- server used for the last successfull NTP synchronisation !-->
+						<xsd:element name="lastSyncServer" type="xsd:string"/>
+						<!-- date when the last successfull NTP synchronisation occured !-->
+						<xsd:element name="lastSyncDate" type="xsd:string"/>
+						<!-- synchronisation offset detected during last successfull synchronisation !-->
+						<xsd:element name="lastSyncOffset" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetTime">
+		<wsdl:part name="parameters" element="v1_0:GetTime"/>
+	</wsdl:message>
+	<wsdl:message name="GetTimeResponse">
+		<wsdl:part name="parameters" element="v1_0:GetTimeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SetTime">
+		<wsdl:part name="parameters" element="v1_0:SetTime"/>
+	</wsdl:message>
+	<wsdl:message name="SetTimeResponse">
+		<wsdl:part name="parameters" element="v1_0:SetTimeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetTimeZone">
+		<wsdl:part name="parameters" element="v1_0:GetTimeZone"/>
+	</wsdl:message>
+	<wsdl:message name="GetTimeZoneResponse">
+		<wsdl:part name="parameters" element="v1_0:GetTimeZoneResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SetTimeZone">
+		<wsdl:part name="parameters" element="v1_0:SetTimeZone"/>
+	</wsdl:message>
+	<wsdl:message name="SetTimeZoneResponse">
+		<wsdl:part name="parameters" element="v1_0:SetTimeZoneResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetNTPStatus">
+		<wsdl:part name="parameters" element="v1_0:GetNTPStatus"/>
+	</wsdl:message>
+	<wsdl:message name="GetNTPStatusResponse">
+		<wsdl:part name="parameters" element="v1_0:GetNTPStatusResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="DateTimeManagement_v1_0">
+		<wsdl:operation name="GetTime">
+			<wsdl:documentation>
+                GetTime
+                    Get time
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    clockId (xsd:token) IGNORED. Hardware Clock as default
+
+                Response
+                    time: (xsd:dateTime) time (YYYY-MM-DD hh:mm:ss+HH:MM eg. 2022-02-24 05:07:00+02:00).
+
+                Faults
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetTime"/>
+			<wsdl:output message="tns:GetTimeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SetTime">
+			<wsdl:documentation>
+                SetTime
+                    Set time
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    clockId (xsd:token) IGNORED. Hardware Clock as default
+                    time: (xsd:dateTime) time to be set in current timezone (YYYY-MM-DDThh:mm:ss eg. 2022-02-24T03:07:00)
+                            or by time string with timezone included in format YYYY-MM-DDThh:mm:ss+ZZ:zz (eg. 2021-06-20T08:06:01-05:00).
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "missing mandatory argument '[X]'": if [X] argument missed
+                    "invalid argument '[X]'" : if [X] argument in wrong format
+                    "permission denied" : If user not privileged to perform operation
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+                    "undefined error" : if undefined error occured
+			</wsdl:documentation>
+			<wsdl:input message="tns:SetTime"/>
+			<wsdl:output message="tns:SetTimeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetTimeZone">
+			<wsdl:documentation>
+                GetTimeZone
+                    Get Time Zone
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    timezone (xsd:string)  like: Europe/Paris
+                    timeShift (xsd:int) time shift in minute like: 60
+                    scheduleDST (xsd:string) full date time like: Sun Mar 26 01:59:59 2017 CET
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetTimeZone"/>
+			<wsdl:output message="tns:GetTimeZoneResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SetTimeZone">
+			<wsdl:documentation>
+                SetTimeZone
+                    Set Time Zone
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+                    timezone (xsd:string)  like: Europe/Paris
+
+                Response
+                    return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "invalid argument '[X]'" : if [X] argument has wrong format or value (eg. non existing timezone)
+                    "not authenticated" : If inactive/bad sessionID passed
+			</wsdl:documentation>
+			<wsdl:input message="tns:SetTimeZone"/>
+			<wsdl:output message="tns:SetTimeZoneResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetNTPStatus">
+			<wsdl:documentation>
+    			GetNTPStatus
+                    Get NTP Status data
+
+                Arguments
+                    sessionId (com:SessionIdentifier)  returned by SessionManagement/Login
+
+                Response
+                    serverList (xsd:string) all NTP servers currently configured as a source for NTP service separated by a space
+                    lastSyncServer (xsd:string) server used for the last successfull NTP synchronisation
+                    lastSyncDate (xsd:string) date when the last successfull NTP synchronisation occured
+                    lastSyncOffset (xsd:string) synchronisation offset detected during last successfull synchronisation, empty when no DST change scheduled
+
+                Faults
+                    "Internal server error" : If a system error occurred
+                    "not authenticated" : If inactive/bad sessionID passed
+			</wsdl:documentation>
+			<wsdl:input message="tns:GetNTPStatus"/>
+			<wsdl:output message="tns:GetNTPStatusResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DateTimeManagement_v1_0_SOAPBinding" type="tns:DateTimeManagement_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetTime">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetTime">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetTimeZone">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetTimeZone">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetNTPStatus">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DateTimeManagement_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:DateTimeManagement_v1_0_SOAPBinding">
+			<soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/DateTimeManagement"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:proj="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/projectors" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Projectors_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                Projectors provides functions to list projector's macro.
+    </wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+			<xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+			<xsd:import schemaLocation="Projectors.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/projectors"/>
+			<xsd:element name="GetMacroList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sessionId" type="com:SessionIdentifier"/>
+						<xsd:element name="projector" type="proj:IdProj"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetMacroListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="macroList" type="com:ArrayOfString"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetMacroList">
+		<wsdl:part name="parameters" element="v1_0:GetMacroList"/>
+	</wsdl:message>
+	<wsdl:message name="GetMacroListResponse">
+		<wsdl:part name="parameters" element="v1_0:GetMacroListResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="Projectors_v1_0">
+		<wsdl:operation name="GetMacroList">
+			<wsdl:documentation>
+                 GetMacroList
+
+                 Arguments
+
+
+                 Response
+
+                 Faults
+
+             </wsdl:documentation>
+			<wsdl:input message="tns:GetMacroList"/>
+			<wsdl:output message="tns:GetMacroListResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="Projectors_v1_0_SOAPBinding" type="tns:Projectors_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetMacroList">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="Projectors_v1_0">
+		<wsdl:port name="SOAPOverHTTP" binding="tns:Projectors_v1_0_SOAPBinding">
+			<soap:address location="http://10.201.22.34:10000/dc/dcp/ws/v1/Projectors"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

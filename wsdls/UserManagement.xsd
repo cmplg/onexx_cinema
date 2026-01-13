@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:usr="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/usermanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/usermanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xs:simpleType name="UserId">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="GroupId">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="UserTypeInfo">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="System"/>
+			<xs:enumeration value="Virtual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplicationRights">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Projectionist"/>
+			<xs:enumeration value="ShowManager"/>
+			<xs:enumeration value="SuperUser"/>
+			<xs:enumeration value="Administrator"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="UserItem">
+		<xs:sequence>
+			<xs:element name="userId" type="usr:UserId"/>
+			<xs:element name="userType" type="usr:UserTypeInfo"/>
+			<xs:element name="lastLoginTime" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GroupItem">
+		<xs:sequence>
+			<xs:element name="groupId" type="usr:GroupId"/>
+			<xs:element name="applicationRights" type="usr:ApplicationRights"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfUser">
+		<xs:sequence>
+			<xs:element name="user" type="usr:UserItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfGroup">
+		<xs:sequence>
+			<xs:element name="group" type="usr:GroupItem" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfGroupId">
+		<xs:sequence>
+			<xs:element name="groupId" type="usr:GroupId" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserInfo">
+		<xs:sequence>
+			<xs:element name="userId" type="usr:UserId"/>
+			<xs:element name="groupId" type="usr:GroupId"/>
+			<xs:element name="userType" type="usr:UserTypeInfo"/>
+			<xs:element name="applicationRights" type="usr:ApplicationRights"/>
+			<xs:element name="userFullName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfUserInfo">
+		<xs:sequence>
+			<xs:element name="userInfo" type="usr:UserInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2011, Doremi Labs, Inc.
+    All rights reserved.
+
+  Redistribution in source or binary forms, with or without
+  modification, are NOT permitted.
+
+    Doremi Labs, Inc.
+    1020 Chestnut St.
+    Burbank, CA 91506
+    Tel : (818) 562 1101
+    Fax : (818) 562 1109
+
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.doremilabs.com/dc/dcp/ws/v1" xmlns:sys="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systeminformation" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" xmlns:v1_0="http://www.doremilabs.com/dc/dcp/ws/v1_0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SystemInformation_v1" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1">
+    <wsdl:documentation>
+                System Information provides functions to get inforamtion on the system (Software or hardware).
+    </wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1_0">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:import schemaLocation="Common.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common"/>
+            <xsd:import schemaLocation="SystemInformation.xsd" namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/systeminformation"/>
+            <xsd:element name="GetProductInformation">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetProductInformationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="productInformation" type="sys:ProductInformationInfo"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSoftwareInventoryList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetSoftwareInventoryListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="softwarePartList" type="sys:ArrayOfSoftwarePart"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetHardwareInventoryList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetHardwareInventoryListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="hardwarePartList" type="sys:ArrayOfHardwarePart"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetHostname">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetHostnameResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="hostname" type="xsd:string"/>
+                        <xsd:element name="screenName" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetHostname">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                        <xsd:element name="hostname" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="screenName" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SetHostnameResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCertificateList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCertificateListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="certificateList" type="sys:ArrayOfCertificate"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFeatureList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="com:SessionIdentifier"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFeatureListResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="featureList" type="sys:ArrayOfFeatureTag"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetProductInformation">
+        <wsdl:part name="parameters" element="v1_0:GetProductInformation"/>
+    </wsdl:message>
+    <wsdl:message name="GetProductInformationResponse">
+        <wsdl:part name="parameters" element="v1_0:GetProductInformationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetSoftwareInventoryList">
+        <wsdl:part name="parameters" element="v1_0:GetSoftwareInventoryList"/>
+    </wsdl:message>
+    <wsdl:message name="GetSoftwareInventoryListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetSoftwareInventoryListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetHardwareInventoryList">
+        <wsdl:part name="parameters" element="v1_0:GetHardwareInventoryList"/>
+    </wsdl:message>
+    <wsdl:message name="GetHardwareInventoryListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetHardwareInventoryListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetHostname">
+        <wsdl:part name="parameters" element="v1_0:GetHostname"/>
+    </wsdl:message>
+    <wsdl:message name="GetHostnameResponse">
+        <wsdl:part name="parameters" element="v1_0:GetHostnameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetHostname">
+        <wsdl:part name="parameters" element="v1_0:SetHostname"/>
+    </wsdl:message>
+    <wsdl:message name="SetHostnameResponse">
+        <wsdl:part name="parameters" element="v1_0:SetHostnameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetCertificateList">
+        <wsdl:part name="parameters" element="v1_0:GetCertificateList"/>
+    </wsdl:message>
+    <wsdl:message name="GetCertificateListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetCertificateListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetFeatureList">
+        <wsdl:part name="parameters" element="v1_0:GetFeatureList"/>
+    </wsdl:message>
+    <wsdl:message name="GetFeatureListResponse">
+        <wsdl:part name="parameters" element="v1_0:GetFeatureListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SystemInformation_v1_0">
+        <wsdl:operation name="GetProductInformation">
+            <wsdl:documentation>
+                GetProductInformation
+                    Get Product Informaiton
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    productInformation (sys:ProductInformationInfo) Product Information.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetProductInformation"/>
+            <wsdl:output message="tns:GetProductInformationResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSoftwareInventoryList">
+            <wsdl:documentation>
+                GetSoftwareInventoryList
+                    Get Software inventory list
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    softwarePartList (sys:ArrayOfSoftwarePart) List of software part. 
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetSoftwareInventoryList"/>
+            <wsdl:output message="tns:GetSoftwareInventoryListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetHardwareInventoryList">
+            <wsdl:documentation>
+                GetHardwareInventoryList
+                    Gets Hardware inventory list
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    hardwarePartList (sys:ArrayOfHardwarePart) List of hardware part.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetHardwareInventoryList"/>
+            <wsdl:output message="tns:GetHardwareInventoryListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetHostname">
+            <wsdl:documentation>
+                GetHostname
+                    Gets SMS board network hostname and screen name for one of IMBs connected to the SMS
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    hostname    Network hostname for SMS board
+                    screenName  Screen Name for one of IMBs. IMB is selected by Channel Management functionality.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetHostname"/>
+            <wsdl:output message="tns:GetHostnameResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetHostname">
+            <wsdl:documentation>
+                SetHostname
+                    Sets SMS board network hostname and/or screen name for one of IMSs connected to the SMS
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login
+                    hostname    Network hostname for SMS board
+                    screenName  Screen Name for one of IMBs. IMB is selected by Channel Management functionality.
+
+                Response
+                    Return nothing on success.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:SetHostname"/>
+            <wsdl:output message="tns:SetHostnameResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCertificateList">
+            <wsdl:documentation>
+                GetCertificateList
+                    Gets certificate list
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    certificateList (sys:ArrayOfCertificate) List of certificat.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetCertificateList"/>
+            <wsdl:output message="tns:GetCertificateListResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetFeatureList">
+            <wsdl:documentation>
+                GetFeatureList
+                    Gets feature list
+
+                Arguments
+                    sessionId   (com:SessionIdentifier)  returned by SessionManagement/Login.
+
+                Response
+                    featureList (sys:ArrayOfFeatureTag) List of feature.
+
+                Faults
+                    "Internal server error" : If a system error occurred
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetFeatureList"/>
+            <wsdl:output message="tns:GetFeatureListResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SystemInformation_v1_0_SOAPBinding" type="tns:SystemInformation_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetProductInformation">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSoftwareInventoryList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetHardwareInventoryList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetHostname">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetHostname">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCertificateList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetFeatureList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SystemInformation_v1_0">
+        <wsdl:port name="SOAPOverHTTP" binding="tns:SystemInformation_v1_0_SOAPBinding">
+            <soap:address location="http://127.0.0.1:10000/dc/dcp/ws/v1/SystemInformation"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

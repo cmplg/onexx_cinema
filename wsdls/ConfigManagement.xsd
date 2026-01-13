@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+	Copyright (c) 2011, Doremi Labs, Inc.
+		All rights reserved.
+
+	Redistribution in source or binary forms, with or without
+	modification, are NOT permitted.
+
+		Doremi Labs, Inc.
+		1020 Chestnut St.
+		Burbank, CA 91506
+		Tel : (818) 562 1101
+		Fax : (818) 562 1109
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cfg="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/configmanagement" xmlns:com="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" targetNamespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/configmanagement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.doremilabs.com/dc/dcp/ws/v1/schemas/common" schemaLocation="Common.xsd"/>
+	<xs:simpleType name="ConfigurationFileIdentifierEnum">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Devices">
+				<!-- devices configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="Macros">
+				<!-- macros configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="DefaultCues">
+				<!-- default_cues configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="Netmap">
+				<!-- netmap configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="NtpServers">
+				<!-- NTP servers configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="AudioMapping">
+				<!-- audio mapping configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="DynamicSub"/>
+			<xs:enumeration value="DynamicCc"/>
+			<xs:enumeration value="ControlView">
+				<!-- control_view configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="FireAlarm"/>
+			<xs:enumeration value="Threshold"/>
+			<xs:enumeration value="ContactList"/>
+			<xs:enumeration value="FacilityInfo"/>
+			<xs:enumeration value="AuditoriumList"/>
+			<xs:enumeration value="AudioDelay">
+				<!-- audio_delay configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="Checklist"/>
+			<xs:enumeration value="SmChecklist"/>
+			<xs:enumeration value="DiagConf"/>
+			<xs:enumeration value="Dolby3dMatrix"/>
+			<xs:enumeration value="AutoStart">
+				<!-- Auto start playback configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="WebTheme">
+				<!-- web theme configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StandbySupport">
+				<!-- standby support configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="RealdLut">
+				<!-- Lut configuration file for Reald GB !-->
+			</xs:enumeration>
+			<xs:enumeration value="CinelisterConfig">
+				<!-- Playback configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="DrmplaylistdConfig">
+				<!-- Automation configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="Bookmarks">
+				<!-- Web interface quick access link configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="AudioHeadPhoneVolume"/>
+			<xs:enumeration value="VideoOutputFormat"/>
+			<xs:enumeration value="VideoOutput3d"/>
+			<xs:enumeration value="VideoOutputProgressive"/>
+			<xs:enumeration value="VideoHdmiHdcp"/>
+			<xs:enumeration value="VideoOutputColorSpace"/>
+			<xs:enumeration value="InputMulticastChannel"/>
+			<xs:enumeration value="LegalInformationValidation"/>
+			<xs:enumeration value="LogManager">
+				<!-- log_uploader configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="PendingCPLDeletion">
+				<!-- list of CPLs schedule for deletion !-->
+			</xs:enumeration>
+			<xs:enumeration value="AutoCPLDeletion">
+				<!-- automatic CPL deletion configuration !-->
+			</xs:enumeration>
+			<xs:enumeration value="VideoConfig">
+				<!-- complete video configuration !-->
+			</xs:enumeration>
+			<xs:enumeration value="TCBIW">
+				<!-- time code burn in windows configuration !-->
+			</xs:enumeration>
+			<xs:enumeration value="NasConfig">
+				<!-- Network attached storage configuration !-->
+			</xs:enumeration>
+			<xs:enumeration value="LightspeedLut">
+				<!-- Lut configuration file for Lightspeed deghost !-->
+			</xs:enumeration>
+			<xs:enumeration value="SubtitleEnable">
+					<!-- Enable/disable subtitles at runtime !-->
+			</xs:enumeration>
+			<xs:enumeration value="MacroDefaultAudioConfig">
+					<!-- Macro default audio configuration !-->
+			</xs:enumeration>
+			<xs:enumeration value="AudioAESOutputs">
+				<!-- Audio AES outputs !-->
+			</xs:enumeration>
+			<xs:enumeration value="AudioAESInputs">
+				<!-- Audio AES inputs !-->
+			</xs:enumeration>
+			<xs:enumeration value="AES67Outputs">
+				<!-- Audio AES67 outputs !-->
+			</xs:enumeration>
+			<xs:enumeration value="AudioMicrophone">
+				<!-- configuration file for AudioMicrophone !-->
+			</xs:enumeration>
+			<xs:enumeration value="EventsConfig">
+				<!-- configuration file for events !-->
+			</xs:enumeration>
+			<xs:enumeration value="NotificationsList">
+				<!-- dictionnary file for notification !-->
+			</xs:enumeration>
+			<xs:enumeration value="NotificationsConfig">
+				<!-- configuration file for notification !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitAudioIndex">
+				<!-- StreamIt Audio Index configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitVideoIndex">
+				<!-- StreamIt Video Index configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitSubtitleIndex">
+				<!-- StreamIt Subtitle Index configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitAudioPID">
+				<!-- StreamIt Audio PID configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitVideoPID">
+				<!-- StreamIt Video PID configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitSubtitlePID">
+				<!-- StreamIt Subtitle PID configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="StreamitAudioDelay">
+				<!-- StreamIt Audio Delay configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="TimeFormat">
+				<!-- time_format configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="SnmpdConf">
+				<!-- Snmpd.local.conf configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="MsConfig">
+				<!-- Main storage configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="WirelessDevices">
+				<!-- Trusted Wireless Devices configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="WebUITimeout">
+				<!-- WebUI Session Timeout configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="AssetMapping">
+				<!-- Asset Mapping configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="ChaseConfig">
+				<!-- Chase Config configuration file !-->
+			</xs:enumeration>
+			<xs:enumeration value="VideoParams">
+				<!-- Video Parameters file !-->
+			</xs:enumeration>
+			<xs:enumeration value="AutoPfsdDisable">
+				<!-- Auto Quick Ingest Disable file !-->
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
