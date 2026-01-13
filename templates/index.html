@@ -65,7 +65,6 @@
         <span class="navbar-brand">ONEXX NOC</span>
         <div class="nav-center">
             <div id="btn-overview" class="nav-link-sw active" onclick="showView('overview')">Screen Overview</div>
-            <div id="btn-content" class="nav-link-sw" onclick="showView('content')">Content</div>
             <div id="btn-mgmt" class="nav-link-sw" onclick="window.location.href='/cpl-playlist-management'">CPL/Playlist Mgmt</div>
         </div>
         <div id="clock">00:00:00</div>
@@ -74,17 +73,6 @@
 
 <!-- VIEW: OVERVIEW -->
 <div id="view-overview"><div id="studio-container"></div></div>
-
-<!-- VIEW: CONTENT -->
-<div id="view-content" class="d-none content-container">
-    <div class="sub-nav">
-        <button id="sub-cpl" class="btn-tab active" onclick="loadLibrary()">CPL Library</button>
-        <button id="sub-th1" class="btn-tab" onclick="loadStudioPlaylists(1)">TH 1 Playlists</button>
-        <button id="sub-th2" class="btn-tab" onclick="loadStudioPlaylists(2)">TH 2 Playlists</button>
-        <button id="sub-th3" class="btn-tab" onclick="loadStudioPlaylists(3)">TH 3 Playlists</button>
-    </div>
-    <div id="content-display"></div>
-</div>
 
 <!-- MODAL: LOAD PLAYLIST -->
 <div class="modal fade" id="loadModal" tabindex="-1">
@@ -100,55 +88,8 @@
 
     function showView(v) {
         document.getElementById('view-overview').classList.toggle('d-none', v !== 'overview');
-        document.getElementById('view-content').classList.toggle('d-none', v !== 'content');
         document.getElementById('btn-overview').classList.toggle('active', v === 'overview');
-        document.getElementById('btn-content').classList.toggle('active', v === 'content');
-        if(v === 'content') loadLibrary();
-    }
-
-    async function loadLibrary() {
-        updateActiveTab('sub-cpl');
-        const disp = document.getElementById('content-display');
-        disp.innerHTML = '<div class="text-center p-5">Scanning servers...</div>';
-        const res = await fetch('/api/content_library');
-        const data = await res.json();
-        let html = `<table class="content-table"><thead><tr><th>Title of CPL</th><th>Studios</th><th>Duration</th><th>Size</th><th>KDM</th></tr></thead><tbody>`;
-        data.forEach(c => {
-            let badges = c.studios.map(s => `<span class="badge-th">${s}</span>`).join('');
-            html += `<tr><td class="text-white fw-bold">${c.title}</td><td>${badges}</td><td>${c.duration}</td><td>${c.size}</td><td class="text-success fw-bold">${c.kdm}</td></tr>`;
-        });
-        disp.innerHTML = html + `</tbody></table>`;
-    }
-
-    async function loadStudioPlaylists(id) {
-        updateActiveTab('sub-th' + id);
-        const disp = document.getElementById('content-display');
-        disp.innerHTML = '<div class="text-center p-5">Loading TH ' + id + ' SPL...</div>';
-        const res = await fetch('/api/playlists/' + id);
-        const data = await res.json();
-        let html = `<div class="row">`;
-        data.forEach(p => { html += `<div class="col-md-4 mb-3"><div class="p-3 bg-dark border border-secondary rounded"><div class="text-white fw-bold">${p.title}</div><small class="text-muted">${p.uuid}</small></div></div>`; });
-        disp.innerHTML = html + `</div>`;
-    }
-
-    function updateActiveTab(id) { document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-
-    async function openLoadModal(studioId) {
-        document.getElementById('modalTitle').innerText = "Load Playlist - TH " + studioId;
-        const listDiv = document.getElementById('playlist-list');
-        listDiv.innerHTML = '<div class="text-center p-4">Fetching...</div>';
-        const modal = new bootstrap.Modal(document.getElementById('loadModal'));
-        modal.show();
-        const res = await fetch('/api/playlists/' + studioId);
-        const data = await res.json();
-        listDiv.innerHTML = '';
-        data.forEach(p => {
-            const btn = document.createElement('div');
-            btn.className = 'list-group-item';
-            btn.innerHTML = `<strong>${p.title}</strong>`;
-            btn.onclick = async () => { if(confirm(`Load "${p.title}"?`)) { await fetch(`/api/control/${studioId}/load_${p.uuid}`); modal.hide(); loadStatus(); } };
-            listDiv.appendChild(btn);
-        });
+        if(v === 'overview') loadStatus();
     }
 
     async function loadStatus() {

@@ -105,19 +105,24 @@ def content_library():
         if not sid: continue
         try:
             svc_cpl = get_client(studio, "CPLManagement")
-            cpl_ids = helpers.serialize_object(svc_cpl.GetCplList(sessionId=sid))
-            for c_id in cpl_ids[:25]:
-                if c_id not in all_cpls:
-                    info = svc_cpl.GetCplInfo(sessionId=sid, cplId=c_id)
-                    all_cpls[c_id] = {
-                        "title": getattr(info, 'contentTitleText', 'Unknown'),
-                        "duration": f"{round(getattr(info, 'durationEdits', 0)/86400)} min",
-                        "size": f"{round(getattr(info, 'cplSizeInBytes', 0)/(1024**3), 2)} GB",
-                        "studios": [studio['name']],
-                        "kdm": "Valid" if getattr(info, 'playable', True) else "No KDM"
-                    }
-                else: all_cpls[c_id]["studios"].append(studio['name'])
-        except: pass
+            cpl_list_info = svc_cpl.GetCPLListInfo(sessionId=sid)
+            if cpl_list_info:
+                for cpl_info in helpers.serialize_object(cpl_list_info)[:25]:
+                    c_id = cpl_info.get('cplId', '')
+                    if c_id not in all_cpls:
+                        all_cpls[c_id] = {
+                            "uuid": str(c_id),
+                            "title": cpl_info.get('contentTitleText', 'Unknown'),
+                            "duration": f"{round(cpl_info.get('durationEdits', 0)/86400)} min",
+                            "size": f"{round(cpl_info.get('cplSizeInBytes', 0)/(1024**3), 2)} GB",
+                            "studios": [studio['name']],
+                            "kdm": "Valid" if cpl_info.get('playable', True) else "No KDM"
+                        }
+                    else: 
+                        all_cpls[c_id]["studios"].append(studio['name'])
+        except Exception as e:
+            print(f"Error getting CPL list: {e}")
+            pass
     return jsonify(list(all_cpls.values()))
 
 @app.route('/api/playlists/<int:studio_id>')
@@ -127,8 +132,20 @@ def get_playlists(studio_id):
     if not sid: return jsonify([])
     try:
         svc = get_client(studio, "SPLManagement")
-        return jsonify(helpers.serialize_object(svc.GetSplList(sessionId=sid)))
-    except: return jsonify([])
+        spl_list_info = svc.GetSPLListInfo(sessionId=sid)
+        playlists = []
+        if spl_list_info:
+            for spl_info in helpers.serialize_object(spl_list_info):
+                playlists.append({
+                    "uuid": str(spl_info.get('splId', '')),
+                    "title": spl_info.get('splTitle', 'Unknown Playlist'),
+                    "items": 0,
+                    "duration": "00:00:00"
+                })
+        return jsonify(playlists)
+    except Exception as e:
+        print(f"Error getting playlists: {e}")
+        return jsonify([])
 
 @app.route('/api/control/<int:studio_id>/<action>')
 def control_playback(studio_id, action):
