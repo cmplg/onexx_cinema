@@ -91,6 +91,9 @@ def fetch_studio_status(studio):
 @app.route('/')
 def index(): return render_template('index.html')
 
+@app.route('/cpl-playlist-management')
+def cpl_playlist_management(): return render_template('cpl_playlist_management.html')
+
 @app.route('/api/all_status')
 def all_status(): return jsonify([fetch_studio_status(s) for s in STUDIOS])
 
@@ -146,6 +149,60 @@ def control_playback(studio_id, action):
             elif action == "eject": svc.Eject(sessionId=sid)
         return jsonify({"status": "success"})
     except: return jsonify({"status": "error"})
+
+@app.route('/api/import_cpl', methods=['POST'])
+def import_cpl():
+    if 'file' not in request.files:
+        return jsonify({"message": "No file provided"}), 400
+    file = request.files['file']
+    target_dir = request.form.get('target_dir', '/storage/cpls')
+    try:
+        import os
+        os.makedirs(target_dir, exist_ok=True)
+        filepath = os.path.join(target_dir, file.filename)
+        file.save(filepath)
+        return jsonify({"message": f"CPL imported successfully: {file.filename}"})
+    except Exception as e:
+        return jsonify({"message": f"Error: {str(e)}"}), 500
+
+@app.route('/api/create_playlist', methods=['POST'])
+def create_playlist():
+    data = request.json
+    name = data.get('name', 'Untitled')
+    theater_id = data.get('theater', 1)
+    studio = next((s for s in STUDIOS if s['id'] == int(theater_id)), None)
+    sid = cached_sid.get(int(theater_id))
+    
+    if not studio or not sid:
+        return jsonify({"message": "Studio not available"}), 400
+    
+    try:
+        svc = get_client(studio, "SPLManagement")
+        new_spl = svc.CreateSpl(sessionId=sid, splTitle=name, splDescription=data.get('desc', ''))
+        return jsonify({"message": f"Playlist '{name}' created successfully", "uuid": str(new_spl)})
+    except Exception as e:
+        return jsonify({"message": f"Error: {str(e)}"}), 500
+
+@app.route('/api/cpl_playlist_mappings')
+def get_cpl_playlist_mappings():
+    mappings = []
+    for studio in STUDIOS:
+        sid = cached_sid.get(studio['id'])
+        if not sid: continue
+        try:
+            svc_show = get_client(studio, "ShowControl")
+            status = svc_show.GetShowStatus(sessionId=sid)
+            if hasattr(status, 'cplTitle') and hasattr(status, 'splTitle'):
+                mappings.append({
+                    "id": f"{studio['id']}-{getattr(status, 'cplId', 'unknown')}",
+                    "cpl_title": getattr(status, 'cplTitle', 'Unknown'),
+                    "playlist_title": getattr(status, 'splTitle', 'Unknown'),
+                    "theater_id": studio['id'],
+                    "kdm_status": "valid" if getattr(status, 'playable', False) else "invalid",
+                    "kdm_expires": "2025-12-31T23:59:59"
+                })
+        except: pass
+    return jsonify(mappings)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
